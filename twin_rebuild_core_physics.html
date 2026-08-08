@@ -1078,6 +1078,15 @@ details.faq .fa b{color:var(--ink)}
   </section>
 
   <!-- ================= ANALYSIS · MULTIPHYSICS ================= -->
+  <!-- ================= SYSTEMS & BALANCE OF PLANT (Part A · public) ================= -->
+  <section class="page" id="page-systems">
+    <div class="lead" id="sys-lead">Plant systems</div>
+    <h2 class="title">Systems &amp; Balance of Plant</h2>
+    <p class="sub">The plant beyond the reactor core — the subsystems that fuel it, cool it, heat it, pump it, convert its power and keep it safe. Each is graded honestly: <b class="gold">FROZEN</b> (from the deposit), <b class="okc">SCREENING</b> (reduced-order), or <b class="badc">AWAITS HARDWARE</b>.</p>
+    <div id="sys-groups"></div>
+    <div class="foot" id="sys-foot"></div>
+  </section>
+
   <section class="page" id="page-analysis">
     <div class="lead" id="ana-lead"></div>
     <h2 class="title">Multiphysics Analysis</h2>
@@ -1468,7 +1477,7 @@ function setMachine(m){M=m;
 var GROUPS=[
  ['Overview',[['core','Core Systems'],['roadmap','Roadmap'],['mrl','Readiness · TRL/MRL'],['future','Future Capability'],['repro','Reproducibility']]],
  ['Physics',[['physics','Physics Engine'],['gov','Governing Physics'],['workbench','Analysis Workbench'],['dspace','Design Space'],['uq','Uncertainty']]],
- ['Engineering',[['hardware','Hardware'],['materials','Materials','mat'],['blueprints','Blueprints','bp'],['analysis','Analysis','ana']]],
+ ['Engineering',[['hardware','Hardware'],['materials','Materials','mat'],['systems','Systems & Balance of Plant'],['blueprints','Blueprints','bp'],['analysis','Analysis','ana']]],
  ['Operations',[['liveops','Live Operations'],['intel','Intelligence'],['control','I&C · Control'],['compute','Compute · HPC/Q'],['ask','Ask the Twin']]],
  ['Evidence',[['verification','Verification & V&V'],['validation','Validation'],['metrology','Metrology · As-Built'],['safety','Safety Case'],['thread','Digital Thread'],['evidence','Evidence & IP'],['data','Data & Standards']]],
  ['Impact',[['ram','RAM · Availability'],['econ','Economics'],['env','Environmental']]],
@@ -1482,11 +1491,11 @@ var ANASHEETS=[['structural','Structural'],['thermal','Thermal'],['em','Electrom
 var MATSECS=[['mat-groups','Overview & systems'],['mat-fieldladder','Field ladder'],['mat-jc','REBCO J_c(B)'],['mat-stack','Winding-pack stack'],['mat-structural','Structural materials'],['mat-stress','Bore-resolved stress'],['mat-fatigue','Fatigue gate'],['mat-shield','Neutron lifetime'],['mat-quench','Quench protection'],['mat-qual','Qualification matrix']];
 function matGo(id){setPage('materials');setTimeout(function(){var el=document.getElementById(id);if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'start'});},70);}
 var anaSheet='structural';
-var ALLPAGES=['hub','core','thread','repro','mrl','future','about','faq','physics','workbench','dspace','uq','verification','validation','metrology','safety','gov','hardware','materials','blueprints','analysis','data','liveops','evidence','ram','econ','env','intel','control','compute','ask','roadmap','team','pubs','benchmarks','milestones','glossary','methods','risks','approaches','algos','library','changelog'];
+var ALLPAGES=['hub','core','thread','repro','mrl','future','about','faq','physics','workbench','dspace','uq','verification','validation','metrology','safety','gov','hardware','materials','blueprints','analysis','data','liveops','evidence','ram','econ','env','intel','control','compute','ask','roadmap','team','pubs','benchmarks','milestones','glossary','methods','risks','approaches','algos','library','changelog','systems'];
 function findGroup(p){for(var i=0;i<GROUPS.length;i++)if(GROUPS[i][1].some(function(s){return s[0]===p;}))return i;return -1;}
 var SUBDESC={core:'Status, vitals & the design-target scorecard',roadmap:'Program stages and G1–G4 gate reviews',
  physics:'Live 0-D readout + the in-browser solver',gov:'Live-computed governing equations',workbench:'Sensitivity curves + tornado ranking',dspace:'All 25,200 scanned configurations',uq:'Monte-Carlo uncertainty & feasibility',
- hardware:'Magnets, DEC, thermal, lifetime',materials:'Materials, neutronics + REBCO magnet deep-dive',analysis:'Structural / thermal / EM / neutronics',blueprints:'Dimensioned drawings + CAD downloads',
+ hardware:'Magnets, DEC, thermal, lifetime',materials:'Materials, neutronics + REBCO magnet deep-dive',systems:'Fuel cycle, cryo, heating, vacuum, power, BoP',analysis:'Structural / thermal / EM / neutronics',blueprints:'Dimensioned drawings + CAD downloads',
  liveops:'Operational sequence player & actuators',intel:'AI/ML stack, what-if, anomaly monitor',ask:'Grounded Q&A with citations',
  validation:'All 68 reproducibility checks',evidence:'DOIs, patents & readiness',data:'Live connections + data standards',
  econ:'LCOE, cost stack & holistic comparison',env:'Lifecycle CO₂, waste, safety',
@@ -1658,6 +1667,7 @@ var TWINSTATE={
   gov:['model','Governing-equation catalogue'],
   hardware:['model','Engineered-systems specification'],
   materials:['model','Materials & neutronics specification'],
+  systems:['model','Plant systems &amp; balance of plant'],
   blueprints:['model','Engineering drawings + real CAD projection'],
   analysis:['computes','Frozen + screening multiphysics — full FEA/CFD/MCNP pending'],
   verification:['model','Requirements traceability over the frozen model'],
@@ -4250,6 +4260,29 @@ function renderMatLab(){
      ['Neutron shield adequacy','Design study','MCNP confirmation pending','var(--gold)']
     ].map(function(r){return '<tr><td class="name">'+r[0]+'</td><td style="color:'+r[3]+'">'+r[1]+'</td><td class="tsub">'+r[2]+'</td></tr>';}).join('')+'</tbody></table></div>');
 }
+/* ================= SYSTEMS & BALANCE OF PLANT (Part A · public) ================= */
+var SYS=[
+ {n:'Fuel cycle & tritium plant',g:'screening',fn:'Stores, purifies and recycles the hydrogen isotopes; extracts and banks helium-3.',br:'Tritium output 4.0 kg/yr (TBR 1.8 target) + He-3 co-production; cryo-distillation; HazCat 2 confinement, multiple barriers.',bu:'D–³He fuel handling; ³He feed + recycle; low tritium inventory (low-neutron).'},
+ {n:'Cryogenics plant',g:'screening',fn:'Cools the superconducting magnets and cold mass to operating temperature.',br:'4.5 K magnet cooling + 20 K stage; cold mass ≈ 608 t; He refrigeration.',bu:'4.5 K high-field plug + central-cell coils; larger cold mass at length.'},
+ {n:'Heating & current drive',g:'model',fn:'Brings the plasma to temperature and (breeder) drives the plasma current.',br:'P_aux ≈ 25.9 MW (NBI + RF); current drive supports I_p 9.86 MA (bootstrap-assisted).',bu:'Central-cell + plug heating; ambipolar potential maintenance.'},
+ {n:'Vacuum & pumping',g:'model',fn:'Holds ultra-high vacuum in the vessel and pumps exhaust.',br:'Base pressure ≈ 1.2×10⁻⁸ Pa; cryopumps + roughing; conformal to the D-vessel.',bu:'Linear vessel + expander end-tanks provide large pumping area.'},
+ {n:'Power conversion & balance of plant',g:'frozen',fn:'Turns fusion output into electricity.',br:'Thermal path — blanket heat to a power cycle (product is fuel/isotopes, not net grid MWe).',bu:'Direct energy conversion (DEC), ion-only η ≈ 0.70 — charged particles straight to electricity, no steam cycle.'},
+ {n:'Power supplies & converters',g:'model',fn:'Feeds the coils, heating and plant loads; conditions grid interface.',br:'CS/PF converters, magnet supplies, plant auxiliaries.',bu:'Plug/central-cell coil supplies; DEC grid-tie converters.'},
+ {n:'Remote handling & maintenance',g:'awaits',fn:'Services activated in-vessel components without human entry.',br:'Hot-cell + remote handling for the tritium/neutron-activated breeder; the higher-activation machine.',bu:'Lower activation (low-neutron) eases maintenance; still remote for the central cell.'},
+ {n:'Instrumentation & control',g:'model',fn:'Senses plasma & plant state and holds the machine in its safety envelope.',br:'Diagnostics + plant control (PCS) and safety instrumented systems (SIS) — see the I&C · Control page.',bu:'Same architecture; mirror-specific diagnostics (end-loss, plug potential).'},
+ {n:'Site, buildings & shielding',g:'model',fn:'Houses the machine and provides biological/neutron shielding.',br:'Reactor building + shielding within a HazCat 2 licensing envelope; remote/isolatable siting.',bu:'Low-neutron enables point-of-use siting (data-centre / installation).'}
+];
+function renderSystems(){
+  document.getElementById('sys-lead').textContent=(M==='breeder'?'Hyperion breeder':'D–³He burner')+' · plant systems';
+  var gc={frozen:['FROZEN','var(--gold)'],screening:['SCREENING','var(--ok)'],awaits:['AWAITS HARDWARE','var(--gold)'],model:['MODEL','var(--dim)']};
+  document.getElementById('sys-groups').innerHTML='<div class="grid g3">'+SYS.map(function(s){
+    var spec=(M==='breeder'?s.br:s.bu);var g=gc[s.g]||gc.model;
+    return '<div class="tile"><div style="display:flex;justify-content:space-between;gap:6px;align-items:flex-start"><div class="th">'+s.n+'</div><span class="mono" style="font-size:8px;flex:none;color:'+g[1]+';border:1px solid '+g[1]+';border-radius:3px;padding:1px 5px">'+g[0]+'</span></div>'+
+      '<div class="tsub" style="margin-top:5px">'+s.fn+'</div>'+
+      '<div class="tsub" style="margin-top:6px"><b class="'+(M==='breeder'?'gold':'pink')+'">'+(M==='breeder'?'Breeder':'Burner')+':</b> <span style="color:var(--dim)">'+spec+'</span></div></div>';
+  }).join('')+'</div>';
+  document.getElementById('sys-foot').innerHTML='Balance-of-plant systems for the '+(M==='breeder'?'breeder':'burner')+', derived from the frozen design; full plant engineering is future work. No economics on this page.';
+}
 /* ---- FAQ (public · SEO/AI · honest) ---- */
 var FAQ=[
  ['The basics',
@@ -4781,7 +4814,7 @@ function renderAnalysis(){
   document.getElementById('ana-foot').innerHTML='Analysis layer of the 3D model · <b class="gold">FROZEN</b> values reproduce from the open deposit, <b class="okc">SCREENING</b> uses reduced-order models, <b class="badc">PARTIAL</b> awaits full FEA / CFD / MCNP. Frozen parameters: <a class="doi" href="https://doi.org/'+doi+'">DOI '+doi+'</a>. <span class="pill gate" style="padding:1px 6px">ENGINEERING · NOT FOR CONSTRUCTION</span>';
 }
 
-function renderAll(){renderStrip();renderCore();renderPhysics();initWBSelects();renderWB();renderGov();renderHardware();renderMaterials();renderBlueprints();renderAnalysis();renderData();initLiveOps();renderEvidence();renderEnv();renderEcon();renderIntel();renderAsk();renderRoadmap();renderMetro();renderSafety();renderControl();renderRAM();renderMRL();renderFuture();renderAbout();renderFAQ();renderCompute();renderRepro();renderThread();renderTeam();renderPubs();renderBenchmarks();renderMilestones();renderGlossary();renderMethods();renderRisks();renderApproaches();renderLibrary();renderChangelog();renderMatLab();renderAlgos();if(typeof VAL!=='undefined'&&VAL){renderVal();renderVV();renderThread();}}
+function renderAll(){renderStrip();renderCore();renderPhysics();initWBSelects();renderWB();renderGov();renderHardware();renderMaterials();renderBlueprints();renderAnalysis();renderData();initLiveOps();renderEvidence();renderEnv();renderEcon();renderIntel();renderAsk();renderRoadmap();renderMetro();renderSafety();renderControl();renderRAM();renderMRL();renderFuture();renderAbout();renderFAQ();renderCompute();renderRepro();renderThread();renderTeam();renderPubs();renderBenchmarks();renderMilestones();renderGlossary();renderMethods();renderRisks();renderApproaches();renderLibrary();renderChangelog();renderMatLab();renderAlgos();renderSystems();if(typeof VAL!=='undefined'&&VAL){renderVal();renderVV();renderThread();}}
 renderAll();try{glossTips();}catch(e){}
 /* ---------- guided tour (Phase 95) ---------- */
 var TOUR=[
