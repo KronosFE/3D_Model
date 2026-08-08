@@ -1164,19 +1164,19 @@ details.faq .fa b{color:var(--ink)}
   <section class="page" id="page-econ">
     <div class="lead">Economics · LCOE <span class="teamonly">🔒 slated for team-only lock</span></div>
     <h2 class="title">Economics &amp; LCOE</h2>
-    <p class="sub">Levelized cost of energy, the cost stack, and the holistic comparison. Built in the open for review — proprietary and financing-sensitive lines are tagged 🔒 team-only and will lock behind team access before go-live. Economics never migrates to Zenodo, the public site, or any media.</p>
+    <p class="sub">Levelized cost of energy, the cost stack, and the holistic comparison are <b>proprietary and team-only</b> — they are not published on the public site, in any media, or in the open deposits. Kronos team members see the full economics after signing in.</p>
 
-    <div class="subhdr">Burner LCOE scenarios · narrow $/MWh</div>
+    <div class="subhdr">Burner LCOE scenarios</div>
     <div class="owwrap"><div id="lcoe-scn"></div><div class="note" id="lcoe-scn-note"></div></div>
 
-    <div class="subhdr">Holistic LCOE — narrow cost + carbon &amp; health externalities · $/MWh</div>
-    <div class="owwrap"><div id="lcoe-hol"></div><div class="note">Holistic = narrow LCOE + monetized carbon (SCC $190/tCO₂) + health. Fusion's near-zero externality is the structural advantage. Sources: literature + calc.</div></div>
+    <div class="subhdr">Holistic comparison — cost + carbon &amp; health externalities</div>
+    <div class="owwrap"><div id="lcoe-hol"></div><div class="note">Publicly: fusion's near-zero operating externality is the structural advantage. The monetized comparison is team-only.</div></div>
 
     <div class="grid g2">
       <div class="card"><h3>The biggest controllable lever</h3><div id="lcoe-lever"></div></div>
       <div class="card"><h3>Breeder tritium unit cost <span class="teamonly">🔒 team-only</span></h3><div id="lcoe-breeder"></div></div>
     </div>
-    <div class="foot">He-3 pricing, capital specs and financing are proprietary (🔒). Current-He-3 burner LCOE is premium/remote only; lunar He-3 is the binding dependency that makes it grid-relevant. Breeder baseline economics are financing-limited and team-only.</div>
+    <div class="foot">He-3 pricing, capital specs and financing are proprietary and team-only. Current-He-3 burner economics are premium/remote only; lunar He-3 is the binding dependency that makes it grid-relevant. Breeder baseline economics are financing-limited. No figures are published here.</div>
   </section>
 
   <!-- ================= ENVIRONMENTAL ================= -->
@@ -2517,28 +2517,16 @@ function stackBar(l,narrow,ext,mx){
     '<span class="seg" style="left:'+nw+'%;width:'+ew+'%;background:var(--bad)"></span></span>'+
     '<span class="rv">$'+(narrow+ext)+'</span></div>';
 }
+/* PUBLIC BUILD: economics figures are proprietary and are NOT shipped in this file.
+   The full-numbers version is kept internally (00 - DO NOT PUBLISH/_3D_MODEL_INTERNAL). */
 function renderEcon(){
-  document.getElementById('lcoe-scn').innerHTML=
-    rangeBar('Current He-3',290,480,500,'var(--pink)','$290–480',true)+
-    rangeBar('Lunar He-3',90,260,500,'var(--gold)','$90–260',true)+
-    rangeBar('Grid reference',50,100,500,'var(--ok)','$50–100')+
-    '<div class="rscale"><span>$0</span><span>$250</span><span>$500 /MWh</span></div>';
-  document.getElementById('lcoe-scn-note').innerHTML='Current-He-3 LCOE is <b class="pink">premium/remote only</b> vs grid $50–100. The lunar He-3 trigger ($2.56M/kg) brings it to $90–260 — competitive with coal’s holistic cost. <span class="teamonly">🔒 He-3 pricing proprietary</span>';
-  document.getElementById('lcoe-hol').innerHTML=
-    stackBar('Coal',55,250,400)+stackBar('Natural gas',58,110,400)+stackBar('Nuclear fission',155,3,400)+
-    stackBar('Solar PV',40,10,400)+stackBar('Wind onshore',42,3,400)+stackBar('Kronos burner (lunar He-3)',175,2,400)+
-    '<div class="rscale"><span>$0</span><span>$200</span><span>$400 /MWh</span></div>'+
-    '<div class="legend" style="margin-top:8px"><span><i style="background:var(--gold)"></i>narrow LCOE</span><span><i style="background:var(--bad)"></i>carbon + health externality</span></div>';
-  document.getElementById('lcoe-lever').innerHTML='<p class="note" style="margin-top:0">Capital recovery is the <b class="gold">biggest controllable lever — an 11.4× swing</b>. Financing, not physics, dominates the cost.</p>'+
-    rangeBar('Low (federal/GOCO, CRF 4%)',40,50,200,'var(--ok)','$40–50',true)+
-    rangeBar('High (commercial, CRF 8.9%)',150,190,200,'var(--pink)','$150–190',true)+
-    '<div class="rscale"><span>$0</span><span>$100</span><span>$200 /MWh</span></div>';
-  document.getElementById('lcoe-breeder').innerHTML=
-    '<div class="irow"><span class="il">Tritium unit cost</span><span class="iv gold">$45–53M / kg</span></div>'+
-    '<div class="irow"><span class="il">NNSA ceiling</span><span class="iv">$60.46M / kg</span></div>'+
-    '<div class="irow"><span class="il">Undercut</span><span class="iv ok">−12 to −25%</span></div>'+
-    '<div class="irow"><span class="il">Defensible baseline</span><span class="iv bad">LOSS — financing-limited</span></div>'+
-    '<p class="note" style="margin-top:10px">Breeder economics are financing-limited at the defensible baseline; financing is the biggest controllable lever. <span class="teamonly">🔒 team-only</span></p>';
+  var lock='<div class="card dark" style="line-height:1.6"><b class="gold">🔒 Economics is Kronos team-only.</b> Levelized cost of energy, the cost stack, helium-3 pricing, tritium unit cost, capital &amp; financing terms, and the holistic comparison are proprietary and are not published here. Kronos team members see the full economics after signing in.<div style="margin-top:12px"><button class="btn sm" onclick="if(typeof gateLogin===\'function\')gateLogin()">Sign in to view ↗</button></div></div>';
+  var b=function(id,h){var el=document.getElementById(id);if(el)el.innerHTML=h;};
+  b('lcoe-scn',lock);
+  b('lcoe-scn-note','');
+  b('lcoe-hol','<p class="note" style="margin:0">The holistic comparison — narrow LCOE plus monetized carbon and health externalities — is part of the team-only economics. Publicly: fusion\'s near-zero operating externality is the structural advantage.</p>');
+  b('lcoe-lever','<p class="note" style="margin-top:0">Capital recovery / financing — not physics — is the biggest controllable cost lever. The figures are team-only.</p>');
+  b('lcoe-breeder','<p class="note" style="margin-top:0">Breeder unit economics are financing-limited at the defensible baseline; the numbers are team-only.</p>');
 }
 
 /* ================= INTELLIGENCE (Phases 18–21) ================= */
