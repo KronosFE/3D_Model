@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Kronos 3D Model — Instructional Film</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap');
+:root{--bg:#232c39;--panel:#323e4d;--panel2:#2a3441;--screen:#161d26;--gold:#d3ac5f;--pink:#e94f9c;--ink:#e0e5eb;--dim:#9aa6b4;--line:rgba(255,255,255,.09);--fm:'Space Mono',monospace;--fg:'Space Grotesk',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#0d1117;font-family:var(--fg);color:var(--ink);overflow:hidden}
+#film{position:fixed;inset:0;background:radial-gradient(120% 90% at 50% 8%,#2b3849 0%,#1a222d 55%,#0d1117 100%);display:flex;align-items:center;justify-content:center}
+/* starfield */
+#stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.st{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.5;animation:tw 3s infinite ease-in-out}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.6}}
+/* scenes */
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  opacity:0;transition:opacity .9s ease;padding:0 8vw}
+.scene.on{opacity:1}
+.kicker{font-family:var(--fm);font-size:clamp(10px,1.5vw,13px);letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.big{font-size:clamp(30px,6vw,68px);font-weight:700;line-height:1.05;letter-spacing:-.01em}
+.sub{font-size:clamp(14px,2.2vw,22px);color:var(--dim);margin-top:18px;max-width:820px;line-height:1.5}
+.pink{color:var(--pink)}.gold{color:var(--gold)}.ok{color:#6fce9f}
+.rowchips{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+.chip{font-family:var(--fm);font-size:clamp(11px,1.6vw,15px);padding:10px 18px;border-radius:10px;border:1px solid var(--line);background:rgba(22,29,38,.6)}
+.chip.g{border-color:rgba(211,172,95,.5);color:var(--gold)} .chip.p{border-color:rgba(233,79,156,.5);color:var(--pink)} .chip.o{border-color:rgba(111,206,159,.4);color:#6fce9f}
+.num{font-family:var(--fm)}
+/* emblem + reactor */
+.emblem{filter:drop-shadow(0 6px 20px rgba(0,0,0,.5))}
+.spin{transform-origin:50% 50%;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.65}50%{opacity:1}}
+.rise{animation:rise 1s ease both}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+/* progress + controls */
+#bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--pink));z-index:6;transition:width .3s linear}
+#ctrls{position:absolute;bottom:16px;right:18px;z-index:7;display:flex;gap:8px}
+#ctrls button{background:rgba(34,44,57,.85);border:1px solid var(--line);color:var(--ink);font-family:var(--fm);font-size:12px;padding:8px 13px;border-radius:8px;cursor:pointer;backdrop-filter:blur(8px)}
+#brandmark{position:absolute;top:18px;left:20px;z-index:7;display:flex;align-items:center;gap:10px;font-family:var(--fg)}
+#brandmark b{font-weight:700;letter-spacing:.02em}#brandmark small{display:block;font-family:var(--fm);font-size:9px;letter-spacing:.2em;color:var(--dim)}
+/* start gate */
+#gate{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(13,17,23,.7);backdrop-filter:blur(6px);cursor:pointer}
+#gate .play{width:96px;height:96px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--gold);background:rgba(34,44,57,.7)}
+#gate p{margin-top:20px;font-family:var(--fm);font-size:13px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.count{display:inline-block;min-width:1ch}
+</style></head>
+<body>
+<div id="film">
+  <div id="stars"></div>
+  <div id="brandmark">
+    <svg class="emblem" width="34" height="34" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#d3ac5f" stroke-width="1.4"/><circle cx="20" cy="20" r="6.5" fill="#e94f9c"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1.1" transform="rotate(30 20 20)"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1.1" transform="rotate(-30 20 20)"/></svg>
+    <div><b>KRONOS</b><small>3D MODEL</small></div>
+  </div>
+  <div id="scenes"></div>
+  <div id="bar"></div>
+  <div id="ctrls"><button id="mute" onclick="toggleMute()">♪ on</button><button onclick="replay()">⟳ Replay</button></div>
+  <div id="gate" onclick="startFilm()"><div class="play">▶</div><p>Play film · music on</p></div>
+</div>
+<script>
+/* ---- starfield ---- */
+(function(){var s=document.getElementById('stars');for(var i=0;i<70;i++){var d=document.createElement('div');d.className='st';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.animationDelay=(Math.random()*3)+'s';d.style.opacity=(0.1+Math.random()*0.5);s.appendChild(d);}})();
+
+/* ---- animated spherical-tokamak SVG (brand: dark metals, emissive-pink plasma, no glow-wash) ---- */
+function reactorSVG(){return '<svg width="300" height="260" viewBox="0 0 300 260" style="max-width:46vw">'+
+  '<g class="spin" transform="translate(150,130)">'+
+  // TF coil cage (dark graphite ellipses)
+  [0,30,60,90,120,150].map(function(a){return '<ellipse cx="0" cy="0" rx="30" ry="96" transform="rotate('+a+')" fill="none" stroke="#3a4653" stroke-width="3"/>';}).join('')+
+  '</g>'+
+  // plasma D (negative triangularity) — emissive pink on dark
+  '<g transform="translate(150,130)"><path class="pulse" d="M-2,-70 C 34,-64 40,-24 40,0 C 40,26 30,64 -4,70 C -30,64 -34,26 -34,0 C -34,-26 -34,-64 -2,-70 Z" fill="rgba(233,79,156,.34)" stroke="#e94f9c" stroke-width="2"/>'+
+  '<ellipse class="pulse" cx="4" cy="0" rx="14" ry="42" fill="rgba(255,154,208,.25)"/></g>'+
+  '<rect x="140" y="18" width="20" height="224" rx="4" fill="#2f3945" stroke="#4a5563"/>'+ // center stack
+  '</svg>';}
+
+function mirrorSVG(){return '<svg width="440" height="150" viewBox="0 0 440 150" style="max-width:60vw">'+
+  '<rect x="70" y="60" width="300" height="30" rx="6" class="pulse" fill="rgba(233,79,156,.3)" stroke="#e94f9c"/>'+
+  [90,140,190,240,290,340].map(function(x){return '<rect x="'+(x-4)+'" y="46" width="8" height="58" rx="2" fill="#3a4653"/>';}).join('')+
+  '<rect x="52" y="52" width="14" height="46" rx="3" fill="#d3ac5f"/><rect x="374" y="52" width="14" height="46" rx="3" fill="#d3ac5f"/>'+ // end plugs
+  '<circle cx="34" cy="75" r="22" fill="none" stroke="#59687a" stroke-width="2"/><circle cx="406" cy="75" r="22" fill="none" stroke="#59687a" stroke-width="2"/>'+ // end tanks
+  '</svg>';}
+
+function heatmap(){return '<svg width="300" height="220" viewBox="0 0 300 220" style="max-width:44vw"><g transform="translate(150,110)">'+
+  '<ellipse rx="96" ry="96" fill="none" stroke="#12a37e" stroke-width="10" opacity=".8"/>'+
+  '<ellipse rx="72" ry="72" fill="none" stroke="#e0a52c" stroke-width="12" opacity=".85"/>'+
+  '<ellipse rx="46" ry="46" fill="none" stroke="#f23c92" stroke-width="12" opacity=".9"/>'+
+  '<ellipse class="pulse" rx="22" ry="22" fill="#f5341f" opacity=".9"/></g></svg>';}
+
+/* ---- scene timeline (music + visuals, no voice) ---- */
+var SCENES=[
+ {d:4400,html:'<div class="kicker rise">Kronos Fusion Energy</div><div class="big rise">The Kronos <span class="gold">3D&nbsp;Model</span></div><div class="sub rise">A twin-ready fusion platform — two machines, real physics, every number reproducible from the open record.</div>'},
+ {d:4600,html:'<div class="kicker rise">Two machines, one platform</div><div class="rowchips"><div class="chip g rise">◈ BREEDER · Hyperion</div><div class="chip p rise" style="animation-delay:.2s">◆ BURNER · Aegis / MetroVolt</div></div><div class="sub rise" style="animation-delay:.35s">The breeder makes tritium, neutrons &amp; helium-3; the burner makes net electricity. Toggle — everything switches with you.</div>'},
+ {d:5000,html:'<div class="kicker">BREEDER · Hyperion</div>'+reactorSVG()+'<div class="rowchips"><div class="chip g">D–T spherical tokamak</div><div class="chip">R₀ 1.2 m · A 2.5 · κ 2.0</div><div class="chip">B_peak <span class="num">16.84 T</span></div></div>'},
+ {d:5000,html:'<div class="kicker">BURNER · Aegis / MetroVolt</div>'+mirrorSVG()+'<div class="rowchips"><div class="chip p">D–³He tandem mirror</div><div class="chip">55 / 440 / 1400 m housings</div><div class="chip">net <span class="num">+104 / +850 / +2832 MWe</span></div></div>'},
+ {d:4800,html:'<div class="kicker">Explore every component</div>'+reactorSVG()+'<div class="sub">Drag to rotate · scroll to zoom · click any part for measurements. Toggle layers, cut away, or explode the assembly.</div>'},
+ {d:4400,html:'<div class="kicker rise">Faithful geometry</div><div class="big rise" style="font-size:clamp(26px,5vw,54px)">Negative triangularity <span class="gold num">δ −0.30</span></div><div class="sub rise">The plasma D opens outward — as in the published equilibrium, not a generic tokamak.</div>'},
+ {d:5400,html:'<div class="kicker">It actually computes</div><div class="rowchips"><div class="chip g"><span class="count" data-to="3.424" data-dec="3">0</span> &nbsp;fusion gain Q</div><div class="chip"><span class="count" data-to="88.7" data-dec="1">0</span> MW&nbsp;fusion power</div><div class="chip"><span class="count" data-to="9.86" data-dec="2">0</span> MA&nbsp;plasma current</div></div><div class="rowchips"><div class="chip p"><span class="count" data-to="1.309" data-dec="3">0</span> &nbsp;engineering Q_E</div><div class="chip"><span class="count" data-to="5.44" data-dec="2">0</span>%&nbsp;neutron fraction · low-neutron</div></div><div class="sub">Move a slider and the real deposit solver recomputes — live, in your browser.</div>'},
+ {d:4600,html:'<div class="kicker rise">Search the design space</div><div class="rowchips"><div class="chip g rise"><span class="count" data-to="25201" data-dec="0">0</span> configurations</div><div class="chip rise" style="animation-delay:.2s"><span class="count" data-to="2000" data-dec="0">0</span> Monte-Carlo samples</div></div><div class="sub rise" style="animation-delay:.35s">Every point run through the real evaluator — uncertainty quantified, not asserted.</div>'},
+ {d:4800,html:'<div class="kicker">As-Simulated — the analysis, on the model</div>'+heatmap()+'<div class="sub">Neutron flux · thermal load · structural stress · as-built deviation — mapped onto every part.</div>'},
+ {d:4600,html:'<div class="kicker rise">Materials &amp; neutronics</div><div class="rowchips"><div class="chip g rise">REBCO HTS magnets</div><div class="chip rise" style="animation-delay:.15s">breeding blanket · TBR</div><div class="chip o rise" style="animation-delay:.3s">low-activation structure</div></div><div class="sub rise" style="animation-delay:.4s">Down to the conductor, the first wall, the tritium cycle — with the open risks named, not hidden.</div>'},
+ {d:4600,html:'<div class="kicker rise">Engineering blueprints</div><div class="big rise" style="font-size:clamp(24px,4.4vw,46px)">A 12-sheet drawing set</div><div class="sub rise">General arrangement, sections, magnets, GD&amp;T, welds — plus <span class="gold">real OpenCASCADE CAD projections</span> from the parametric model.</div>'},
+ {d:5000,html:'<div class="kicker">The assurance stack</div><div class="rowchips"><div class="chip">Multiphysics</div><div class="chip">V&amp;V</div><div class="chip">Metrology</div><div class="chip">Safety</div><div class="chip">Control</div><div class="chip">RAM</div></div><div class="sub">Every requirement traced from the 3-D part → analysis → validation → as-built. One connected digital thread.</div>'},
+ {d:4600,html:'<div class="kicker rise">Inherently safe</div><div class="rowchips"><div class="chip o rise">no chain reaction</div><div class="chip o rise" style="animation-delay:.15s">no meltdown path</div><div class="chip g rise" style="animation-delay:.3s">decay heat ≪ fission</div></div><div class="sub rise" style="animation-delay:.4s">FMEA, HAZOP and the radiological picture — stated plainly, graded by maturity.</div>'},
+ {d:4600,html:'<div class="kicker rise">HPC &amp; Quantum</div><div class="rowchips"><div class="chip g rise">declared HPC ports</div><div class="chip p rise" style="animation-delay:.2s">quantum: no crossover this decade</div></div><div class="sub rise" style="animation-delay:.35s">Classical still wins today — and we say so. The heavy solvers plug in when they help.</div>'},
+ {d:4600,html:'<div class="kicker rise">Honest by design</div><div class="rowchips"><div class="chip o rise">COMPUTES NOW</div><div class="chip g rise" style="animation-delay:.15s">AWAITS HARDWARE</div><div class="chip rise" style="animation-delay:.3s">MODEL</div></div><div class="sub rise" style="animation-delay:.4s">Every surface says what it truly is. Nothing overstates itself.</div>'},
+ {d:5000,html:'<div class="kicker rise">Check us — don\'t just trust us</div><div class="big rise"><span class="ok num"><span class="count" data-to="182" data-dec="0">0</span> / 182</span> reproducible</div><div class="rowchips"><div class="chip o rise">5 open Zenodo deposits · CC BY</div></div><div class="sub rise">Five pre-registered tests, open code and data. Run them yourself.</div>'},
+ {d:5400,html:'<svg class="emblem rise" width="72" height="72" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#d3ac5f" stroke-width="1.3"/><circle cx="20" cy="20" r="6.5" fill="#e94f9c"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1" transform="rotate(30 20 20)"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1" transform="rotate(-30 20 20)"/></svg><div class="big rise" style="margin-top:18px">KRONOS FUSION ENERGY</div><div class="sub rise gold">from 3-D model → digital twin</div>'}
+];
+var TOTAL=SCENES.reduce(function(a,s){return a+s.d;},0);
+
+/* ---- player ---- */
+var idx=-1,timer=null,t0=0,elapsed=0,rafid=null;
+function showScene(i){var c=document.getElementById('scenes');c.innerHTML='<div class="scene" id="sc">'+SCENES[i].html+'</div>';
+  var el=document.getElementById('sc');requestAnimationFrame(function(){el.classList.add('on');});runCounts(el);}
+function runCounts(el){el.querySelectorAll('.count').forEach(function(sp){var to=parseFloat(sp.dataset.to),dec=+sp.dataset.dec,st=performance.now(),dur=1300;
+  function step(now){var k=Math.min(1,(now-st)/dur);var v=(to*(1-Math.pow(1-k,3)));sp.textContent=v.toFixed(dec);if(k<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
+function next(){idx++;if(idx>=SCENES.length){finish();return;}showScene(idx);timer=setTimeout(next,SCENES[idx].d);}
+function tick(){elapsed=performance.now()-t0;document.getElementById('bar').style.width=Math.min(100,elapsed/TOTAL*100)+'%';if(idx<SCENES.length)rafid=requestAnimationFrame(tick);}
+function startFilm(){document.getElementById('gate').style.display='none';startAudio();idx=-1;t0=performance.now();elapsed=0;next();tick();}
+function replay(){clearTimeout(timer);cancelAnimationFrame(rafid);idx=-1;t0=performance.now();next();tick();}
+function finish(){document.getElementById('scenes').querySelector('.scene').classList.add('on');document.getElementById('bar').style.width='100%';fadeAudio();}
+
+/* ---- generated ambient music (royalty-free; Web Audio) ---- */
+var AC=null,master=null,muted=false,arpTimer=null;
+var VOL=0.10,busPad=null,busArp=null;
+/* happy corporate — bright major loop (C–G–Am–F), gentle pluck + soft beat, generative & royalty-free */
+var CHORDS=[[261.63,329.63,392.00],[196.00,246.94,392.00],[220.00,261.63,329.63],[174.61,261.63,349.23]]; // C, G/B-ish, Am, F
+var BPM=108, BEAT=60/108, bar=0;
+function tone(freq,t,dur,type,peak,dest,atk){var o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=freq;
+  o.connect(g);g.connect(dest);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(peak,t+(atk||0.015));g.gain.exponentialRampToValueAtTime(0.0006,t+dur);o.start(t);o.stop(t+dur+0.05);}
+function startAudio(){try{
+  AC=new (window.AudioContext||window.webkitAudioContext)();
+  master=AC.createGain();master.gain.value=0;
+  var lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2600;lp.Q.value=0.3; // bright but not harsh
+  master.connect(lp);lp.connect(AC.destination);
+  master.gain.linearRampToValueAtTime(VOL,AC.currentTime+1.6); // upbeat entrance
+  busPad=AC.createGain();busPad.gain.value=0.5;busPad.connect(master);
+  busArp=AC.createGain();busArp.gain.value=0.6;busArp.connect(master);
+  var barDur=4*BEAT;
+  function playBar(){if(!AC||muted){bar++;return;}var c=CHORDS[bar%4],t=AC.currentTime+0.04;
+    // bright pad triad for the bar
+    c.forEach(function(f){tone(f,t,barDur*0.98,'triangle',0.05,busPad,0.08);});
+    // soft bass root, beats 1 & 3
+    tone(c[0]/2,t,BEAT*1.4,'sine',0.10,master,0.01);tone(c[0]/2,t+2*BEAT,BEAT*1.4,'sine',0.10,master,0.01);
+    // cheerful up/down pluck arpeggio (8th notes, one octave up)
+    var pat=[0,1,2,1,2,1,0,2];for(var k=0;k<8;k++){tone(c[pat[k]]*2,t+k*(BEAT/2),BEAT*0.42,'triangle',0.05,busArp,0.006);}
+    // gentle soft kick, beats 1 & 3 (low, quick — momentum, not startle)
+    [0,2].forEach(function(b){var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.connect(g);g.connect(master);var tt=t+b*BEAT;
+      o.frequency.setValueAtTime(110,tt);o.frequency.exponentialRampToValueAtTime(55,tt+0.12);g.gain.setValueAtTime(0.11,tt);g.gain.exponentialRampToValueAtTime(0.0006,tt+0.16);o.start(tt);o.stop(tt+0.2);});
+    bar++;}
+  playBar();arpTimer=setInterval(playBar,barDur*1000);
+}catch(e){}}
+function fadeAudio(){if(AC&&master){try{master.gain.linearRampToValueAtTime(0.0001,AC.currentTime+3);}catch(e){}}}
+function toggleMute(){if(!AC)return;muted=!muted;master.gain.setTargetAtTime(muted?0:VOL,AC.currentTime,0.15);document.getElementById('mute').textContent=muted?'♪ off':'♪ on';}
+</script>
+</body></html>
