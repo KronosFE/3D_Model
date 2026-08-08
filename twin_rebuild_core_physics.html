@@ -118,6 +118,10 @@ body.embed nav.tabs{top:0}
 .dmenu{display:none;position:absolute;top:100%;left:0;min-width:210px;background:var(--panel);
   border:1px solid var(--line2);border-radius:0 0 8px 8px;box-shadow:0 14px 36px rgba(0,0,0,.45);padding:6px;z-index:40}
 .dropdown:hover .dmenu,.dropdown.open .dmenu{display:block}
+.dmenu .subdrop{position:relative}
+.dmenu .subdrop>.submenu{display:none;position:absolute;left:100%;top:-6px;min-width:190px;background:var(--panel);border:1px solid var(--line2);border-radius:8px;box-shadow:0 14px 36px rgba(0,0,0,.45);padding:6px;z-index:41}
+.dmenu .subdrop:hover>.submenu{display:block}
+.dmenu .subbtn .subcar{float:right;color:var(--dim);margin-left:10px}
 .dmenu button{display:block;width:100%;text-align:left;background:transparent;border:0;color:var(--ink);
   font-family:var(--fm);font-size:12px;letter-spacing:.02em;padding:9px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
 .dmenu button:hover{background:rgba(255,255,255,.06)}
@@ -581,6 +585,12 @@ details.faq .fa b{color:var(--ink)}
     <div class="lead">From 3-D model → digital twin</div>
     <h2 class="title">Future Capability</h2>
     <p class="sub">What this platform is today, and what each surface <b>becomes</b> as the machine is built and instrumented. We are honest about the line: most of this is a <b class="gold">twin-ready model</b>; the live twin activates only when there is hardware feeding it.</p>
+    <div class="subhdr">The three stages — model → shadow → twin</div>
+    <p class="note" style="margin:0 0 12px">A "digital twin" is a specific thing: a live, two-way link between a real machine and its model. You can't have one without the machine. Here is the honest path, and exactly what separates each stage — <b>the direction the data flows.</b></p>
+    <div id="fut-stages"></div>
+    <div id="fut-flow"></div>
+    <div class="subhdr">What it takes to advance</div>
+    <div class="grid g2" id="fut-reqs"></div>
     <div class="subhdr">The maturity ladder</div>
     <div id="fut-ladder"></div>
     <div class="subhdr">What activates, and when</div>
@@ -1035,6 +1045,7 @@ details.faq .fa b{color:var(--ink)}
     <div class="lead" id="mat-lead"></div>
     <h2 class="title">Materials &amp; Neutronics</h2>
     <p class="sub" id="mat-sub"></p>
+    <div class="bpsheets" id="mat-secnav"></div>
     <div id="mat-groups"></div>
     <div class="subhdr">Magnet &amp; tape deep-dive <span class="mono" style="font-size:9px;color:var(--dim)">· REBCO deposit 10.5281/zenodo.21842514</span></div>
     <p class="note" style="margin:0 0 12px">Grounded in the 16-track REBCO magnet study + tape-conductor program. Every value carries its basis tag: <b style="color:var(--ok)">SOURCED / PUBLIC-DATA</b>, <b style="color:var(--gold)">DESIGN-ASSUMPTION</b>, <b style="color:var(--pink)">REQUIREMENT</b>, or <b style="color:var(--bad)">REFUTED / INFEASIBLE</b>.</p>
@@ -1455,18 +1466,18 @@ function setMachine(m){M=m;
   if(typeof updateURL==='function')updateURL();
 }
 var GROUPS=[
- ['Overview',[['core','Core Systems'],['thread','Digital Thread'],['repro','Reproducibility'],['mrl','Readiness · TRL/MRL'],['future','Future Capability'],['roadmap','Roadmap'],['about','About & Cite'],['faq','FAQ']]],
+ ['Overview',[['core','Core Systems'],['roadmap','Roadmap'],['mrl','Readiness · TRL/MRL'],['future','Future Capability'],['repro','Reproducibility']]],
  ['Physics',[['physics','Physics Engine'],['gov','Governing Physics'],['workbench','Analysis Workbench'],['dspace','Design Space'],['uq','Uncertainty']]],
+ ['Engineering',[['hardware','Hardware'],['materials','Materials','mat'],['blueprints','Blueprints','bp'],['analysis','Analysis','ana']]],
  ['Operations',[['liveops','Live Operations'],['intel','Intelligence'],['control','I&C · Control'],['compute','Compute · HPC/Q'],['ask','Ask the Twin']]],
- ['Evidence',[['verification','Verification & V&V'],['validation','Validation'],['metrology','Metrology · As-Built'],['safety','Safety Case'],['evidence','Evidence & IP'],['data','Data & Standards']]],
+ ['Evidence',[['verification','Verification & V&V'],['validation','Validation'],['metrology','Metrology · As-Built'],['safety','Safety Case'],['thread','Digital Thread'],['evidence','Evidence & IP'],['data','Data & Standards']]],
  ['Impact',[['ram','RAM · Availability'],['econ','Economics'],['env','Environmental']]],
- ['Proof & People',[['team','Team & Experience'],['pubs','Publications & Talks'],['benchmarks','Benchmarks vs Devices'],['milestones','Milestones'],['glossary','Glossary'],['methods','Methodology & Limits']]],
- ['Explore & Verify',[['risks','Open Risks'],['approaches','Approach Comparison'],['algos','Algorithm Library'],['library','Research Library'],['changelog','Changelog']]]
+ ['Explore',[['risks','Open Risks'],['approaches','Approach Comparison'],['algos','Algorithm Library'],['benchmarks','Benchmarks vs Devices'],['library','Research Library'],['glossary','Glossary'],['methods','Methodology & Limits'],['changelog','Changelog']]],
+ ['Company',[['about','About & Cite'],['team','Team & Experience'],['pubs','Publications & Talks'],['milestones','Milestones'],['faq','FAQ']]]
 ];
 var BPSHEETNAV=[['radial','Radial Build'],['ga','General Arrangement'],['cadproj','CAD Projection'],['sections','Sections A-A/B-B'],['magnet','Magnet Detail'],['detail','Component Details'],['gdt','GD&T & Datums'],['weld','Weld & NDE'],['icd','Interface Control'],['exploded','Exploded Assembly'],['instr','Instrumentation'],['assembly','Assembly & BOM']];
-var NAV=[{t:'tab',p:'reactor3d',l:'◈ 3D Reactor'},{t:'grp',gi:0},{t:'grp',gi:1},
- {t:'tab',p:'hardware',l:'Hardware'},{t:'mat'},{t:'bp'},{t:'ana'},
- {t:'grp',gi:2},{t:'grp',gi:3},{t:'grp',gi:4},{t:'grp',gi:5},{t:'grp',gi:6}];
+var NAV=[{t:'tab',p:'reactor3d',l:'◈ 3D Reactor'},
+ {t:'grp',gi:0},{t:'grp',gi:1},{t:'grp',gi:2},{t:'grp',gi:3},{t:'grp',gi:4},{t:'grp',gi:5},{t:'grp',gi:6},{t:'grp',gi:7}];
 var ANASHEETS=[['structural','Structural'],['thermal','Thermal'],['em','Electromagnetic'],['neutronics','Neutronics']];
 var MATSECS=[['mat-groups','Overview & systems'],['mat-fieldladder','Field ladder'],['mat-jc','REBCO J_c(B)'],['mat-stack','Winding-pack stack'],['mat-structural','Structural materials'],['mat-stress','Bore-resolved stress'],['mat-fatigue','Fatigue gate'],['mat-shield','Neutron lifetime'],['mat-quench','Quench protection'],['mat-qual','Qualification matrix']];
 function matGo(id){setPage('materials');setTimeout(function(){var el=document.getElementById(id);if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'start'});},70);}
@@ -1475,7 +1486,7 @@ var ALLPAGES=['hub','core','thread','repro','mrl','future','about','faq','physic
 function findGroup(p){for(var i=0;i<GROUPS.length;i++)if(GROUPS[i][1].some(function(s){return s[0]===p;}))return i;return -1;}
 var SUBDESC={core:'Status, vitals & the design-target scorecard',roadmap:'Program stages and G1–G4 gate reviews',
  physics:'Live 0-D readout + the in-browser solver',gov:'Live-computed governing equations',workbench:'Sensitivity curves + tornado ranking',dspace:'All 25,200 scanned configurations',uq:'Monte-Carlo uncertainty & feasibility',
- hardware:'Magnets, DEC, thermal, lifetime',blueprints:'Dimensioned drawings + CAD downloads',
+ hardware:'Magnets, DEC, thermal, lifetime',materials:'Materials, neutronics + REBCO magnet deep-dive',analysis:'Structural / thermal / EM / neutronics',blueprints:'Dimensioned drawings + CAD downloads',
  liveops:'Operational sequence player & actuators',intel:'AI/ML stack, what-if, anomaly monitor',ask:'Grounded Q&A with citations',
  validation:'All 68 reproducibility checks',evidence:'DOIs, patents & readiness',data:'Live connections + data standards',
  econ:'LCOE, cost stack & holistic comparison',env:'Lifecycle CO₂, waste, safety',
@@ -1493,7 +1504,12 @@ function renderNav(){
       MATSECS.map(function(s){return '<button onclick="matGo(\''+s[0]+'\')">'+s[1]+'</button>';}).join('')+'</div></div>';
     var g=GROUPS[n.gi];
     return '<div class="dropdown"><button class="dbtn" data-g="'+n.gi+'" onclick="goHub('+n.gi+')">'+g[0]+'<span class="car">▾</span></button><div class="dmenu">'+
-      g[1].map(function(s){return '<button data-p="'+s[0]+'" onclick="setPage(\''+s[0]+'\')">'+s[1]+'</button>';}).join('')+'</div></div>';
+      g[1].map(function(s){
+        if(s[2]){var subs=(s[2]==='mat')?MATSECS:(s[2]==='bp')?BPSHEETNAV:ANASHEETS;var call=(s[2]==='mat')?'matGo':(s[2]==='bp')?'bpGo':'anaGo';
+          return '<div class="subdrop"><button class="subbtn" data-p="'+s[0]+'" onclick="setPage(\''+s[0]+'\')">'+s[1]+'<span class="subcar">▸</span></button><div class="submenu">'+
+            subs.map(function(x){return '<button onclick="'+call+'(\''+x[0]+'\')">'+x[1]+'</button>';}).join('')+'</div></div>';}
+        return '<button data-p="'+s[0]+'" onclick="setPage(\''+s[0]+'\')">'+s[1]+'</button>';
+      }).join('')+'</div></div>';
   }).join('');
   document.getElementById('topnav').innerHTML=h;
 }
@@ -1519,6 +1535,8 @@ document.addEventListener('click',function(e){if(!e.target.closest('#topnav'))do
 function toggleNav(){var b=document.body.classList.toggle('navopen');var t=document.getElementById('navtoggle');if(t)t.setAttribute('aria-expanded',b?'true':'false');}
 function closeNav(){document.body.classList.remove('navopen');var t=document.getElementById('navtoggle');if(t)t.setAttribute('aria-expanded','false');}
 function shareView(btn){var u=location.href;if(typeof copyDL==='function')copyDL(btn,u);else{try{navigator.clipboard.writeText(u);}catch(e){}}}
+/* locked-section → Kronos login. Embedded: navigate the whole page to /login; standalone: fall back to About. */
+function gateLogin(){if(window.top!==window.self){try{window.top.location.href='/login';return;}catch(e){}}setPage('about');}
 function citeView(btn){var doi=(M==='burner')?'10.5281/zenodo.21746479':'10.5281/zenodo.21746157';
   var mlab=(M==='burner')?'Burner (D–³He tandem mirror)':'Breeder — Hyperion (D–T spherical tokamak)';
   var txt='Kronos Fusion Energy (2026). Kronos 3D Model — '+mlab+'. Interactive model, view: '+location.href+' — Data: Zenodo, DOI '+doi+' (CC BY 4.0).';
@@ -3779,7 +3797,39 @@ var FUTTABLE=[
   ['RAM','Allocated MTBF/MTTR','Early field reliability','Live availability + prognostics'],
   ['Quantum','Simulator PoC + resource estimate (no crossover yet)','Chemistry / sensing on a maturing QPU','Quantum-accelerated design where it genuinely wins']
 ];
+var FUTSTAGES=[
+  {n:'1',name:'Digital Model',state:'You are here',col:'var(--ok)',flow:'no live data',dir:'—',
+   def:'A physics-grounded 3-D representation of a machine that does not exist yet. It runs the real design calculations and every number reproduces from open data — but nothing is measured, because there is no hardware.',
+   have:'Live now: geometry, the in-browser solver, analysis, V&V, safety, and the whole assurance stack.'},
+  {n:'2',name:'Digital Shadow',state:'Needs a prototype',col:'var(--gold)',flow:'one-way',dir:'machine → model',
+   def:'Once a prototype is built and instrumented, real sensor data flows ONE-WAY into the model. It now mirrors the actual machine — you compare as-built vs as-designed and watch it run — but the model does not yet act on the machine.',
+   have:'Unlocks with: a built, instrumented prototype + a data pipeline. The Live-Ops, metrology and anomaly surfaces are the scaffold, running on simulated data today.'},
+  {n:'3',name:'Digital Twin',state:'Needs the operating plant',col:'var(--pink)',flow:'two-way (closed loop)',dir:'machine ⇄ model',
+   def:'A live, two-way sync. The model ingests plant data AND feeds predictions, optimisation and control back to operations in real time. It forecasts, catches anomalies before they matter, and informs decisions continuously.',
+   have:'Unlocks with: an operating machine + models validated against real data + control integration + safety qualification.'}
+];
+var FUTREQS=[
+  ['Hardware','A built prototype, then an operating plant. Everything downstream waits on this — see the Roadmap gates.'],
+  ['Instrumentation','Sensors and diagnostics feeding a reliable data pipeline (for the one-way shadow, a data-diode keeps it safe).'],
+  ['High-fidelity models','Full FEA / CFD / neutron-transport (MCNP) validated against real measurements — the declared HPC/Quantum ports come online here.'],
+  ['Integration & safety','Binding the model to plant control (PCS/SIS), plus the qualification and cyber-security a live loop demands.']
+];
 function renderFuture(){
+  document.getElementById('fut-stages').innerHTML='<div class="grid g3">'+FUTSTAGES.map(function(s){
+    return '<div class="card" style="border-top:3px solid '+s.col+'">'+
+      '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="pill" style="padding:2px 9px;background:var(--panel2);color:'+s.col+';border:1px solid var(--line2)">Stage '+s.n+'</span>'+
+      '<span class="mono" style="font-size:9px;letter-spacing:.06em;color:'+s.col+';border:1px solid '+s.col+';border-radius:3px;padding:1px 6px">'+s.state.toUpperCase()+'</span></div>'+
+      '<div style="font-weight:700;font-size:16px">'+s.name+'</div>'+
+      '<div class="mono" style="font-size:10.5px;color:var(--dim);margin:3px 0 8px">data: '+s.flow+' &nbsp;·&nbsp; '+s.dir+'</div>'+
+      '<div class="tsub" style="margin-bottom:8px">'+s.def+'</div>'+
+      '<div style="font-size:12px;line-height:1.5;color:var(--dim)">'+s.have+'</div></div>';
+  }).join('')+'</div>';
+  document.getElementById('fut-flow').innerHTML='<div class="card dark" style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-family:var(--fm);font-size:12px">'+
+    '<span style="color:var(--ok)">◈ Model</span><span style="color:var(--dim)">— no data —</span>'+
+    '<span style="color:var(--dim)">→</span><span style="color:var(--gold)">◈ Shadow</span><span style="color:var(--gold)">machine → model</span>'+
+    '<span style="color:var(--dim)">→</span><span style="color:var(--pink)">◈ Twin</span><span style="color:var(--pink)">machine ⇄ model</span>'+
+    '<span class="dim" style="width:100%;text-align:center;margin-top:6px">The only thing that changes across the three stages is whether — and which way — real data flows.</span></div>';
+  document.getElementById('fut-reqs').innerHTML=FUTREQS.map(function(r){return '<div class="tile"><div class="th">'+r[0]+'</div><div class="tsub" style="margin-top:5px">'+r[1]+'</div></div>';}).join('');
   document.getElementById('fut-ladder').innerHTML='<div style="display:flex;flex-direction:column;gap:6px">'+
     FUTLADDER.map(function(r,i){var here=(i<3);
       return '<div style="display:flex;align-items:center;gap:12px;background:var(--screen);border:1px solid '+(here?'var(--line2)':'var(--line)')+';border-left:3px solid '+r[3]+';border-radius:9px;padding:11px 14px'+(here?'':';opacity:.72')+'">'+
@@ -4201,6 +4251,7 @@ function renderMatLab(){
     [['26.49 T','2.35 MJ','145 K','405 V','YES'],['39.74 T','39.4 MJ','109 K','455 V','YES']].map(function(r){return '<tr><td class="name">'+r[0]+'</td><td>'+r[1]+'</td><td class="gold">'+r[2]+'</td><td>'+r[3]+'</td><td style="color:var(--ok)">'+r[4]+'</td></tr>';}).join('')+'</tbody></table></div>'+
     '<div class="tsub" style="margin-top:8px">The VOx metal-insulation approach is self-protecting (peak temperatures well below damage limits), benchmarked against Suetomi 2021 (model reproduces the 330 K reference). Good news among the harder magnet items.</div>');
   // 9. QUALIFICATION MATRIX
+  var sn=document.getElementById('mat-secnav');if(sn)sn.innerHTML=MATSECS.map(function(s){return '<button onclick="matGo(\''+s[0]+'\')">'+s[1]+'</button>';}).join('');
   document.getElementById('mat-qual').innerHTML=mlCard('Materials qualification — where each stands','HONEST STATUS',G,
     '<div style="overflow-x:auto"><table class="score"><thead><tr><th>Item</th><th>Status</th><th>Note</th></tr></thead><tbody>'+
     [['REBCO tape','Commercial','J_c well-characterised; fusion-fluence lifetime open','var(--ok)'],
@@ -4835,7 +4886,7 @@ var GATE_PAGES=['physics','workbench','dspace','uq','verification','validation',
 (function initGates(){GATE_PAGES.forEach(function(p){var s=document.getElementById('page-'+p);if(!s||s.querySelector('.gate-teaser'))return;
   s.setAttribute('data-gate','member');var t=s.querySelector('.title');var nm=t?t.textContent.trim():'this section';
   var d=document.createElement('div');d.className='gate-teaser';
-  d.innerHTML='<div class="gt">🔒 <b>Signed-in reviewers only.</b> The full <b>'+nm+'</b> — the data, tables, live calculations and engineering detail — is available to reviewers with an issued account. The overview above is public.<button onclick="setPage(\'about\')">Request access ↗</button></div>';
+  d.innerHTML='<div class="gt">🔒 <b>'+nm+' is Kronos-only.</b> The overview above is public — the full data, tables, live calculations and engineering detail on this page require a Kronos team sign-in.<button onclick="gateLogin()">Sign in to view ↗</button></div>';
   s.appendChild(d);});})();
 /* apply preview role + audience (owner default) */
 try{initPreview();}catch(e){}
