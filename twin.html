@@ -105,7 +105,7 @@ header.master{position:sticky;top:0;z-index:50;display:flex;align-items:center;g
 <script>
 // read tier + deep-link params from THIS page's URL (Lovable sets ?role= by sign-in)
 var _q=new URLSearchParams(location.search);
-var _role=_q.get('role'),_aud=_q.get('aud'),_m0=_q.get('m'),_tab=_q.get('tab');
+var _role=_q.get('role'),_aud=_q.get('aud'),_m0=_q.get('m'),_tab=_q.get('tab'),_viewer=_q.get('viewer');
 var M=(_m0==='burner'||_m0==='breeder')?_m0:'breeder',FID='Designed';
 // build the detail iframe URL with the tier + deep-link so there's no flash of ungated content
 (function(){var u='twin_rebuild_core_physics.html?embed=1';
@@ -113,6 +113,7 @@ var M=(_m0==='burner'||_m0==='breeder')?_m0:'breeder',FID='Designed';
   if(_aud)u+='&aud='+encodeURIComponent(_aud);
   if(_m0)u+='&m='+encodeURIComponent(_m0);
   if(_tab)u+='&tab='+encodeURIComponent(_tab);
+  if(_viewer)u+='&viewer='+encodeURIComponent(_viewer);
   var det=document.getElementById('fdet');if(det&&u!=='twin_rebuild_core_physics.html?embed=1')det.src=u;
   if(M!=='breeder')document.querySelectorAll('#mtoggle button').forEach(function(b){b.classList.toggle('on',b.dataset.m===M);});})();
 function frames(){return [document.getElementById('f3d').contentWindow,document.getElementById('fdet').contentWindow];}
@@ -124,7 +125,7 @@ function setF(f,el){FID=f;document.querySelectorAll('#fidelity button').forEach(
   document.getElementById('f3d').contentWindow.postMessage({kfeFidelity:f},'*');}
 // push current state once each frame loads
 ['f3d','fdet'].forEach(function(id){document.getElementById(id).addEventListener('load',function(){
-  var w=this.contentWindow;setTimeout(function(){w.postMessage({kfeMachine:M,kfeFidelity:FID},'*');if(_role)w.postMessage({kfeRole:_role},'*');if(_aud)w.postMessage({kfeAudience:_aud},'*');},300);});});
+  var w=this.contentWindow;setTimeout(function(){w.postMessage({kfeMachine:M,kfeFidelity:FID},'*');if(_role)w.postMessage({kfeRole:_role},'*');if(_aud)w.postMessage({kfeAudience:_aud},'*');if(_viewer)w.postMessage({kfeViewer:_viewer},'*');},300);});});
 // let the Lovable parent set the tier dynamically after auth resolves → relay to child frames
-window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeRole||d.kfeAudience||d.kfeMachine)post(d);});
+window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeRole||d.kfeAudience||d.kfeMachine||typeof d.kfeViewer==='string')post(d);});
 </script>
