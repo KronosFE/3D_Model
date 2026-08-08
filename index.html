@@ -1,0 +1,117 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><!-- SEO SWITCH: change to "index, follow" at public go-live to enable search indexing -->
+<title>Kronos 3D Model — Interactive Fusion Reactor Model | Kronos Fusion Energy</title>
+<meta name="description" content="Explore Kronos Fusion Energy's interactive 3-D model of two fusion machines — a D–T spherical-tokamak breeder (Hyperion) and a D–³He tandem-mirror burner (Aegis · MetroVolt). Open, reproducible physics: rotate the reactor, run the live solver, and verify every number against five open Zenodo datasets.">
+<meta name="keywords" content="fusion energy, nuclear fusion, spherical tokamak, tandem mirror, deuterium tritium, helium-3, D-3He, tritium breeder, direct energy conversion, REBCO magnet, digital twin, reproducible science, Kronos Fusion Energy, Hyperion, fusion reactor model">
+<meta name="author" content="Kronos Fusion Energy">
+<link rel="canonical" href="https://www.kronosfusionenergy.com/3D_Model">
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kronos Fusion Energy">
+<meta property="og:title" content="Kronos 3D Model — Interactive Fusion Reactor Model">
+<meta property="og:description" content="An interactive, physics-grounded 3-D model of two fusion machines. Rotate the reactor, run the real solver in your browser, and reproduce every number from five open datasets.">
+<meta property="og:url" content="https://www.kronosfusionenergy.com/3D_Model">
+<meta property="og:image" content="https://www.kronosfusionenergy.com/3D_Model/assets/og-3d-model.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kronos 3D Model — Interactive Fusion Reactor Model">
+<meta name="twitter:description" content="Interactive 3-D model of two fusion machines — open, reproducible physics you can verify yourself.">
+<meta name="twitter:image" content="https://www.kronosfusionenergy.com/3D_Model/assets/og-3d-model.png">
+<!-- Structured data for search + AI -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://www.kronosfusionenergy.com/#org","name":"Kronos Fusion Energy","url":"https://www.kronosfusionenergy.com","description":"Fusion energy company developing a D–T spherical-tokamak breeder and a D–³He tandem-mirror burner, with open, reproducible physics.","sameAs":["https://zenodo.org/communities/kronos_fusion_energy","https://github.com/KronosFE"]},
+{"@type":"WebSite","@id":"https://www.kronosfusionenergy.com/#website","url":"https://www.kronosfusionenergy.com","name":"Kronos Fusion Energy","publisher":{"@id":"https://www.kronosfusionenergy.com/#org"}},
+{"@type":"SoftwareApplication","name":"Kronos 3D Model","applicationCategory":"Scientific/Engineering","operatingSystem":"Web browser","url":"https://www.kronosfusionenergy.com/3D_Model","description":"Interactive 3-D model of two fusion machines with an in-browser physics solver, multiphysics analysis, and reproducibility tests.","publisher":{"@id":"https://www.kronosfusionenergy.com/#org"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@type":"Dataset","name":"Hyperion — D–T spherical-tokamak breeder: simulation code and data","identifier":"https://doi.org/10.5281/zenodo.21746157","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@id":"https://www.kronosfusionenergy.com/#org"},"isPartOf":"https://zenodo.org/communities/kronos_fusion_energy"},
+{"@type":"Dataset","name":"D–³He tandem-mirror burner with direct conversion: validation package","identifier":"https://doi.org/10.5281/zenodo.21746479","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@id":"https://www.kronosfusionenergy.com/#org"}},
+{"@type":"Dataset","name":"High-field REBCO conductor and winding system for compact fusion magnets","identifier":"https://doi.org/10.5281/zenodo.21842514","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@id":"https://www.kronosfusionenergy.com/#org"}},
+{"@type":"Dataset","name":"Direct Energy Conversion for a D–³He magnetic-mirror burner","identifier":"https://doi.org/10.5281/zenodo.21842864","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@id":"https://www.kronosfusionenergy.com/#org"}},
+{"@type":"Dataset","name":"Physics-Informed AI and Quantum technologies for certifiable real-time control of compact fusion generators","identifier":"https://doi.org/10.5281/zenodo.21842371","license":"https://creativecommons.org/licenses/by/4.0/","creator":{"@id":"https://www.kronosfusionenergy.com/#org"}}
+]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is the Kronos burner aneutronic?","acceptedAnswer":{"@type":"Answer","text":"No — it is low-neutron, not aneutronic. Residual D–D and D–T burn-up reactions give a neutron fraction of about 5.44%, roughly 10–15× cleaner than a mainstream D–T tokamak, but not zero."}},
+{"@type":"Question","name":"Is this a working fusion reactor?","acceptedAnswer":{"@type":"Answer","text":"No. Nothing is built yet. It is a validated design model — a twin-ready platform. Each surface is labelled as specification, live calculation, or a structure awaiting a real machine."}},
+{"@type":"Question","name":"What are the two Kronos machines?","acceptedAnswer":{"@type":"Answer","text":"A breeder (Hyperion), a D–T spherical tokamak that makes tritium, neutrons and helium-3; and a burner (Aegis · MetroVolt), a D–³He tandem mirror that makes net electricity."}},
+{"@type":"Question","name":"What is the fusion gain?","acceptedAnswer":{"@type":"Answer","text":"The breeder reaches fusion gain Q ≈ 3.424; the burner reaches an engineering Q_E ≈ 1.309 at its closing point, with net electric output of +104, +850 and +2832 MWe across three housing lengths."}},
+{"@type":"Question","name":"Can a fusion reactor melt down?","acceptedAnswer":{"@type":"Answer","text":"No. There is no chain reaction and no meltdown path — the plasma stops if disturbed. Decay heat after shutdown is orders of magnitude below fission and is passively removable, with no high-level waste and no long-lived actinides."}},
+{"@type":"Question","name":"How do I know the numbers are real?","acceptedAnswer":{"@type":"Answer","text":"Every headline number reproduces from five open Zenodo datasets (CC BY 4.0) with published code, data and a runbook. Five pre-registered tests let anyone regenerate the results independently."}},
+{"@type":"Question","name":"When will there be a real machine?","acceptedAnswer":{"@type":"Answer","text":"The roadmap runs from physics freeze to component demonstration, a prototype around 2030, and a first product around 2036 — targets tied to readiness gates."}}
+]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#232c39;--screen:#1b232e;--panel:#323e4d;--panel2:#2a3441;--gold:#d3ac5f;--pink:#e94f9c;
+  --ink:#e0e5eb;--dim:#9aa6b4;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --fh:'Space Grotesk',system-ui,sans-serif;--fm:'Space Mono',monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fh)}
+header.master{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:10px 20px;background:rgba(27,35,46,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.14em;font-size:13px}
+.brand small{display:block;font-weight:400;letter-spacing:.26em;color:var(--dim);font-size:9px;margin-top:1px}
+.emblem{width:26px;height:26px}
+.spacer{flex:1}
+.mtoggle{display:flex;border:1px solid var(--line2);border-radius:6px;overflow:hidden;font-family:var(--fm)}
+.mtoggle button{background:transparent;color:var(--dim);border:0;padding:7px 15px;font-size:11px;letter-spacing:.08em;cursor:pointer;font-family:var(--fm)}
+.mtoggle button.on[data-m=breeder]{background:var(--gold);color:#20160a}
+.mtoggle button.on[data-m=burner]{background:var(--pink);color:#1a0d15}
+.fidelity{display:flex;gap:2px;font-family:var(--fm);font-size:9.5px}
+.fidelity button{background:var(--panel2);color:var(--dim);border:1px solid var(--line);padding:5px 9px;cursor:pointer;font-family:var(--fm);font-size:9.5px}
+.fidelity button.on{background:var(--panel);color:var(--gold);border-color:var(--gold)}
+.fidelity button:first-child{border-radius:5px 0 0 5px}.fidelity button:last-child{border-radius:0 5px 5px 0}
+.sandbox{font-family:var(--fm);font-size:9px;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(211,172,95,.4);border-radius:4px;padding:3px 7px}
+.hero{height:74vh;min-height:460px;border-bottom:1px solid var(--line);position:relative}
+.hero iframe{width:100%;height:100%;border:0;display:block}
+.divlabel{display:flex;align-items:center;gap:14px;padding:22px 24px 6px;max-width:1220px;margin:0 auto}
+.divlabel .t{font-family:var(--fm);font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.divlabel .l{flex:1;height:1px;background:var(--line)}
+.details iframe{width:100%;height:calc(100vh - 8px);border:0;display:block}
+.scrollcue{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:10px;
+  color:var(--dim);background:rgba(27,35,46,.7);border:1px solid var(--line);border-radius:20px;padding:6px 14px;pointer-events:none}
+</style>
+
+<header class="master">
+  <div class="brand">
+    <svg class="emblem" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#d3ac5f" stroke-width="1.4"/><circle cx="20" cy="20" r="6.5" fill="#e94f9c"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1.2" transform="rotate(30 20 20)"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1.2" transform="rotate(-30 20 20)"/></svg>
+    <div>KRONOS FUSION ENERGY<small>3D MODEL</small></div>
+  </div>
+  <div class="mtoggle" id="mtoggle">
+    <button data-m="breeder" class="on" onclick="setM('breeder')">◈ BREEDER · HYPERION</button>
+    <button data-m="burner" onclick="setM('burner')">◆ BURNER · AEGIS / METROVOLT</button>
+  </div>
+  <div class="fidelity" id="fidelity">
+    <button class="on" data-f="Designed" onclick="setF('Designed',this)">As-Designed</button>
+    <button data-f="Simulated" onclick="setF('Simulated',this)">As-Simulated</button>
+    <button data-f="Operating" onclick="setF('Operating',this)">As-Operating</button>
+  </div>
+  <div class="spacer"></div>
+  <span class="sandbox">Sandbox · noindex</span>
+</header>
+
+<div class="hero">
+  <iframe id="f3d" src="twin_3d_reactor.html?embed=1" title="3D reactor"></iframe>
+  <div class="scrollcue">▾ scroll for full analysis &amp; measurements</div>
+</div>
+
+<div class="divlabel"><span class="t">Analysis &amp; Measurements</span><span class="l"></span></div>
+<div class="details">
+  <iframe id="fdet" src="twin_rebuild_core_physics.html?embed=1" title="Detail sections"></iframe>
+</div>
+
+<script>
+var M='breeder',FID='Designed';
+function frames(){return [document.getElementById('f3d').contentWindow,document.getElementById('fdet').contentWindow];}
+function post(msg){frames().forEach(function(w){try{w.postMessage(msg,'*');}catch(e){}});}
+function setM(m){M=m;
+  document.querySelectorAll('#mtoggle button').forEach(function(b){b.classList.toggle('on',b.dataset.m===m);});
+  post({kfeMachine:m});}
+function setF(f,el){FID=f;document.querySelectorAll('#fidelity button').forEach(function(b){b.classList.remove('on');});el.classList.add('on');
+  document.getElementById('f3d').contentWindow.postMessage({kfeFidelity:f},'*');}
+// push current state once each frame loads
+['f3d','fdet'].forEach(function(id){document.getElementById(id).addEventListener('load',function(){
+  setTimeout(function(){this.contentWindow.postMessage({kfeMachine:M,kfeFidelity:FID},'*');}.bind(this),300);});});
+</script>
