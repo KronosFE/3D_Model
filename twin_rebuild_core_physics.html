@@ -56,6 +56,8 @@ header.top{position:sticky;top:0;z-index:40;background:rgba(27,35,46,.94);
 body.aud-doe .aud.aud-doe,body.aud-investor .aud.aud-investor,body.aud-public .aud.aud-public{display:block}
 .aud .al{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
 .gterm{border-bottom:1px dotted var(--dim);cursor:help}
+/* per-viewer forensic watermark (signed-in team/owner only) — faint tiled email·date across gated content */
+#viewerwm{position:fixed;inset:0;z-index:9998;pointer-events:none;background-repeat:repeat;display:none}
 /* owner toolkit (Track C) */
 #toolkit{position:fixed;top:0;right:0;height:100%;width:400px;max-width:94vw;background:var(--panel);border-left:1px solid var(--line2);z-index:61;padding:22px;overflow-y:auto;transform:translateX(100%);transition:transform .25s;box-shadow:-10px 0 40px rgba(0,0,0,.5)}
 #toolkit.on{transform:translateX(0)}
@@ -1307,6 +1309,9 @@ details.faq .fa b{color:var(--ink)}
   &nbsp;·&nbsp; <a href="#" onclick="setPage('about');return false">Full legal notice, patents &amp; how to cite ↗</a>
 </footer>
 
+<!-- per-viewer forensic watermark (signed-in only) -->
+<div id="viewerwm"></div>
+
 <!-- preview: role + audience switcher -->
 <div id="previewbar">
   <div class="pbtitle"><span>◉ Preview</span><span class="pbx" onclick="document.getElementById('previewbar').classList.toggle('min')" title="Collapse">–</span></div>
@@ -1567,9 +1572,17 @@ function curAud(){if(document.body.classList.contains('aud-doe'))return 'doe';if
 function renderPreviewBar(){var r=curRole(),a=curAud();
   var pr=document.getElementById('pb-role');if(pr)pr.innerHTML=ROLELAB.map(function(x){return '<button class="'+(x[0]===r?'on':'')+'" onclick="setRole(\''+x[0]+'\')">'+x[1]+'</button>';}).join('');
   var pa=document.getElementById('pb-aud');if(pa)pa.innerHTML=AUDLAB.map(function(x){return '<button class="'+(x[0]===a?'on':'')+'" onclick="setAudience(\''+x[0]+'\')">'+x[1]+'</button>';}).join('');}
+var VIEWER='';
+function setViewer(v){VIEWER=(v||'').trim();var el=document.getElementById('viewerwm');if(!el)return;
+  if(!VIEWER){el.style.display='none';return;}
+  var stamp=VIEWER+' · '+new Date().toISOString().slice(0,10);
+  var esc=function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="360" height="210"><text x="10" y="130" transform="rotate(-28 10 130)" fill="rgba(154,166,180,0.07)" font-family="monospace" font-size="13">'+esc(stamp)+'</text></svg>';
+  el.style.backgroundImage="url(\"data:image/svg+xml;utf8,"+encodeURIComponent(svg)+"\")";el.style.display='block';}
 function initPreview(){
   var q;try{q=new URLSearchParams(location.search);}catch(e){q=null;}
   var role=q?q.get('role'):null,aud=q?q.get('aud'):null;
+  try{setViewer(q?(q.get('viewer')||''):'');}catch(e){}
   var prod=!!(role||aud); // a tier passed by the host = production embed → lock the preview switch
   setRole(role&&ROLES.hasOwnProperty(role)?role:lsGet('kfe_role','owner'));
   setAudience(aud||lsGet('kfe_aud','public'));
@@ -1626,7 +1639,7 @@ function specSheet(){var mach=(M==='burner')?'Burner (D–³He tandem mirror) ·
     '<div class="n">This is a model spec sheet — a design estimate under stated assumptions, not built hardware or a performance guarantee. Reproduces from Zenodo DOI '+doi+' (CC BY 4.0). © 2026 Kronos Fusion Energy, Inc. · U.S. Patent 12,009,112 + patents pending.</div>'+
     '</body></html>');w.document.close();setTimeout(function(){try{w.print();}catch(e){}},400);}
 /* --- 3D snapshot (#121) --- */
-function snap3D(){var f=document.getElementById('reactor-frame');if(f&&f.contentWindow){try{f.contentWindow.postMessage({kfeSnap:1},'*');}catch(e){}}
+function snap3D(){var f=document.getElementById('reactor-frame');var stamp=VIEWER?(VIEWER+' · '+new Date().toISOString().slice(0,10)):'';if(f&&f.contentWindow){try{f.contentWindow.postMessage({kfeSnap:1,kfeStamp:stamp},'*');}catch(e){}}
   alert('Preparing a 3-D snapshot… it will download once the reactor view responds. (Open the 3-D Reactor tab first for the current framing.)');}
 window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeSnapData){var a=document.createElement('a');a.href=d.kfeSnapData;a.download='kronos-3d-'+M+'.png';document.body.appendChild(a);a.click();a.remove();}});
 /* ---- glossary tooltips (#105) — safe text-node wrap of distinctive terms ---- */
@@ -4917,5 +4930,6 @@ try{if(location.search.indexOf('embed')<0 && !localStorage.getItem('kfe_seen')){
 if(location.search.indexOf('embed')>=0)document.body.classList.add('embed');
 window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeMachine&&d.kfeMachine!==M)setMachine(d.kfeMachine);
   if(d.kfeRole&&ROLES.hasOwnProperty(d.kfeRole)){setRole(d.kfeRole);var pb=document.getElementById('previewbar');if(pb)pb.style.display='none';}
-  if(d.kfeAudience)setAudience(d.kfeAudience);});
+  if(d.kfeAudience)setAudience(d.kfeAudience);
+  if(typeof d.kfeViewer==='string')setViewer(d.kfeViewer);});
 </script>
