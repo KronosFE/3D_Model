@@ -28,6 +28,13 @@ header{position:absolute;top:0;left:0;right:0;height:52px;z-index:20;display:fle
 .sandbox{font-family:var(--fm);font-size:9px;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(211,172,95,.4);border-radius:4px;padding:3px 7px}
 #stage{position:absolute;inset:52px 0 0 0}
 #canvasWrap{position:absolute;inset:0}
+#cadview{position:absolute;inset:0;z-index:20;display:none;flex-direction:column;background:#eef2f6;color:#1a2230}
+#cadview.on{display:flex}
+#cadview .cadhdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-family:var(--fm);font-size:11px;letter-spacing:.1em;color:#33506b;border-bottom:1px solid #cdd6df;background:#e2e9f0}
+#cadview #cadclose{cursor:pointer;color:#8a5a2a}
+#cadview img{flex:1;width:100%;min-height:0;object-fit:contain;padding:18px}
+#cadview .cadnote{padding:9px 16px;font-family:var(--fm);font-size:10px;line-height:1.5;color:#5a6b7d;border-top:1px solid #cdd6df;background:#e2e9f0}
+#schemnote{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:13;font-family:var(--fm);font-size:9px;letter-spacing:.04em;color:var(--dim);background:rgba(20,26,34,.6);padding:3px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
 canvas{display:block}
 #layers{position:absolute;top:66px;left:14px;z-index:15;width:262px;background:rgba(34,44,57,.86);
   backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:14px;max-height:calc(100% - 96px);overflow-y:auto}
@@ -138,12 +145,19 @@ body.embed #fidfloat{display:flex}
   </div>
   <div class="spacer"></div>
   <button class="fidelity" style="border:0"><button id="resetbtn" onclick="resetView()" title="Recenter and reframe the camera">⟳ Reset view</button></button>
-  <button class="fidelity" style="border:0"><button id="lblbtn" class="on" onclick="toggleLabels(this)">◉ Labels</button></button>
+  <button class="fidelity" style="border:0"><button id="cadbtn" onclick="toggleCAD()" title="Show the real CAD (OpenCASCADE B-rep) projection">◨ CAD view</button></button>
+  <button class="fidelity" style="border:0"><button id="lblbtn" class="on" onclick="toggleLabels(this)" title="Hover any component to see its label">◉ Hover labels</button></button>
   <span class="sandbox">PREVIEW · NOINDEX</span>
 </header>
 
 <div id="stage">
   <div id="canvasWrap"></div>
+  <div id="cadview">
+    <div class="cadhdr"><span id="cadttl">◨ CAD PROJECTION · OpenCASCADE B-rep</span><span id="cadclose" onclick="toggleCAD()">✕ back to 3-D</span></div>
+    <img id="cadimg" alt="CAD hidden-line projection of the reactor">
+    <div class="cadnote">Real B-rep hidden-line projection from the parametric CAD — dimensionally faithful to the frozen design point (representative geometry, not as-built hardware). Download the full STEP models from <b>Blueprints</b>.</div>
+  </div>
+  <div id="schemnote">Schematic — geometry representative of the frozen design (A 2.5 · κ 2.0 · δ −0.30); not an as-built CAD render. See “CAD view” for the B-rep projection.</div>
   <div id="fidfloat">
     <button class="on" data-f="Designed" onclick="setFidelity('Designed',this)">As-Designed</button>
     <button data-f="Simulated" onclick="setFidelity('Simulated',this)">As-Simulated</button>
@@ -237,6 +251,8 @@ function init(){
     composer.addPass(bloom);
   }catch(e){composer=null;}
   renderer.domElement.addEventListener('click',onClick);
+  renderer.domElement.addEventListener('mousemove',onMove);
+  renderer.domElement.addEventListener('mouseleave',function(){hoverName='';});
   window.addEventListener('resize',onResize);
   document.getElementById('loading').style.display='none';
   build();animate();
@@ -280,7 +296,16 @@ function clearScene(){Object.values(layerGroups).forEach(function(l){scene.remov
 function build(){clearScene();if(M==='breeder')buildBreeder();else buildBurner();
   renderLayerPanel();renderReadout();renderGeo();buildLabels();applyFidelity();applyClipState();applyExplodeState();
   document.getElementById('bctrl').classList.toggle('on',M==='burner');if(M==='burner')updBurner();
+  updateSchem();if(cadOn)document.getElementById('cadimg').src='cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg');
   frameCamera();}
+var cadOn=false;
+function updateSchem(){var el=document.getElementById('schemnote');if(!el)return;
+  el.textContent=(M==='breeder')
+    ? 'Schematic — geometry representative of the frozen design (A 2.5 · κ 2.0 · δ −0.30); not an as-built CAD render. See “CAD view” for the B-rep projection.'
+    : 'Schematic — tandem-mirror topology representative of the frozen design (not to length-scale: central cell is 55–1400 m). See “CAD view” for the B-rep projection.';}
+function toggleCAD(){cadOn=!cadOn;var v=document.getElementById('cadview'),b=document.getElementById('cadbtn');
+  if(cadOn){document.getElementById('cadimg').src='cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg');v.classList.add('on');if(b)b.classList.add('on');}
+  else{v.classList.remove('on');if(b)b.classList.remove('on');}}
 /* default framing — zoomed out a bit, per machine */
 function frameCamera(){
   if(M==='breeder')camera.position.set(11,7,13.5); else camera.position.set(11,8.5,23);
@@ -303,7 +328,8 @@ function updBurner(){if(M!=='burner')return;
 
 /* ---------------- BREEDER: spherical tokamak ---------------- */
 function buildBreeder(){
-  var R0=2.4,a=1.12,kap=1.62;
+  // proportions locked to the frozen design: A=2.5 (R0/a), κ=2.0, δ=−0.30. Display scale = 2× physical (R0 1.2 m → 2.4).
+  var R0=2.4,a=0.96,kap=2.0;
   var gP=addLayer('Plasma & Magnetic Fields',0xe94f9c);
   // layered plasma: negative-triangularity D-shape (δ=−0.30) + additive glow shells
   var pl=part(gP,dShapeGeo(R0,a*0.82,kap,TRI,96),glowMat(0xe94f9c,.9,.95),'D–T plasma',
@@ -531,11 +557,20 @@ function renderGeo(){var g=document.getElementById('geo');
   else g.innerHTML='<b>Tandem mirror</b><br>a_c <b>0.86 m</b> · β_c <b>0.55</b><br>B_m <b>17 T</b> throat<br>55 / 440 / 1400 m housings';}
 
 /* labels */
+var hoverName='';
 function buildLabels(){document.querySelectorAll('.lbl').forEach(function(e){e.remove();});
-  labelAnchors.forEach(function(a){var d=document.createElement('div');d.className='lbl '+(a.color||'');d.innerHTML=a.name+(a.sub?' <small>'+a.sub+'</small>':'');d.style.display=showLabels?'block':'none';document.getElementById('stage').appendChild(d);a.el=d;});}
-function toggleLabels(el){showLabels=!showLabels;el.classList.toggle('on',showLabels);labelAnchors.forEach(function(a){if(a.el)a.el.style.display=showLabels?'block':'none';});}
-function updateLabels(){if(!showLabels)return;var w=window.innerWidth,h=window.innerHeight-(document.body.classList.contains('embed')?0:52),off=(document.body.classList.contains('embed')?0:52);
-  labelAnchors.forEach(function(a){if(!a.el)return;var vis=layerGroups[a.mesh.userData.layer]&&layerGroups[a.mesh.userData.layer].on;if(!vis){a.el.style.display='none';return;}
+  labelAnchors.forEach(function(a){var d=document.createElement('div');d.className='lbl '+(a.color||'');d.innerHTML=a.name+(a.sub?' <small>'+a.sub+'</small>':'');d.style.display='none';document.getElementById('stage').appendChild(d);a.el=d;});}
+function toggleLabels(el){showLabels=!showLabels;el.classList.toggle('on',showLabels);if(!showLabels)labelAnchors.forEach(function(a){if(a.el)a.el.style.display='none';});}
+function onMove(e){if(!raycaster)return;var rect=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(mouse,camera);var meshes=[];Object.values(layerGroups).forEach(function(l){if(l.on)l.group.traverse(function(o){if(o.isMesh)meshes.push(o);});});
+  var hit=raycaster.intersectObjects(meshes,true)[0];
+  hoverName=(hit&&hit.object.userData&&hit.object.userData.name)?hit.object.userData.name:'';
+  renderer.domElement.style.cursor=hoverName?'pointer':'grab';}
+/* hover-only labels: show just the part under the cursor */
+function updateLabels(){var w=window.innerWidth,h=window.innerHeight-(document.body.classList.contains('embed')?0:52),off=(document.body.classList.contains('embed')?0:52);
+  labelAnchors.forEach(function(a){if(!a.el)return;
+    if(!showLabels||a.name!==hoverName){a.el.style.display='none';return;}
+    var vis=layerGroups[a.mesh.userData.layer]&&layerGroups[a.mesh.userData.layer].on;if(!vis){a.el.style.display='none';return;}
     var p=new THREE.Vector3();a.mesh.getWorldPosition(p);p.project(camera);if(p.z>1){a.el.style.display='none';return;}
     a.el.style.display='block';a.el.style.left=((p.x*0.5+0.5)*w)+'px';a.el.style.top=((-p.y*0.5+0.5)*h+off)+'px';});}
 
