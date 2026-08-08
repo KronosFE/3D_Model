@@ -1540,7 +1540,14 @@ function curAud(){if(document.body.classList.contains('aud-doe'))return 'doe';if
 function renderPreviewBar(){var r=curRole(),a=curAud();
   var pr=document.getElementById('pb-role');if(pr)pr.innerHTML=ROLELAB.map(function(x){return '<button class="'+(x[0]===r?'on':'')+'" onclick="setRole(\''+x[0]+'\')">'+x[1]+'</button>';}).join('');
   var pa=document.getElementById('pb-aud');if(pa)pa.innerHTML=AUDLAB.map(function(x){return '<button class="'+(x[0]===a?'on':'')+'" onclick="setAudience(\''+x[0]+'\')">'+x[1]+'</button>';}).join('');}
-function initPreview(){setRole(lsGet('kfe_role','owner'));setAudience(lsGet('kfe_aud','public'));}
+function initPreview(){
+  var q;try{q=new URLSearchParams(location.search);}catch(e){q=null;}
+  var role=q?q.get('role'):null,aud=q?q.get('aud'):null;
+  var prod=!!(role||aud); // a tier passed by the host = production embed → lock the preview switch
+  setRole(role&&ROLES.hasOwnProperty(role)?role:lsGet('kfe_role','owner'));
+  setAudience(aud||lsGet('kfe_aud','public'));
+  if(prod){var pb=document.getElementById('previewbar');if(pb)pb.style.display='none';}
+}
 /* ================= OWNER TOOLKIT (Track C, #119-123) ================= */
 function toolkitOpen(){document.getElementById('toolkit').classList.add('on');bmRender();notesLoad();}
 function toolkitClose(){document.getElementById('toolkit').classList.remove('on');}
@@ -4836,5 +4843,7 @@ try{initPreview();}catch(e){}
 try{if(location.search.indexOf('embed')<0 && !localStorage.getItem('kfe_seen')){setTimeout(function(){document.getElementById('welcome').classList.add('on');document.getElementById('welcome-scrim').classList.add('on');},600);}}catch(e){}
 /* embed mode + cross-frame machine sync */
 if(location.search.indexOf('embed')>=0)document.body.classList.add('embed');
-window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeMachine&&d.kfeMachine!==M)setMachine(d.kfeMachine);});
+window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeMachine&&d.kfeMachine!==M)setMachine(d.kfeMachine);
+  if(d.kfeRole&&ROLES.hasOwnProperty(d.kfeRole)){setRole(d.kfeRole);var pb=document.getElementById('previewbar');if(pb)pb.style.display='none';}
+  if(d.kfeAudience)setAudience(d.kfeAudience);});
 </script>
