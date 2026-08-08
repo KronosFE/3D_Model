@@ -35,6 +35,7 @@ header{position:absolute;top:0;left:0;right:0;height:52px;z-index:20;display:fle
 #cadview img{flex:1;width:100%;min-height:0;object-fit:contain;padding:18px}
 #cadview .cadnote{padding:9px 16px;font-family:var(--fm);font-size:10px;line-height:1.5;color:#5a6b7d;border-top:1px solid #cdd6df;background:#e2e9f0}
 #schemnote{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:13;font-family:var(--fm);font-size:9px;letter-spacing:.04em;color:var(--dim);background:rgba(20,26,34,.6);padding:3px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
+#wm{position:absolute;right:14px;bottom:26px;z-index:12;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:var(--gold);opacity:.20;pointer-events:none;user-select:none}
 canvas{display:block}
 #layers{position:absolute;top:66px;left:14px;z-index:15;width:262px;background:rgba(34,44,57,.86);
   backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:14px;max-height:calc(100% - 96px);overflow-y:auto}
@@ -158,6 +159,7 @@ body.embed #fidfloat{display:flex}
     <div class="cadnote">Real B-rep hidden-line projection from the parametric CAD — dimensionally faithful to the frozen design point (representative geometry, not as-built hardware). Download the full STEP models from <b>Blueprints</b>.</div>
   </div>
   <div id="schemnote">Schematic — geometry representative of the frozen design (A 2.5 · κ 2.0 · δ −0.30); not an as-built CAD render. See “CAD view” for the B-rep projection.</div>
+  <div id="wm">◈ kronosfusionenergy.com/3D_Model</div>
   <div id="fidfloat">
     <button class="on" data-f="Designed" onclick="setFidelity('Designed',this)">As-Designed</button>
     <button data-f="Simulated" onclick="setFidelity('Simulated',this)">As-Simulated</button>
@@ -611,7 +613,15 @@ function animate(){requestAnimationFrame(animate);t+=0.006;
 /* embed + cross-frame sync */
 if(location.search.indexOf('embed')>=0)document.body.classList.add('embed');
 window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeMachine&&d.kfeMachine!==M)setMachine(d.kfeMachine);if(d.kfeFidelity){FID=d.kfeFidelity;applyFidelity();}
-  if(d.kfeSnap){try{if(composer)composer.render();else renderer.render(scene,camera);var url=renderer.domElement.toDataURL('image/png');(e.source||window.parent).postMessage({kfeSnapData:url},'*');}catch(err){}}});
+  if(d.kfeSnap){try{if(composer)composer.render();else renderer.render(scene,camera);
+    var src=renderer.domElement,c=document.createElement('canvas');c.width=src.width;c.height=src.height;var g=c.getContext('2d');
+    g.drawImage(src,0,0);
+    // bake the attribution watermark into the exported image; if a viewer id is supplied, stamp it too (forensic)
+    var fs=Math.max(11,Math.round(c.height*0.020));g.font=fs+'px monospace';g.textAlign='right';
+    g.fillStyle='rgba(211,172,95,0.55)';g.fillText('◈ KRONOS FUSION ENERGY · kronosfusionenergy.com/3D_Model',c.width-18,c.height-18);
+    if(d.kfeStamp){g.fillStyle='rgba(224,229,235,0.45)';g.font=Math.round(fs*0.8)+'px monospace';g.fillText(String(d.kfeStamp),c.width-18,c.height-18-fs*1.4);}
+    var url=c.toDataURL('image/png');(e.source||window.parent).postMessage({kfeSnapData:url},'*');
+  }catch(err){}}});
 function webglOK(){try{var c=document.createElement('canvas');return !!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){return false;}}
 function fb(msg){var L=document.getElementById('loading');if(L)L.innerHTML='<div style="max-width:340px;text-align:center;color:var(--dim);font-family:var(--fm);font-size:12px;line-height:1.6;padding:24px">'+msg+'</div>';}
 function bootReactor(){
