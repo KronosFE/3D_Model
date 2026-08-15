@@ -1,42 +1,25 @@
-Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
-(CC BY-NC-ND 4.0)
+Copyright © 2026 Kronos Fusion Energy, Inc. All rights reserved.
 
-Copyright (c) 2026 Kronos Fusion Energy / Priyanca Iyengar Ford.
-All rights reserved except as expressly granted below.
+This repository and the web pages it serves — including all text, images,
+diagrams, figures, data, designs, source code, and other materials (the
+"Content") — are the proprietary property of Kronos Fusion Energy, Inc.
+("Kronos") and are protected by United States and international copyright,
+trademark, and other intellectual-property laws.
 
-This repository is the PUBLIC build of the Kronos 3-D reactor model — a public
-demonstration ("teaser"). The materials it contains (the interactive viewer,
-the shown geometry, analysis pages, images, and text) are licensed under the
-Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International
-License. You are free to VIEW and SHARE this material with attribution, but:
+No license, express or implied, is granted. You may not copy, reproduce,
+republish, distribute, transmit, publicly display, modify, create derivative
+works from, scrape, text- or data-mine, or otherwise use the Content, in whole
+or in part, for any purpose without the prior written permission of Kronos.
 
-  • NonCommercial — you may not use the material for commercial purposes;
-  • NoDerivatives — if you remix, transform, or build upon the material, you
-    may not distribute the modified material.
+Viewing the Content in a standard web browser for personal, non-commercial
+reference is permitted. All other rights are reserved.
 
-  Full license text: https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
-  License summary:    https://creativecommons.org/licenses/by-nc-nd/4.0/
+"Kronos Fusion Energy," "Hyperion," "Aegis," "MetroVolt," and the Kronos names,
+marks, and logos are trademarks of Kronos Fusion Energy, Inc. Nothing herein
+grants any right to use them.
 
---------------------------------------------------------------------------------
-NOTICE — WHAT IS AND IS NOT INCLUDED
---------------------------------------------------------------------------------
-This public build is generated from the private engineering package. It
-INTENTIONALLY EXCLUDES, and does NOT license, any of the following, which are
-proprietary and ALL RIGHTS RESERVED:
+THE CONTENT IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND. It is provided
+for general information only, describes design- and simulation-stage work, and
+is not an offer of securities, a warranty, or professional advice.
 
-  • detailed blueprint sheets (magnets, in-vessel, P&IDs, power, I&C, burner
-    series, exploded/assembly views);
-  • CAD projection sheets and STEP/CAD source files;
-  • any manufacturing, materials, or engineering specification not visibly
-    present in this public repository.
-
-These files are physically absent from this repository — not merely hidden.
-Nothing in this license grants any right to reconstruct, reverse-engineer, or
-manufacture the machine or its components. Patents and patent applications of
-Kronos Fusion Energy are reserved and are not licensed by this document.
-
-Trademarks (the Kronos Fusion Energy name, the Hyperion / Aegis / MetroVolt
-product names, and all logos and brand marks) are not licensed.
-
-If you would like to use this material commercially or create derivatives,
-contact .
+Permissions and inquiries: https://kronosfusionenergy.com/contact
