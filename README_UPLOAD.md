@@ -21,7 +21,7 @@ Upload the **entire contents of this folder** (preserving the subfolders) to the
 3. **Access tiers (Lovable auth)**: set body classes by sign-in state —
    - anonymous public → `member-locked public-locked`
    - signed-in reviewer → `public-locked`
-   - owner (p.ford@kronosfusionenergy.com) → *no classes*
+   - owner () → *no classes*
    The in-app `◉ Preview` widget is for previewing these tiers; live gating comes from these body classes.
 
 ## Notes
