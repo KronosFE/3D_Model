@@ -448,7 +448,7 @@ tr.frozenrow td{background:rgba(233,79,156,.08)}
 .tour-nav .prog{font-family:var(--fm);font-size:10px;color:var(--dim);flex:1}
 .tour-nav button{background:var(--panel2);border:1px solid var(--line2);color:var(--ink);font-family:var(--fm);font-size:11px;padding:6px 13px;border-radius:6px;cursor:pointer}
 .tour-nav button.pri{background:var(--gold);color:#20160a;border-color:var(--gold)}
-/* owner-only controls (downloads/exports) — Lovable auth gates these to p.ford@kronosfusionenergy.com */
+/* owner-only controls (downloads/exports) — Lovable auth gates these to  */
 .ownr{font-family:var(--fm);font-size:8px;letter-spacing:.08em;background:rgba(211,172,95,.16);color:var(--gold);border:1px solid rgba(211,172,95,.35);border-radius:10px;padding:1px 6px;margin-left:4px;text-transform:uppercase;vertical-align:middle}
 body.public-locked .owner-only{display:none!important}
 /* member gate: everyone sees the high-level (lead/title/sub); data & features are signed-in-reviewer only */
@@ -575,7 +575,7 @@ details.faq .fa b{color:var(--ink)}
     <div id="thr-spine"></div>
     <div id="thr-roll" class="grid g4" style="margin-top:14px"></div>
     <div class="subhdr">Integrated traceability — one requirement, across every workstream</div>
-    <div class="card wbctrl"><span class="wbhint">Each row is one full thread · cells show linked-artifact counts · click a row for the whole chain</span><button class="owner-only" data-access="owner" style="margin-left:auto;color:var(--gold);border:1px solid rgba(211,172,95,.4);background:var(--panel2);font-family:var(--fm);font-size:11px;padding:6px 12px;border-radius:6px;cursor:pointer" onclick="exportThread()" title="Owner export — p.ford@kronosfusionenergy.com">⤓ Export thread record <span class="ownr">owner</span></button></div>
+    <div class="card wbctrl"><span class="wbhint">Each row is one full thread · cells show linked-artifact counts · click a row for the whole chain</span><button class="owner-only" data-access="owner" style="margin-left:auto;color:var(--gold);border:1px solid rgba(211,172,95,.4);background:var(--panel2);font-family:var(--fm);font-size:11px;padding:6px 12px;border-radius:6px;cursor:pointer" onclick="exportThread()" title="Owner export — ">⤓ Export thread record <span class="ownr">owner</span></button></div>
     <div class="card" style="padding:0;margin-top:14px"><div style="overflow-x:auto"><table class="score" id="thr-matrix"></table></div></div>
     <div class="subhdr">Weakest link</div>
     <div id="thr-weak"></div>
@@ -1072,8 +1072,8 @@ details.faq .fa b{color:var(--ink)}
     <div class="bpframe"><div id="bp-draw"></div></div>
     <div class="subhdr">CAD models · real OpenCASCADE B-rep (generated from the frozen parameters)</div>
     <div class="grid g3">
-      <div class="tile"><div class="th">HYPERION breeder</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Center stack · plasma · blanket · vessel · PF coils · divertor, built from R₀/a/κ. Import into SolidWorks / Fusion / FreeCAD.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="cad/breeder.step" download title="Owner download — p.ford@kronosfusionenergy.com">⬇ breeder.step <span class="ownr">owner</span></a></div>
-      <div class="tile"><div class="th">Burner · Aegis / MetroVolt</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Central cell · 11 solenoid coils · plug coils · end tanks · vessel, built from a_c and the coil layout.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="cad/burner.step" download title="Owner download — p.ford@kronosfusionenergy.com">⬇ burner.step <span class="ownr">owner</span></a></div>
+      <div class="tile"><div class="th">HYPERION breeder</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Center stack · plasma · blanket · vessel · PF coils · divertor, built from R₀/a/κ. Import into SolidWorks / Fusion / FreeCAD.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="cad/breeder.step" download title="Owner download — ">⬇ breeder.step <span class="ownr">owner</span></a></div>
+      <div class="tile"><div class="th">Burner · Aegis / MetroVolt</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Central cell · 11 solenoid coils · plug coils · end tanks · vessel, built from a_c and the coil layout.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="cad/burner.step" download title="Owner download — ">⬇ burner.step <span class="ownr">owner</span></a></div>
       <div class="tile"><div class="th">Provenance</div><div class="tsub">Real B-rep solids via CadQuery on OpenCASCADE 7.7 — not a mesh, not a mock. <b class="gold">Representative to frozen parameters</b>, not as-built (that needs component CAD). CC BY 4.0.</div></div>
     </div>
     <div class="foot" id="bp-foot"></div>
@@ -1283,7 +1283,7 @@ details.faq .fa b{color:var(--ink)}
         <p class="note" style="margin-top:0">The twin compiles operational, validation and regulatory reports automatically — but a qualified human reviews and signs before anything is submitted.</p>
         <div id="report-preview"></div>
         <button class="lobtn" style="margin-top:12px" onclick="genReport()">⟳ Compile report draft</button>
-        <button class="lobtn owner-only" data-access="owner" style="margin-top:12px;margin-left:8px" onclick="exportReport()" title="Owner export — p.ford@kronosfusionenergy.com">⬇ Export PDF <span class="ownr">owner</span></button>
+        <button class="lobtn owner-only" data-access="owner" style="margin-top:12px;margin-left:8px" onclick="exportReport()" title="Owner export — ">⬇ Export PDF <span class="ownr">owner</span></button>
         <div id="report-sign"></div>
       </div>
     </div>
@@ -2829,7 +2829,7 @@ function renderBlueprints(){
   var d=BP[M];
   document.getElementById('bp-lead').textContent=(M==='breeder'?'Blueprints · Breeder':'Blueprints · Burner')+' · representative · sheet set (11)';
   document.getElementById('bp-sheets').innerHTML=BPSHEETS.map(function(s){return '<button class="'+(s[0]===bpSheet?'on':'')+'" onclick="setSheet(\''+s[0]+'\')">'+s[1]+'</button>';}).join('')+
-    '<button class="owner-only" data-access="owner" style="margin-left:auto;color:var(--gold);border-color:rgba(211,172,95,.4)" onclick="exportBlueprints()" title="Owner export — p.ford@kronosfusionenergy.com">⤓ Export set (PDF) <span class="ownr">owner</span></button>';
+    '<button class="owner-only" data-access="owner" style="margin-left:auto;color:var(--gold);border-color:rgba(211,172,95,.4)" onclick="exportBlueprints()" title="Owner export — ">⤓ Export set (PDF) <span class="ownr">owner</span></button>';
   var drawer=bpDrawer(bpSheet);
   document.getElementById('bp-draw').innerHTML=drawer?drawer(d):'';
   document.getElementById('bp-foot').innerHTML='Representative engineering drawing derived from frozen parameters · <span class="pill gate" style="padding:1px 6px">NOT FOR CONSTRUCTION</span> · reproduced from the open deposit <a class="doi" href="https://doi.org/'+d.doi+'">DOI '+d.doi+'</a>.';
@@ -2890,7 +2890,7 @@ function drawCADProj(d){
     '<img src="'+f+'" style="width:100%;display:block" alt="CAD hidden-line projection"/>'+
     '<div style="display:flex;justify-content:space-between;font-family:var(--fm);font-size:9px;color:#5a6572;border-top:1px solid #c7ced6;padding-top:7px;margin-top:8px">'+
     '<span>Real B-rep projection · CadQuery / OCP 7.7 · representative to frozen parameters · <b style="color:#b04a4a">NOT FOR CONSTRUCTION</b></span>'+
-    '<a href="'+step+'" download class="owner-only" data-access="owner" style="color:#9a6b0f;font-weight:700" title="Owner download — p.ford@kronosfusionenergy.com">⬇ STEP <span class="ownr">owner</span></a></div></div>'+
+    '<a href="'+step+'" download class="owner-only" data-access="owner" style="color:#9a6b0f;font-weight:700" title="Owner download — ">⬇ STEP <span class="ownr">owner</span></a></div></div>'+
     '<p class="note" style="margin:10px 0 0">Unlike the schematic sheets, this view is projected directly from the parametric OpenCASCADE solid — the geometry <b>is</b> the model. Import the STEP into SolidWorks / Fusion / FreeCAD to inspect it natively.</p>';
 }
 
