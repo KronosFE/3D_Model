@@ -1,0 +1,464 @@
+{
+ "schema": "phase2-registry-public/v1",
+ "generated": "2026-08-22T15:32:11+00:00",
+ "counts": {
+  "studies_total": 223,
+  "public": 31,
+  "hifi_adapters": 7,
+  "deposits": 5
+ },
+ "anchors": {
+  "design_anchors": 14,
+  "regression_total": 19,
+  "regression_passed": 19,
+  "design_points": {
+   "breeder": {
+    "Q": 3.4239,
+    "P_fus_MW": 88.6604,
+    "Ip_MA": 9.8599,
+    "T_kg_yr": 3.9995,
+    "f_n": 0.7971
+   },
+   "burner": {
+    "Q_E": 1.3181,
+    "P_fus_MW": 4298.5,
+    "P_n_MW": 233.95,
+    "f_n_pct": 5.4426,
+    "phi_i_keV": 248.75
+   }
+  },
+  "checks": [
+   {
+    "name": "breeder.Q",
+    "verdict": "PASS"
+   },
+   {
+    "name": "breeder.P_fus_MW",
+    "verdict": "PASS"
+   },
+   {
+    "name": "breeder.Ip_MA",
+    "verdict": "PASS"
+   },
+   {
+    "name": "breeder.T_kg_yr",
+    "verdict": "PASS"
+   },
+   {
+    "name": "breeder.f_n",
+    "verdict": "PASS"
+   },
+   {
+    "name": "burner.Q_E",
+    "verdict": "PASS"
+   },
+   {
+    "name": "burner.P_fus_MW",
+    "verdict": "PASS"
+   },
+   {
+    "name": "burner.P_n_MW",
+    "verdict": "PASS"
+   },
+   {
+    "name": "burner.f_n_pct",
+    "verdict": "PASS"
+   },
+   {
+    "name": "burner.phi_i_keV",
+    "verdict": "PASS"
+   },
+   {
+    "name": "surplus.1.34",
+    "verdict": "PASS"
+   },
+   {
+    "name": "surplus.1.80",
+    "verdict": "PASS"
+   },
+   {
+    "name": "neutronics.local_tbr",
+    "verdict": "PASS"
+   },
+   {
+    "name": "neutronics.net_tbr",
+    "verdict": "PASS"
+   },
+   {
+    "name": "hifi.gyrokinetic",
+    "verdict": "PASS"
+   },
+   {
+    "name": "hifi.neoclassical",
+    "verdict": "PASS"
+   },
+   {
+    "name": "hifi.struct_fea",
+    "verdict": "PASS"
+   },
+   {
+    "name": "hifi.kinetic_mirror",
+    "verdict": "PASS"
+   },
+   {
+    "name": "hifi.nucdata",
+    "verdict": "PASS"
+   }
+  ],
+  "note": null
+ },
+ "studies": [
+  {
+   "title": "H1 - Tritium self-sufficiency",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 3,
+   "scripts": 4
+  },
+  {
+   "title": "H10 - Steady state sustainment",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 4,
+   "scripts": 1
+  },
+  {
+   "title": "H11 - licensing",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 5,
+   "scripts": 1
+  },
+  {
+   "title": "H12 - environmental",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 4,
+   "scripts": 1
+  },
+  {
+   "title": "H2 - Bootstrap net-power go-no-go",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 4,
+   "scripts": 3
+  },
+  {
+   "title": "H3 - Materials facility",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 4,
+   "scripts": 3
+  },
+  {
+   "title": "H4 - Isotope Co-Production",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 1,
+   "scripts": 1
+  },
+  {
+   "title": "H5 - He-3 separation",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 2,
+   "scripts": 1
+  },
+  {
+   "title": "H7 - NT kappa stability delta-banking",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 4,
+   "scripts": 1
+  },
+  {
+   "title": "H8 - disruptions",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 3,
+   "scripts": 1
+  },
+  {
+   "title": "H9 - exhaust divertor engineering",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 3,
+   "scripts": 4
+  },
+  {
+   "title": "P56 - Platform mission",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 4,
+   "scripts": 2
+  },
+  {
+   "title": "R1 - Extrapolation ledger",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 1,
+   "scripts": 0
+  },
+  {
+   "title": "R3 - Upgradability",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 1,
+   "scripts": 1
+  },
+  {
+   "title": "R4 - Post-diction",
+   "track": "Hyperion (breeder)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 1,
+   "scripts": 1
+  },
+  {
+   "title": "A2 - Siting and survivability",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 4,
+   "scripts": 0
+  },
+  {
+   "title": "A3 - Personnel-proximity radiation",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 5,
+   "scripts": 0
+  },
+  {
+   "title": "A4 - He-3 fuel security",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 1,
+   "scripts": 0
+  },
+  {
+   "title": "A5 - Defense-grade RAMI",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 5,
+   "scripts": 0
+  },
+  {
+   "title": "A6 - Self-fuelled demonstrator",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 4,
+   "scripts": 0
+  },
+  {
+   "title": "A7 - DoD federal licensing",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 3,
+   "scripts": 0
+  },
+  {
+   "title": "A8 - Load-profile fit",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 5,
+   "scripts": 0
+  },
+  {
+   "title": "DF3 - Survivability hardening",
+   "track": "Aegis (burner)",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 4,
+   "scripts": 0
+  },
+  {
+   "title": "P56 - Burner closure audit",
+   "track": "Burner \u2014 shared",
+   "phase": "2 (product analysis)",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 8,
+   "scripts": 0
+  },
+  {
+   "title": "BURNER-SHARED",
+   "track": "Burner \u2014 shared",
+   "phase": "closure-opt",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 3,
+   "scripts": 0
+  },
+  {
+   "title": "gate1-thermal-barrier-push",
+   "track": "Burner \u2014 shared",
+   "phase": "closure-opt",
+   "deposit_doi": "10.5281/zenodo.21746479",
+   "csv": 4,
+   "scripts": 0
+  },
+  {
+   "title": "HC-A",
+   "track": "Hyperion (breeder)",
+   "phase": "closure-opt",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 2,
+   "scripts": 7
+  },
+  {
+   "title": "HC-B",
+   "track": "Hyperion (breeder)",
+   "phase": "closure-opt",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 1,
+   "scripts": 2
+  },
+  {
+   "title": "de-risk",
+   "track": "Hyperion (breeder)",
+   "phase": "closure-opt",
+   "deposit_doi": "10.5281/zenodo.21746157",
+   "csv": 6,
+   "scripts": 4
+  },
+  {
+   "title": "BC1",
+   "track": "Robustness",
+   "phase": "2 (product analysis)",
+   "deposit_doi": null,
+   "csv": 1,
+   "scripts": 0
+  },
+  {
+   "title": "BC2",
+   "track": "Robustness",
+   "phase": "2 (product analysis)",
+   "deposit_doi": null,
+   "csv": 1,
+   "scripts": 0
+  }
+ ],
+ "hifi": [
+  {
+   "adapter": "EdgeSOL",
+   "real_codes": [
+    "solps",
+    "b2.5",
+    "eirene"
+   ],
+   "retired_by": "SOLPS-ITER (edge/SOL plasma-neutral transport)",
+   "hpc_workstream": false
+  },
+  {
+   "adapter": "Gyrokinetic",
+   "real_codes": [
+    "gene",
+    "cgyro",
+    "gs2",
+    "tglf"
+   ],
+   "retired_by": "GENE / CGYRO / GS2 / TGLF (gyrokinetic turbulence)",
+   "hpc_workstream": true
+  },
+  {
+   "adapter": "KineticMirror",
+   "real_codes": [
+    "cql3d",
+    "cql3d-m",
+    "cql3dm"
+   ],
+   "retired_by": "CQL3D-m (bounce-averaged Fokker-Planck, mirror)",
+   "hpc_workstream": false
+  },
+  {
+   "adapter": "Neoclassical",
+   "real_codes": [
+    "neo",
+    "sfincs"
+   ],
+   "retired_by": "NEO / SFINCS (neoclassical drift-kinetic)",
+   "hpc_workstream": false
+  },
+  {
+   "adapter": "NucData",
+   "real_codes": [
+    "njoy",
+    "njoy2016",
+    "sandy"
+   ],
+   "retired_by": "NJOY / SANDY (evaluated nuclear-data processing)",
+   "hpc_workstream": false
+  },
+  {
+   "adapter": "StructFEA",
+   "real_codes": [
+    "ansys",
+    "comsol",
+    "elmerfem",
+    "elmer"
+   ],
+   "retired_by": "ANSYS / COMSOL / Elmer (structural FEA)",
+   "hpc_workstream": false
+  },
+  {
+   "adapter": "SyncTransport",
+   "real_codes": [
+    "spece",
+    "cyneq"
+   ],
+   "retired_by": "SPECE / CYNEQ-class (synchrotron radiation transport)",
+   "hpc_workstream": false
+  }
+ ],
+ "deposits": [
+  {
+   "title": "Breeder \u2014 Hyperion (v2: 21795620)",
+   "doi": "10.5281/zenodo.21746157",
+   "url": "https://doi.org/10.5281/zenodo.21746157",
+   "study_count": 41
+  },
+  {
+   "title": "Burner \u2014 Tandem Mirror",
+   "doi": "10.5281/zenodo.21746479",
+   "url": "https://doi.org/10.5281/zenodo.21746479",
+   "study_count": 121
+  },
+  {
+   "title": "REBCO Magnet & Tape",
+   "doi": "10.5281/zenodo.21842514",
+   "url": "https://doi.org/10.5281/zenodo.21842514",
+   "study_count": 3
+  },
+  {
+   "title": "Direct Energy Conversion",
+   "doi": "10.5281/zenodo.21842864",
+   "url": "https://doi.org/10.5281/zenodo.21842864",
+   "study_count": 3
+  },
+  {
+   "title": "AI-ML-Quantum Control",
+   "doi": "10.5281/zenodo.21842371",
+   "url": "https://doi.org/10.5281/zenodo.21842371",
+   "study_count": 1
+  }
+ ]
+}

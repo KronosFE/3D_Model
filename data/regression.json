@@ -1,0 +1,140 @@
+{
+ "all_pass": true,
+ "passed": 19,
+ "total": 19,
+ "rows": [
+  {
+   "check": "breeder.Q",
+   "expected": "3.423913",
+   "got": "3.423913",
+   "atol": "0.0001",
+   "verdict": "PASS"
+  },
+  {
+   "check": "breeder.P_fus_MW",
+   "expected": "88.660424",
+   "got": "88.660424",
+   "atol": "0.5000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "breeder.Ip_MA",
+   "expected": "9.859860",
+   "got": "9.859860",
+   "atol": "0.0100",
+   "verdict": "PASS"
+  },
+  {
+   "check": "breeder.T_kg_yr",
+   "expected": "3.999522",
+   "got": "3.999522",
+   "atol": "0.0100",
+   "verdict": "PASS"
+  },
+  {
+   "check": "breeder.f_n",
+   "expected": "0.797120",
+   "got": "0.797120",
+   "atol": "0.0001",
+   "verdict": "PASS"
+  },
+  {
+   "check": "burner.Q_E",
+   "expected": "1.318120",
+   "got": "1.318121",
+   "atol": "0.0001",
+   "verdict": "PASS"
+  },
+  {
+   "check": "burner.P_fus_MW",
+   "expected": "4298.500000",
+   "got": "4298.499304",
+   "atol": "0.5000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "burner.P_n_MW",
+   "expected": "233.950000",
+   "got": "233.950944",
+   "atol": "0.2000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "burner.f_n_pct",
+   "expected": "5.442600",
+   "got": "5.442619",
+   "atol": "0.0100",
+   "verdict": "PASS"
+  },
+  {
+   "check": "burner.phi_i_keV",
+   "expected": "248.750000",
+   "got": "248.748154",
+   "atol": "0.0500",
+   "verdict": "PASS"
+  },
+  {
+   "check": "surplus.1.34",
+   "expected": "1.690000",
+   "got": "1.691289",
+   "atol": "0.0200",
+   "verdict": "PASS"
+  },
+  {
+   "check": "surplus.1.80",
+   "expected": "3.980000",
+   "got": "3.979503",
+   "atol": "0.0200",
+   "verdict": "PASS"
+  },
+  {
+   "check": "neutronics.local_tbr",
+   "expected": "1.151700",
+   "got": "1.151700",
+   "atol": "0.0010",
+   "verdict": "PASS"
+  },
+  {
+   "check": "neutronics.net_tbr",
+   "expected": "0.742400",
+   "got": "0.742400",
+   "atol": "0.0010",
+   "verdict": "PASS"
+  },
+  {
+   "check": "hifi.gyrokinetic",
+   "expected": "0.689655",
+   "got": "0.689655",
+   "atol": "0.0000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "hifi.neoclassical",
+   "expected": "0.632456",
+   "got": "0.632456",
+   "atol": "0.0000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "hifi.struct_fea",
+   "expected": "0.785000",
+   "got": "0.785000",
+   "atol": "0.0000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "hifi.kinetic_mirror",
+   "expected": "0.428388",
+   "got": "0.428388",
+   "atol": "0.0000",
+   "verdict": "PASS"
+  },
+  {
+   "check": "hifi.nucdata",
+   "expected": "18.353000",
+   "got": "18.353000",
+   "atol": "0.0010",
+   "verdict": "PASS"
+  }
+ ]
+}
