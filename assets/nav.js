@@ -10,12 +10,17 @@ var SECTIONS=[
   {key:'home',    label:'Overview', href:'index.html'},
   {key:'machine', label:'Machine',  href:'machine/index.html', sub:[
       ['Overview','machine/index.html'],['3D Reactor','machine/reactor-3d.html'],
+      ['Hardware & Systems','machine/hardware.html'],['Materials & Environment','machine/materials.html'],
       ['Instructional film','instructional_video.html']]},
   {key:'physics', label:'Physics',  href:'physics/index.html', sub:[
-      ['Overview','physics/index.html'],['Breeder','physics/breeder.html'],
+      ['Governing Physics','physics/index.html'],['Breeder','physics/breeder.html'],
       ['Burner','physics/burner.html'],['Reactivity','physics/reactivity.html'],
+      ['Validation & UQ','physics/validation.html'],
       ['Environment','physics/environment.html'],['Deposits','physics/deposits.html']]},
-  {key:'program', label:'Program',  href:'program/index.html'},
+  {key:'program', label:'Program',  href:'program/index.html', sub:[
+      ['Overview','program/index.html'],['Roadmap','program/roadmap.html'],
+      ['Readiness & Risks','program/readiness.html'],['Computing','program/computing.html'],
+      ['About the Record','program/about.html']]},
   {key:'lab',     label:'Lab',      href:'lab/index.html'}
 ];
 
