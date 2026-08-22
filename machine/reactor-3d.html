@@ -1,0 +1,630 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kronos Model — 3D Reactor</title>
+<style>
+:root{--bg:#0a1322;--panel:#111f38;--panel2:#0e1a2e;--screen:#071021;--gold:#e8c476;--pink:#e94f9c;
+  --ink:#edf1f8;--dim:#93a4bd;--line:#1d3050;--line2:#2b4269;
+  --ok:#6ec9b2;--bad:#e2766b;--fh:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;--fm:'SF Mono',ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--fh);overflow:hidden}
+.mono{font-family:var(--fm)}
+header{position:absolute;top:0;left:0;right:0;height:52px;z-index:20;display:flex;align-items:center;gap:16px;
+  padding:0 18px;background:rgba(22,29,38,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.14em;font-size:12px}
+.brand small{display:block;font-weight:400;letter-spacing:.26em;color:var(--dim);font-size:9px;margin-top:1px}
+.emblem{width:24px;height:24px}
+.spacer{flex:1}
+.mtoggle{display:flex;border:1px solid var(--line2);border-radius:6px;overflow:hidden;font-family:var(--fm)}
+.mtoggle button{background:transparent;color:var(--dim);border:0;padding:6px 13px;font-size:10.5px;letter-spacing:.08em;cursor:pointer;font-family:var(--fm)}
+.mtoggle button.on[data-m=breeder]{background:var(--gold);color:#20160a}
+.mtoggle button.on[data-m=burner]{background:var(--pink);color:#1a0d15}
+.fidelity{display:flex;gap:2px;font-family:var(--fm);font-size:9.5px}
+.fidelity button{background:var(--panel2);color:var(--dim);border:1px solid var(--line);padding:5px 9px;cursor:pointer;font-family:var(--fm);font-size:9.5px}
+.fidelity button.on{background:var(--panel);color:var(--gold);border-color:var(--gold)}
+.fidelity button:first-child{border-radius:5px 0 0 5px}.fidelity button:last-child{border-radius:0 5px 5px 0}
+.sandbox{font-family:var(--fm);font-size:9px;letter-spacing:.12em;color:var(--gold);border:1px solid rgba(232,196,118,.4);border-radius:4px;padding:3px 7px}
+#stage{position:absolute;inset:52px 0 0 0}
+#canvasWrap{position:absolute;inset:0}
+#cadview{position:absolute;inset:0;z-index:20;display:none;flex-direction:column;background:#eef2f6;color:#1a2230}
+#cadview.on{display:flex}
+#cadview .cadhdr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;font-family:var(--fm);font-size:11px;letter-spacing:.1em;color:#33506b;border-bottom:1px solid #cdd6df;background:#e2e9f0}
+#cadview #cadclose{cursor:pointer;color:#8a5a2a}
+#cadview img{flex:1;width:100%;min-height:0;object-fit:contain;padding:18px}
+#cadview .cadnote{padding:9px 16px;font-family:var(--fm);font-size:10px;line-height:1.5;color:#5a6b7d;border-top:1px solid #cdd6df;background:#e2e9f0}
+#schemnote{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:13;font-family:var(--fm);font-size:9px;letter-spacing:.04em;color:var(--dim);background:rgba(20,26,34,.6);padding:3px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
+#wm{position:absolute;right:14px;bottom:26px;z-index:12;font-family:var(--fm);font-size:10px;letter-spacing:.1em;color:var(--gold);opacity:.20;pointer-events:none;user-select:none}
+canvas{display:block}
+#layers{position:absolute;top:66px;left:14px;z-index:15;width:262px;background:rgba(34,44,57,.86);
+  backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:14px;max-height:calc(100% - 96px);overflow-y:auto}
+#layers h4{font-size:12px;letter-spacing:.02em;margin:0 0 3px;display:flex;justify-content:space-between;align-items:baseline}
+#layers h4 .ct{font-family:var(--fm);font-size:9px;color:var(--dim)}
+.laction{display:flex;gap:6px;margin:10px 0 12px}
+.laction button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-family:var(--fm);
+  font-size:9.5px;letter-spacing:.1em;padding:6px;border-radius:5px;cursor:pointer;text-transform:uppercase}
+.laction button:hover{color:var(--ink);border-color:var(--line2)}
+.lrow{display:flex;align-items:center;gap:9px;padding:7px 6px;border-radius:6px;cursor:pointer;font-size:12px}
+.lrow:hover{background:rgba(255,255,255,.04)}
+.lrow .sw{width:11px;height:11px;border-radius:3px;flex:0 0 auto;box-shadow:0 0 6px currentColor}
+.lrow .nm{flex:1}
+.lrow .eye{font-family:var(--fm);font-size:11px;color:var(--dim)}
+.lrow.off{opacity:.4}
+.lrow .iso{font-family:var(--fm);font-size:8.5px;color:var(--dim);border:1px solid var(--line);border-radius:3px;padding:1px 5px;opacity:0}
+.lrow:hover .iso{opacity:1}.lrow .iso:hover{color:var(--gold);border-color:var(--gold)}
+.viewctl{margin:2px 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.viewctl .vc{display:flex;align-items:center;gap:9px;margin:7px 0;font-family:var(--fm);font-size:9.5px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
+.viewctl .vc span{width:58px;flex:0 0 auto}
+.viewctl input[type=range]{flex:1;-webkit-appearance:none;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--pink));outline:0}
+.viewctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--ink);border:2px solid var(--panel2);cursor:pointer}
+.geo{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--fm);font-size:10.5px;color:var(--dim);line-height:1.9}
+.geo b{color:var(--ink)}
+#readout{position:absolute;top:66px;right:14px;z-index:15;width:200px;background:rgba(34,44,57,.86);
+  backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:14px;font-family:var(--fm)}
+#readout .rlab{font-size:9px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+#readout .rbig{font-size:20px;margin:2px 0 10px}
+#readout .rbig small{font-size:11px;color:var(--dim)}
+#hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:15;font-family:var(--fm);
+  font-size:10.5px;color:var(--dim);background:rgba(22,29,38,.7);padding:7px 14px;border-radius:20px;border:1px solid var(--line)}
+#ovlegend{display:none;position:absolute;left:14px;bottom:14px;z-index:16;width:236px;background:rgba(34,44,57,.92);
+  backdrop-filter:blur(12px);border:1px solid var(--line2);border-radius:12px;padding:12px 13px;font-family:var(--fm)}
+#ovlegend .olt{font-size:10px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
+#ovlegend .olbtns{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+#ovlegend .olbtns button{flex:1 1 46%;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font-family:var(--fm);
+  font-size:8.5px;letter-spacing:.03em;padding:5px 3px;border-radius:6px;cursor:pointer;text-transform:uppercase}
+#ovlegend .olbtns button.on{background:var(--gold);color:#20160a;border-color:var(--gold)}
+#ovlegend .olbar{height:11px;border-radius:5px;background:linear-gradient(90deg,#123a6b 0%,#12a37e 30%,#e0a52c 55%,#f23c92 78%,#f5341f 100%)}
+#ovlegend .olsc{display:flex;justify-content:space-between;font-size:9px;color:var(--ink);margin:4px 0 7px}
+#ovlegend .olcap{font-size:9.5px;line-height:1.5;color:var(--dim)}
+#bctrl{display:none;position:absolute;bottom:56px;left:50%;transform:translateX(-50%);z-index:16;width:520px;max-width:92vw;
+  background:rgba(34,44,57,.94);backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:12px;padding:14px 18px}
+#bctrl.on{display:block}
+.bcrow{display:flex;align-items:center;gap:12px;margin:8px 0;font-family:var(--fm);font-size:10.5px;letter-spacing:.08em;color:var(--dim);text-transform:uppercase}
+.bcrow .bcl{width:132px;flex:0 0 auto}
+.bcrow input[type=range]{flex:1;-webkit-appearance:none;height:4px;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--pink));outline:0}
+.bcrow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--ink);border:2px solid var(--panel2);cursor:pointer}
+.bcrow .bcv{width:64px;text-align:right;color:var(--gold);flex:0 0 auto}
+.bcout{font-family:var(--fm);font-size:14px;color:var(--ink);margin:10px 0 4px;text-align:center}
+.bcout b{color:var(--pink)}
+.bchint{font-family:var(--fm);font-size:9.5px;color:var(--dim);line-height:1.5;text-align:center}
+.lbl{position:absolute;z-index:14;font-family:var(--fm);font-size:9.5px;color:var(--ink);
+  background:rgba(22,29,38,.82);border:1px solid var(--line2);border-radius:4px;padding:2px 7px;
+  pointer-events:none;transform:translate(-50%,-140%);white-space:nowrap}
+.lbl small{color:var(--dim)}
+.lbl.pink{border-color:rgba(233,79,156,.5)}.lbl.gold{border-color:rgba(211,172,95,.5)}
+#scrim{position:absolute;inset:0;background:rgba(15,20,26,.5);opacity:0;pointer-events:none;transition:.2s;z-index:30}
+#scrim.on{opacity:1;pointer-events:auto}
+#inspect{position:absolute;top:0;right:0;height:100%;width:360px;max-width:90vw;background:var(--panel);
+  border-left:1px solid var(--line2);box-shadow:-20px 0 60px rgba(0,0,0,.4);transform:translateX(105%);
+  transition:.24s cubic-bezier(.4,0,.2,1);z-index:31;padding:24px 22px;overflow-y:auto}
+#inspect.on{transform:translateX(0)}
+#inspect .xclose{position:absolute;top:14px;right:14px;background:transparent;border:1px solid var(--line2);color:var(--dim);width:28px;height:28px;border-radius:6px;cursor:pointer}
+.ilead{font-family:var(--fm);font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase}
+#inspect h3{font-size:17px;margin:3px 0 14px}
+.irow{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-family:var(--fm);font-size:12.5px}
+.irow .il{color:var(--dim)}.irow .iv{color:var(--ink);text-align:right}
+.ifoot{margin-top:16px;font-family:var(--fm);font-size:10px;color:var(--dim);line-height:1.7}
+.prov{display:inline-flex;gap:5px;font-family:var(--fm);font-size:8.5px;letter-spacing:.1em;color:var(--gold);border:1px solid rgba(211,172,95,.35);border-radius:3px;padding:2px 6px;margin-top:8px}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.doi{color:var(--gold)}
+#loading{position:absolute;inset:52px 0 0 0;display:flex;align-items:center;justify-content:center;z-index:5;font-family:var(--fm);color:var(--dim);font-size:12px}
+#fidfloat{display:none;position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:16;gap:2px;font-family:var(--fm)}
+#fidfloat button{background:rgba(34,44,57,.92);backdrop-filter:blur(10px);color:var(--dim);border:1px solid var(--line);padding:6px 12px;cursor:pointer;font-family:var(--fm);font-size:10px;letter-spacing:.03em}
+#fidfloat button.on{background:var(--panel);color:var(--gold);border-color:var(--gold)}
+#fidfloat button:first-child{border-radius:6px 0 0 6px}#fidfloat button:last-child{border-radius:0 6px 6px 0}
+body.embed header{display:none}
+body.embed #stage{top:0}
+body.embed #loading{top:0}
+body.embed #fidfloat{display:flex}
+/* responsive / mobile */
+@media(max-width:760px){
+  html,body{overflow-x:hidden}
+  #layers{width:44vw;max-width:170px;font-size:9px;max-height:56%;overflow:auto;padding:8px}
+  #readout{width:110px;top:54px;right:8px;padding:8px}
+  #readout .rbig{font-size:15px}
+  #bctrl{width:94vw;bottom:8px;padding:10px 12px}
+  #ovlegend{width:160px;left:8px;bottom:8px;padding:9px}
+  #fidfloat button{padding:5px 9px;font-size:9px}
+  #hint{display:none}
+  header .fidelity button{padding:4px 7px;font-size:9px}
+}
+</style>
+
+<header>
+  <div class="brand">
+    <svg class="emblem" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#d3ac5f" stroke-width="1.4"/><circle cx="20" cy="20" r="6.5" fill="#e94f9c"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1.2" transform="rotate(30 20 20)"/><ellipse cx="20" cy="20" rx="16" ry="6.5" stroke="#d3ac5f" stroke-width="1.2" transform="rotate(-30 20 20)"/></svg>
+    <div>KRONOS<small>3D MODEL</small></div>
+  </div>
+  <div class="mtoggle" id="mtoggle">
+    <button data-m="breeder" class="on" onclick="setMachine('breeder')">◈ BREEDER</button>
+    <button data-m="burner" onclick="setMachine('burner')">◆ BURNER</button>
+  </div>
+  <div class="fidelity" id="fidelity">
+    <button class="on" data-f="Designed" onclick="setFidelity('Designed',this)">As-Designed</button>
+    <button data-f="Simulated" onclick="setFidelity('Simulated',this)">As-Simulated</button>
+    <button data-f="Operating" onclick="setFidelity('Operating',this)">As-Operating</button>
+  </div>
+  <a href="../index.html" style="font-family:var(--fm);font-size:9.5px;letter-spacing:.12em;color:var(--dim);text-decoration:none">◂ KRONOS MODEL</a><div class="spacer"></div>
+  <button class="fidelity" style="border:0"><button id="resetbtn" onclick="resetView()" title="Recenter and reframe the camera">⟳ Reset view</button></button>
+  <button class="fidelity" style="border:0"><button id="cadbtn" onclick="toggleCAD()" title="Show the real CAD (OpenCASCADE B-rep) projection">◨ CAD view</button></button>
+  <button class="fidelity" style="border:0"><button id="lblbtn" class="on" onclick="toggleLabels(this)" title="Hover any component to see its label">◉ Hover labels</button></button>
+  <span class="sandbox">DESIGN RECORD · LIVE</span>
+</header>
+
+<div id="stage">
+  <div id="canvasWrap"></div>
+  <div id="cadview">
+    <div class="cadhdr"><span id="cadttl">◨ CAD PROJECTION · OpenCASCADE B-rep</span><span id="cadclose" onclick="toggleCAD()">✕ back to 3-D</span></div>
+    <img id="cadimg" alt="CAD hidden-line projection of the reactor">
+    <div class="cadnote">Real B-rep hidden-line projection from the parametric CAD — dimensionally faithful to the frozen design point (representative geometry, not as-built hardware). Download the full STEP models from <b>Blueprints</b>.</div>
+  </div>
+  <div id="schemnote">Schematic — geometry representative of the frozen design (A 2.5 · κ 2.0 · δ −0.30); not an as-built CAD render. See “CAD view” for the B-rep projection.</div>
+  <div id="wm">◈ kronosfusionenergy.com/3D_Model</div>
+  <div id="fidfloat">
+    <button class="on" data-f="Designed" onclick="setFidelity('Designed',this)">As-Designed</button>
+    <button data-f="Simulated" onclick="setFidelity('Simulated',this)">As-Simulated</button>
+    <button data-f="Operating" onclick="setFidelity('Operating',this)">As-Operating</button>
+  </div>
+  <div id="loading">loading 3D reactor…</div>
+  <div id="layers">
+    <h4>Layer Controls <span class="ct" id="lcount"></span></h4>
+    <div class="laction"><button onclick="allLayers(true)">All</button><button onclick="allLayers(false)">None</button><button onclick="resetIso()">Reset</button></div>
+    <div class="viewctl">
+      <div class="vc"><span>Cutaway</span><input type="range" id="cutSlider" min="0" max="100" value="0"></div>
+      <div class="vc"><span>Explode</span><input type="range" id="expSlider" min="0" max="100" value="0"></div>
+    </div>
+    <div id="lrows"></div>
+    <div class="geo" id="geo"></div>
+  </div>
+  <div id="readout"></div>
+  <div id="bctrl">
+    <div class="bcrow"><span class="bcl">Central-cell length</span><input type="range" id="b-len" min="55" max="1400" value="440"><span class="bcv" id="b-lenv">440 m</span></div>
+    <div class="bcrow"><span class="bcl">³He fraction x</span><input type="range" id="b-x" min="20" max="45" value="30"><span class="bcv" id="b-xv">0.30</span></div>
+    <div class="bcout" id="b-out"></div>
+    <div class="bchint">More length → more power (Q_E &amp; f_n hold; H69). More ³He → cleaner but past x≈0.43 it stops closing.</div>
+  </div>
+  <div id="ovlegend">
+    <div class="olt">◑ As-Simulated field overlay</div>
+    <div class="olbtns">
+      <button data-fl="flux" class="on" onclick="setField('flux',this)">Neutron flux</button>
+      <button data-fl="thermal" onclick="setField('thermal',this)">Thermal load</button>
+      <button data-fl="stress" onclick="setField('stress',this)">Structural stress</button>
+      <button data-fl="asbuilt" onclick="setField('asbuilt',this)">Δ As-built</button>
+    </div>
+    <div class="olbar"></div>
+    <div class="olsc"><span id="ol-lo">low</span><span id="ol-hi">peak</span></div>
+    <div class="olcap" id="ol-cap"></div>
+  </div>
+  <div id="hint">drag to rotate · scroll to zoom · click a component for measurements</div>
+</div>
+
+<div id="scrim" onclick="closeInspect()"></div>
+<aside id="inspect">
+  <button class="xclose" onclick="closeInspect()">✕</button>
+  <div class="ilead" id="i-lead"></div><h3 id="i-title"></h3><div id="i-body"></div><div class="ifoot" id="i-foot"></div>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script>
+var DOI={breeder:'10.5281/zenodo.21746157',burner:'10.5281/zenodo.21746479'};
+var scene,camera,renderer,controls,raycaster,mouse,composer,bloom,labelAnchors=[],showLabels=true;
+var M='breeder',FID='Designed',layerGroups={},particles=null,plasmaMeshes=[],idleTimer=null;
+var clipPlane=new THREE.Plane(new THREE.Vector3(0,0,-1),9),cutOn=false;
+
+function init(){
+  scene=new THREE.Scene();
+  scene.background=bgTex();
+  scene.fog=new THREE.Fog(0x161d26,16,42);
+  var w=window.innerWidth,h=window.innerHeight-(document.body.classList.contains('embed')?0:52);
+  camera=new THREE.PerspectiveCamera(44,w/h,0.1,120);camera.position.set(7,4.6,8.4);
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,preserveDrawingBuffer:true});
+  renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=0.85;
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.localClippingEnabled=true;
+  document.getElementById('canvasWrap').appendChild(renderer.domElement);
+  // studio environment for PBR reflections
+  try{var pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new THREE.RoomEnvironment(),0.04).texture;}catch(e){}
+  controls=new THREE.OrbitControls(camera,renderer.domElement);
+  controls.enableDamping=true;controls.dampingFactor=.08;controls.minDistance=3.5;controls.maxDistance=44;controls.autoRotate=false;controls.autoRotateSpeed=0.6;
+  // idle auto-rotate: spin gently after 8s of no interaction; stop the moment the user grabs it
+  controls.addEventListener('start',function(){controls.autoRotate=false;clearTimeout(idleTimer);});
+  controls.addEventListener('end',function(){clearTimeout(idleTimer);idleTimer=setTimeout(function(){controls.autoRotate=true;},8000);});
+  idleTimer=setTimeout(function(){controls.autoRotate=true;},8000);
+  scene.add(new THREE.AmbientLight(0x6b7a92,.38));
+  var key=new THREE.DirectionalLight(0xffffff,1.05);key.position.set(7,11,6);scene.add(key);
+  var fill=new THREE.DirectionalLight(0xd3ac5f,.5);fill.position.set(-9,-2,-7);scene.add(fill);
+  var rim=new THREE.DirectionalLight(0xe94f9c,.45);rim.position.set(-4,3,9);scene.add(rim);
+  var grid=new THREE.GridHelper(30,30,0x2b4269,0x1d3050);grid.position.y=-3.4;grid.material.opacity=.5;grid.material.transparent=true;scene.add(grid);
+  raycaster=new THREE.Raycaster();mouse=new THREE.Vector2();
+  // post-processing bloom (with graceful fallback)
+  try{
+    composer=new THREE.EffectComposer(renderer);
+    composer.addPass(new THREE.RenderPass(scene,camera));
+    bloom=new THREE.UnrealBloomPass(new THREE.Vector2(w,h),0.35,0.32,0.62);
+    composer.addPass(bloom);
+  }catch(e){composer=null;}
+  renderer.domElement.addEventListener('click',onClick);
+  renderer.domElement.addEventListener('mousemove',onMove);
+  renderer.domElement.addEventListener('mouseleave',function(){hoverName='';});
+  window.addEventListener('resize',onResize);
+  document.getElementById('loading').style.display='none';
+  build();animate();
+}
+function bgTex(){var c=document.createElement('canvas');c.width=4;c.height=512;var x=c.getContext('2d');
+  var g=x.createLinearGradient(0,0,0,512);g.addColorStop(0,'#2b3849');g.addColorStop(.55,'#1c242f');g.addColorStop(1,'#11161d');
+  x.fillStyle=g;x.fillRect(0,0,4,512);var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;return t;}
+
+/* material helpers */
+function metal(color,rough,metalness){var m=new THREE.MeshStandardMaterial({color:color,roughness:rough===undefined?.52:rough,metalness:metalness===undefined?.85:metalness});m.envMapIntensity=0.3;return m;}
+function glowMat(color,inten,op){return new THREE.MeshStandardMaterial({color:0x080608,emissive:color,emissiveIntensity:inten,roughness:.5,metalness:0,transparent:op<1,opacity:op===undefined?1:op});}
+function shell(color,op){return new THREE.MeshStandardMaterial({color:color,roughness:.6,metalness:.2,transparent:true,opacity:op,side:THREE.DoubleSide});}
+
+function addLayer(name,color){var g=new THREE.Group();g.userData.layer=name;layerGroups[name]={group:g,color:color,on:true};scene.add(g);return g;}
+function part(group,geo,material,name,meas,labelColor,doLabel){
+  var m=new THREE.Mesh(geo,material);m.userData={name:name,meas:meas,layer:group.userData.layer};group.add(m);
+  if(name&&meas&&doLabel!==false)labelAnchors.push({mesh:m,name:name,color:labelColor||'',sub:(meas[0]?meas[0][1]:'')});
+  return m;
+}
+/* D-shaped TF coil loop as a tube along a rounded-rect curve */
+function dCoilGeo(xi,xo,H,r,tube){
+  var s=new THREE.Shape();
+  s.moveTo(xi+r,-H);s.lineTo(xo-r,-H);s.absarc(xo-r,-H+r,r,-Math.PI/2,0,false);
+  s.lineTo(xo,H-r);s.absarc(xo-r,H-r,r,0,Math.PI/2,false);
+  s.lineTo(xi+r,H);s.absarc(xi+r,H-r,r,Math.PI/2,Math.PI,false);
+  s.lineTo(xi,-H+r);s.absarc(xi+r,-H+r,r,Math.PI,Math.PI*1.5,false);
+  var pts=s.getPoints(70).map(function(p){return new THREE.Vector3(p.x,p.y,0);});
+  return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts,true),150,tube,12,true);
+}
+/* Miller-parametrised plasma boundary revolved about the vertical axis.
+   delta = triangularity (NEGATIVE for Hyperion, δ=−0.30 → the D points OUTWARD toward the wall). */
+function dShapeGeo(R0,aa,kap,delta,seg){
+  var pts=[],da=Math.asin(Math.max(-1,Math.min(1,delta))),n=72;
+  for(var i=0;i<=n;i++){var th=i/n*Math.PI*2;
+    pts.push(new THREE.Vector2(R0+aa*Math.cos(th+da*Math.sin(th)), kap*aa*Math.sin(th)));}
+  return new THREE.LatheGeometry(pts,seg||96);
+}
+var TRI=-0.30; // Hyperion negative triangularity (canonical, published equilibrium)
+function clearScene(){Object.values(layerGroups).forEach(function(l){scene.remove(l.group);});layerGroups={};labelAnchors=[];plasmaMeshes=[];
+  if(particles){scene.remove(particles);particles=null;}document.querySelectorAll('.lbl').forEach(function(e){e.remove();});}
+function build(){clearScene();if(M==='breeder')buildBreeder();else buildBurner();
+  renderLayerPanel();renderReadout();renderGeo();buildLabels();applyFidelity();applyClipState();applyExplodeState();
+  document.getElementById('bctrl').classList.toggle('on',M==='burner');if(M==='burner')updBurner();
+  updateSchem();if(cadOn)document.getElementById('cadimg').src='../cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg');
+  frameCamera();}
+var cadOn=false;
+function updateSchem(){var el=document.getElementById('schemnote');if(!el)return;
+  el.textContent=(M==='breeder')
+    ? 'Schematic — geometry representative of the frozen design (A 2.5 · κ 2.0 · δ −0.30); not an as-built CAD render. See “CAD view” for the B-rep projection.'
+    : 'Schematic — tandem-mirror topology representative of the frozen design (not to length-scale: central cell is 55–1400 m). See “CAD view” for the B-rep projection.';}
+function toggleCAD(){cadOn=!cadOn;var v=document.getElementById('cadview'),b=document.getElementById('cadbtn');
+  if(cadOn){document.getElementById('cadimg').src='../cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg');v.classList.add('on');if(b)b.classList.add('on');}
+  else{v.classList.remove('on');if(b)b.classList.remove('on');}}
+/* default framing — zoomed out a bit, per machine */
+function frameCamera(){
+  if(M==='breeder')camera.position.set(11,7,13.5); else camera.position.set(11,8.5,23);
+  controls.target.set(0,0,0);controls.update();}
+/* Reset view — reframe camera and cancel any idle spin (re-arms after 8s) */
+function resetView(){if(!controls)return;controls.autoRotate=false;frameCamera();clearTimeout(idleTimer);idleTimer=setTimeout(function(){controls.autoRotate=true;},8000);}
+/* burner length / fuel interactivity (Phase 41b) */
+function netAtLen(L){var p=[[55,104],[440,850],[1400,2832]];if(L<=55)return 104*L/55;
+  for(var i=0;i<p.length-1;i++){if(L<=p[i+1][0]){var a=p[i],b=p[i+1],t=(L-a[0])/(b[0]-a[0]);return a[1]+t*(b[1]-a[1]);}}return p[2][1];}
+function pfusAtLen(L){return 0.00977*L;}
+function xInterp(x){var w=[[0.20,1.140,9.53],[0.25,1.283,7.14],[0.30,1.318,5.44],[0.35,1.252,4.18],[0.40,1.128,3.23],[0.45,0.988,2.50]];
+  if(x<=0.20)return[w[0][1],w[0][2]];for(var i=0;i<w.length-1;i++){if(x<=w[i+1][0]){var a=w[i],b=w[i+1],t=(x-a[0])/(b[0]-a[0]);return[a[1]+t*(b[1]-a[1]),a[2]+t*(b[2]-a[2])];}}return[w[5][1],w[5][2]];}
+function updBurner(){if(M!=='burner')return;
+  var L=+document.getElementById('b-len').value,x=(+document.getElementById('b-x').value)/100;
+  var net=netAtLen(L),pf=pfusAtLen(L),q=xInterp(x),closes=x<=0.435;
+  document.getElementById('b-lenv').textContent=L+' m';document.getElementById('b-xv').textContent=x.toFixed(2);
+  document.getElementById('b-out').innerHTML='Net <b>'+(net>=0?'+':'')+net.toFixed(0)+' MWe</b> · P_fus '+pf.toFixed(2)+' GW · Q_E '+q[0].toFixed(2)+' · f_n '+q[1].toFixed(2)+'%'+(closes?'':' · <span style="color:var(--bad)">does not close</span>');
+  var sc=Math.max(0.4,Math.min(2.4,L/440));
+  Object.keys(layerGroups).forEach(function(n){layerGroups[n].group.scale.x=sc;});}
+
+/* ---------------- BREEDER: spherical tokamak ---------------- */
+function buildBreeder(){
+  // proportions locked to the frozen design: A=2.5 (R0/a), κ=2.0, δ=−0.30. Display scale = 2× physical (R0 1.2 m → 2.4).
+  var R0=2.4,a=0.96,kap=2.0;
+  var gP=addLayer('Plasma & Magnetic Fields',0xe94f9c);
+  // layered plasma: negative-triangularity D-shape (δ=−0.30) + additive glow shells
+  var pl=part(gP,dShapeGeo(R0,a*0.82,kap,TRI,96),glowMat(0xe94f9c,.9,.95),'D–T plasma',
+    [['type','D–T, neutron-rich'],['f_n','0.797'],['T_i0','15 keV'],['β_N','1.532 / 4.2'],['κ','2.0'],['δ (triangularity)','−0.30 (negative)'],['A','2.5']],'pink');
+  pl.material.side=THREE.DoubleSide;plasmaMeshes.push(pl);
+  var glow=new THREE.Mesh(dShapeGeo(R0,a*1.04,kap,TRI,64),new THREE.MeshBasicMaterial({color:0xff7ac0,transparent:true,opacity:.05,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));
+  gP.add(glow);plasmaMeshes.push(glow);
+  var core=new THREE.Mesh(dShapeGeo(R0,a*0.5,kap,TRI,60),new THREE.MeshBasicMaterial({color:0xff9ad0,transparent:true,opacity:.05,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));
+  gP.add(core);plasmaMeshes.push(core);
+  // Magnets
+  var gM=addLayer('Magnet Systems',0x9fc3d4);
+  var cs=part(gM,new THREE.CylinderGeometry(0.46,0.46,R0*1.7,40),metal(0xc98a4c,.3,.9),'Central solenoid / center stack',
+    [['conductor','REBCO HTS'],['role','Ohmic + TF return'],['B_peak','16.84 T']],'gold');
+  part(gM,new THREE.CylinderGeometry(0.54,0.54,R0*1.72,40),metal(0x39434f,.55,.8),'CS casing',[['function','structural casing']],'',false);
+  // D-shaped TF coils
+  var N=16,coilGeo=dCoilGeo(0.62,R0+a+0.55,a*kap+0.85,0.42,0.085);
+  for(var i=0;i<N;i++){var ang=i/N*Math.PI*2;var g=new THREE.Group();g.rotation.y=ang;
+    var c=new THREE.Mesh(coilGeo,metal(0x2f3945,.55,.82));c.userData={name:'TF coil '+(i+1)+' / 16',meas:[['count','16 × REBCO'],['B₀ on-axis','8 T'],['B_peak','16.84 T ≤ 20.1']],layer:'Magnet Systems'};
+    g.add(c);gM.add(g);}
+  // PF coils
+  [1,-1].forEach(function(s){[R0*0.5,R0*1.05].forEach(function(rr,j){
+    var pf=part(gM,new THREE.TorusGeometry(rr,0.11,16,60),metal(0x4fbfae,.35,.85),'PF coil (shaping)',[['function','plasma shaping'],['q₉₅','3.0']],'gold',(s===1&&j===0));
+    pf.rotation.x=Math.PI/2;pf.position.y=s*(a*kap+0.35+j*0.55);});});
+  // radial build: first wall, blanket, vessel
+  var gB=addLayer('Blanket & Fuel Cycle',0xd3ac5f);
+  var fw=part(gB,dShapeGeo(R0,a*0.92,kap,TRI,88),shell(0xb0b8c2,.22),'First wall',[['load','1.97 MW/m²'],['life','~2.5 fpy'],['shape','conformal · δ −0.30']],'',false);
+  var bl=part(gB,dShapeGeo(R0,a*1.28,kap,TRI,80),shell(0xd3ac5f,.16),'Breeding blanket',
+    [['TBR','1.8 target (1.34 demo)'],['tritium','4.0 kg/yr'],['He-3','~1.97 kg/yr'],['materials','Li / Be']],'gold');
+  var gW=addLayer('Outer Wall & Structure',0x8792a0);
+  var ves=part(gW,new THREE.TorusGeometry(R0,a*1.62,20,52),shell(0x9aa6b4,.12),'Vacuum vessel',[['plasma volume','10.9 m³'],['R₀','1.2 m']],'');
+  ves.rotation.x=Math.PI/2;ves.scale.set(1,1,kap*0.96);
+  var gD=addLayer('Divertor & PFCs',0xb7bfc9);
+  var div=part(gD,new THREE.TorusGeometry(R0*0.8,0.2,16,54),metal(0x565f6b,.5,.7),'Divertor assembly',[['material','tungsten monoblocks'],['location','lower single-null']],'');
+  div.rotation.x=Math.PI/2;div.position.y=-(a*kap+0.15);
+  var gS=addLayer('Plasma Diagnostics',0xffd88a);
+  for(var k=0;k<10;k++){var ta=k/10*Math.PI*2;
+    var sp=part(gS,new THREE.SphereGeometry(0.1,14,14),glowMat(0xffd88a,.8,1),'Diagnostic suite',[['sensors','Thomson · interferometry · Mirnov · ECE'],['fast readout','µs edge loop']],'gold',(k===0));
+    sp.position.set(Math.cos(ta)*(R0+a+1.1),Math.sin(ta*2)*1.5,Math.sin(ta)*(R0+a+1.1));}
+  // Cryostat & structure (photoreal engineering detail)
+  var gStr=addLayer('Cryostat & Structure',0x7a8492);
+  var span=a*kap+0.85, rout=R0+a+0.55;
+  var base=part(gStr,new THREE.CylinderGeometry(rout+1.8,rout+2.3,0.7,56),metal(0x232b33,.8,.4),'Base pedestal',[['role','support platform']],'',false);
+  base.position.y=-(span+1.6);
+  for(var lg=0;lg<8;lg++){var la=lg/8*Math.PI*2;var legH=1.5;
+    var leg=part(gStr,new THREE.CylinderGeometry(0.16,0.2,legH,14),metal(0x333d48,.6,.6),'Gravity support',[['count','8 legs'],['role','seismic + dead load']],'',(lg===0));
+    leg.position.set(Math.cos(la)*(rout+0.4),-(span+0.85),Math.sin(la)*(rout+0.4));}
+  var cryo=part(gStr,new THREE.CylinderGeometry(rout+1.6,rout+1.6,span*2+1.4,60,1,true),shell(0x9aa6b4,.05),'Cryostat',[['role','vacuum cryostat enclosure'],['vacuum','1.2×10⁻⁸ Pa']],'');
+  var lid=part(gStr,new THREE.CylinderGeometry(rout+1.6,rout+0.4,1.0,60,1,true),shell(0x9aa6b4,.06),'Cryostat dome',[['role','upper closure']],'',false);
+  lid.position.y=span+1.0;
+  for(var pr=0;pr<4;pr++){var pa=pr/4*Math.PI*2+0.4;
+    var port=part(gStr,new THREE.CylinderGeometry(0.42,0.42,2.2,20),metal(0x39434f,.55,.65),'Equatorial port',[['use','NBI / RF / diagnostics'],['count','16 ports total']],'',(pr===0));
+    port.rotation.z=Math.PI/2;port.rotation.y=pa;port.position.set(Math.cos(pa)*(rout+1.4),0,Math.sin(pa)*(rout+1.4));}
+  makeParticles(gP,R0,a*kap,900,0xffe0f0);
+  controls.target.set(0,0,0);
+}
+
+/* ---------------- BURNER: tandem mirror ---------------- */
+function buildBurner(){
+  var L=6.6,rc=0.8;
+  var gP=addLayer('Central-Cell Plasma',0xe94f9c);
+  var pl=part(gP,new THREE.CylinderGeometry(rc,rc,L*2,44,1,false),glowMat(0xe94f9c,.9,.9),'D–³He central-cell plasma',
+    [['fuel','D–³He'],['f_n','5.44% (low-neutron)'],['T_i','90 keV'],['T_e/T_i','0.998'],['β_c','0.55']],'pink');
+  pl.rotation.z=Math.PI/2;plasmaMeshes.push(pl);
+  var glow=new THREE.Mesh(new THREE.CylinderGeometry(rc*1.22,rc*1.22,L*2,32,1,true),new THREE.MeshBasicMaterial({color:0xff7ac0,transparent:true,opacity:.06,blending:THREE.AdditiveBlending,side:THREE.DoubleSide}));
+  glow.rotation.z=Math.PI/2;gP.add(glow);plasmaMeshes.push(glow);
+  [1,-1].forEach(function(s){var cone=part(gP,new THREE.ConeGeometry(rc,1.7,32),new THREE.MeshBasicMaterial({color:0xff6fb0,transparent:true,opacity:.5,blending:THREE.AdditiveBlending}),'Plug transition',[['role','ambipolar plug throat']],'pink',false);
+    cone.rotation.z=s*Math.PI/2;cone.position.x=s*(L+0.85);plasmaMeshes.push(cone);});
+  // central-cell coil packs (grouped rings = winding pack look)
+  var gM=addLayer('Mirror Magnet Coils',0x9fc3d4);var nc=11;
+  for(var i=0;i<nc;i++){var x=-L+(i/(nc-1))*2*L;var pk=new THREE.Group();
+    for(var t=-1;t<=1;t++){var c=new THREE.Mesh(new THREE.TorusGeometry(rc+0.34,0.075,14,44),metal(0x2f3945,.55,.82));c.rotation.y=Math.PI/2;c.position.x=x+t*0.11;pk.add(c);}
+    pk.children[0].userData={name:'Central-cell coil pack',meas:[['B (central)','~5.5 T'],['count','11 solenoid packs']],layer:'Mirror Magnet Coils'};gM.add(pk);}
+  // end plug / throat coils (dense, gold, high-field)
+  var gE=addLayer('End Plugs & Throats',0xd3ac5f);
+  [1,-1].forEach(function(s){for(var j=0;j<4;j++){var c=part(gE,new THREE.TorusGeometry(rc-0.05+j*0.1,0.13,16,44),metal(0xd3ac5f,.3,.92),'Mirror throat / end plug',
+      [['B_m throat','17 T (WHAM)'],['plug/ion-end','26.49 T'],['S_y req','431 MPa (inside 316LN)'],['n_p/n_c','16 (required)']],'gold',(s===1&&j===0));
+    c.rotation.y=Math.PI/2;c.position.x=s*(L+0.9+j*0.34);}});
+  // DEC collector: concentric venetian-blind rings
+  var gC=addLayer('Direct Energy Conversion',0xffd88a);
+  [1,-1].forEach(function(s){var dg=new THREE.Group();
+    for(var r=0;r<5;r++){var ring=new THREE.Mesh(new THREE.TorusGeometry(0.5+r*0.3,0.05,10,40),metal(0xe8c37a,.3,.9));ring.rotation.y=Math.PI/2;ring.position.x=s*(L+3.0+r*0.16);dg.add(ring);}
+    dg.children[0].userData={name:'DEC collector',meas:[['η (ions-only)','0.70'],['f_dir','0.494'],['collector','139 m² (2×69.3)'],['premium','+16 MWe']],layer:'Direct Energy Conversion'};
+    if(s===1)labelAnchors.push({mesh:dg.children[2],name:'DEC collector',color:'gold',sub:'η 0.70'});gC.add(dg);});
+  var gV=addLayer('Vacuum Vessel',0x8792a0);
+  var ves=part(gV,new THREE.CylinderGeometry(rc+0.85,rc+0.85,L*2+1.4,40,1,true),shell(0x9aa6b4,.1),'Vacuum vessel',[['q_wall','1.17 MW/m²'],['pressure','6.62 MPa'],['a_c','0.86 m']],'');
+  ves.rotation.z=Math.PI/2;
+  var gS=addLayer('Plasma Diagnostics',0xffd88a);
+  for(var k=0;k<8;k++){var x=-L+(k/7)*2*L;var sp=part(gS,new THREE.SphereGeometry(0.1,14,14),glowMat(0xffd88a,.8,1),'Diagnostic suite',[['sensors','interferometry · fast-ion · neutron flux']],'gold',(k===0));sp.position.set(x,rc+1.0,0);}
+  // Cryostat & structure (photoreal engineering detail)
+  var gStr=addLayer('Cryostat & Structure',0x7a8492);
+  var yb=-(rc+1.5);
+  var rail=part(gStr,new THREE.BoxGeometry(L*2+10,0.5,2.6),metal(0x232b33,.8,.4),'Base rail',[['role','support rail + services']],'',false);
+  rail.position.y=yb;
+  for(var sd=0;sd<7;sd++){var sx=-L+ (sd/6)*2*L;
+    var sad=part(gStr,new THREE.BoxGeometry(0.5,1.2,2.2),metal(0x333d48,.6,.6),'Support saddle',[['count','7 saddles'],['role','vessel cradle']],'',(sd===0));
+    sad.position.set(sx,yb+0.85,0);}
+  [1,-1].forEach(function(s){var tank=part(gStr,new THREE.SphereGeometry(1.7,32,24),shell(0x9aa6b4,.09),'End tank',[['role','expander + pumping'],['q limit','2.5 MW/m² (assumed)']],'',(s===1));
+    tank.position.x=s*(L+4.6);
+    var tm=part(gStr,new THREE.SphereGeometry(1.55,28,20),metal(0x39434f,.55,.6),'End-wall plate',[['area','203 m²'],['material','actively-cooled W']],'',false);tm.position.x=s*(L+4.6);});
+  makeParticlesLinear(gP,L,rc,500,0xffe0f0);
+  controls.target.set(0,0,0);
+}
+
+/* particle emission systems */
+function makeParticles(group,R0,a,n,color){
+  var geo=new THREE.BufferGeometry(),pos=new Float32Array(n*3),vel=[];
+  for(var i=0;i<n;i++){var ang=Math.random()*Math.PI*2,rr=R0+(Math.random()-0.5)*a*1.4,yy=(Math.random()-0.5)*a*2;
+    pos[i*3]=Math.cos(ang)*rr;pos[i*3+1]=yy;pos[i*3+2]=Math.sin(ang)*rr;
+    var sp=0.02+Math.random()*0.05;vel.push([Math.cos(ang)*sp,(Math.random()-0.5)*sp,Math.sin(ang)*sp]);}
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  particles=new THREE.Points(geo,new THREE.PointsMaterial({color:color,size:0.05,transparent:true,opacity:.7,blending:THREE.AdditiveBlending,depthWrite:false}));
+  particles.userData={vel:vel,mode:'radial',R0:R0,a:a};group.add(particles);
+}
+function makeParticlesLinear(group,L,rc,n,color){
+  var geo=new THREE.BufferGeometry(),pos=new Float32Array(n*3),vel=[];
+  for(var i=0;i<n;i++){var side=Math.random()<.5?1:-1;pos[i*3]=(Math.random()*2-1)*L;
+    var ang=Math.random()*Math.PI*2,rr=rc*Math.random();pos[i*3+1]=Math.cos(ang)*rr;pos[i*3+2]=Math.sin(ang)*rr;
+    vel.push([side*(0.04+Math.random()*0.08),0,0]);}
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  particles=new THREE.Points(geo,new THREE.PointsMaterial({color:color,size:0.06,transparent:true,opacity:.75,blending:THREE.AdditiveBlending,depthWrite:false}));
+  particles.userData={vel:vel,mode:'linear',L:L,rc:rc};group.add(particles);
+}
+function stepParticles(){
+  if(!particles)return;var p=particles.geometry.attributes.position,v=particles.userData.vel,d=particles.userData;
+  for(var i=0;i<v.length;i++){p.array[i*3]+=v[i][0];p.array[i*3+1]+=v[i][1];p.array[i*3+2]+=v[i][2];
+    if(d.mode==='radial'){var x=p.array[i*3],z=p.array[i*3+2];if(x*x+z*z>(d.R0+d.a+4)*(d.R0+d.a+4)){var ang=Math.random()*Math.PI*2;p.array[i*3]=Math.cos(ang)*d.R0;p.array[i*3+1]=(Math.random()-0.5)*d.a*2;p.array[i*3+2]=Math.sin(ang)*d.R0;}}
+    else{if(Math.abs(p.array[i*3])>d.L+4){p.array[i*3]=(Math.random()*2-1)*d.L*0.3;}}}
+  p.needsUpdate=true;
+}
+
+/* fidelity */
+function setFidelity(f,el){FID=f;document.querySelectorAll('[data-f]').forEach(function(b){b.classList.toggle('on',b.dataset.f===f);});applyFidelity();}
+function fidBase(){return FID==='Operating'?1.0:(FID==='Simulated'?0.78:0.58);}
+function applyFidelity(){var base=fidBase();
+  plasmaMeshes.forEach(function(m){if(m.material&&m.material.emissive)m.material.emissiveIntensity=base;});
+  if(bloom)bloom.strength=(FID==='Operating'?0.55:(FID==='Simulated'?0.4:0.28));
+  if(particles)particles.visible=(FID!=='Designed');
+  applyOverlay();}
+
+/* ---- As-Simulated field overlay (Phase 66 · Workstream A) ---- */
+var OVERLAY_FIELD='flux';
+function rampColor(v){v=Math.max(0,Math.min(1,v));
+  // saturated ramp: deep-navy(cold) → teal → gold → hot-pink → red(hot)
+  var s=[[0,0x123a6b],[0.3,0x12a37e],[0.55,0xe0a52c],[0.78,0xf23c92],[1,0xf5341f]];
+  for(var i=0;i<s.length-1;i++){if(v<=s[i+1][0]){var a=s[i],b=s[i+1],t=(v-a[0])/(b[0]-a[0]);
+    return new THREE.Color(a[1]).lerp(new THREE.Color(b[1]),t);}}
+  return new THREE.Color(0xf5341f);}
+function heatMat(v,wasTrans,op){var c=rampColor(v);
+  // colour comes from EMISSION on a near-black base (like the plasma) so reflections/lighting can't wash it flat,
+  // and it scales HARD with v so cold reads dim and hot reads vivid — real contrast, but bloom is suppressed so it never burns.
+  var m=new THREE.MeshStandardMaterial({color:0x0a0d12,emissive:c,emissiveIntensity:0.16+v*0.72,roughness:.55,metalness:0,
+    transparent:wasTrans,opacity:wasTrans?Math.max(.2,Math.min(.62,op*2.6)):1,side:wasTrans?THREE.DoubleSide:THREE.FrontSide});
+  m.envMapIntensity=0;return m;}
+function fieldVal(name){var f=OVERLAY_FIELD,br=(M==='breeder'),n=(name||'').toLowerCase();
+  function pick(map,def){for(var k in map){if(n.indexOf(k)>=0)return map[k];}return def;}
+  if(f==='flux'){
+    if(br)return pick({'first wall':[1.0,'1.97 MW/m²'],'blanket':[0.55,'~1.1 MW/m²'],'divertor':[0.35,'~0.7 rel'],'vacuum vessel':[0.12,'shielded'],'diagnostic':[0.18,'port L.O.S.'],'tf coil':[0.05,'≪ budget'],'solenoid':[0.05,'centre stack'],'center stack':[0.05,''],'pf coil':[0.04,''],'cryostat':[0.01,'ex-vessel'],'port':[0.15,''],'pedestal':[0.02,''],'support':[0.02,''],'casing':[0.06,'']},[0.05,'low']);
+    return pick({'vacuum vessel':[0.5,'1.17 MW/m²'],'end-wall':[0.6,'end-loss n'],'end tank':[0.4,'expander'],'throat':[0.3,'plug'],'end plug':[0.3,''],'coil':[0.12,'low-n'],'dec':[0.2,'collector'],'diagnostic':[0.18,''],'saddle':[0.05,''],'rail':[0.03,'']},[0.1,'low-n']);}
+  if(f==='thermal'){
+    if(br)return pick({'divertor':[1.0,'8.5 MW/m²'],'first wall':[0.6,'~0.5 MW/m²'],'blanket':[0.45,'480 °C'],'vacuum vessel':[0.15,'~120 °C'],'diagnostic':[0.2,''],'tf coil':[0.05,'4.5 K'],'solenoid':[0.05,'4.5 K'],'center stack':[0.05,''],'pf coil':[0.05,'4.5 K'],'cryostat':[0.03,'thermal shield'],'port':[0.1,''],'casing':[0.06,'']},[0.05,'cold']);
+    return pick({'end-wall':[1.0,'2.5 MW/m²'],'dec':[0.7,'grid load'],'end tank':[0.5,'expander'],'vacuum vessel':[0.45,'1.17 MW/m²'],'throat':[0.4,''],'end plug':[0.4,''],'coil':[0.1,'4.5 K'],'diagnostic':[0.2,''],'saddle':[0.05,''],'rail':[0.04,'']},[0.08,'low']);}
+  if(f==='asbuilt'){
+    if(br)return pick({'tf coil':[0.85,'+0.7 mm · out'],'blanket':[0.78,'+1.2 mm · out'],'divertor':[0.72,'+0.42 mm · out'],'first wall':[0.3,'+0.4 mm'],'vacuum vessel':[0.35,'round 2.1 mm'],'solenoid':[0.4,'0.31 mm'],'center stack':[0.4,'0.31 mm'],'casing':[0.35,'in-tol'],'pf coil':[0.3,'in-tol'],'cryostat':[0.2,'in-tol'],'port':[0.25,'in-tol'],'pedestal':[0.2,'in-tol'],'support':[0.2,'in-tol'],'diagnostic':[0.15,'in-tol']},[0.2,'in-tol']);
+    return pick({'throat':[0.8,'+0.38 mm · out'],'end plug':[0.82,'+0.6 mm · out'],'dec':[0.75,'+0.28 mm · out'],'coil':[0.4,'+0.3 mm'],'vacuum vessel':[0.35,'3.2 mm straight'],'end tank':[0.3,'1.4 mm'],'end-wall':[0.4,'in-tol'],'saddle':[0.25,'in-tol'],'rail':[0.2,'in-tol'],'diagnostic':[0.15,'in-tol']},[0.2,'in-tol']);}
+  if(br)return pick({'tf coil':[0.82,'hoop @16.84 T'],'solenoid':[0.8,'centre stack'],'center stack':[0.8,''],'casing':[0.72,'structural'],'support':[0.6,'seismic'],'pedestal':[0.55,''],'vacuum vessel':[0.5,'disruption EM'],'pf coil':[0.5,''],'first wall':[0.3,''],'blanket':[0.25,''],'divertor':[0.3,''],'cryostat':[0.3,'vacuum load'],'port':[0.35,''],'diagnostic':[0.15,'']},[0.2,'low']);
+  return pick({'throat':[1.0,'26.49 T plug'],'end plug':[1.0,''],'coil':[0.42,'central pack'],'vacuum vessel':[0.5,'6.62 MPa'],'saddle':[0.5,'cradle'],'rail':[0.3,''],'end tank':[0.3,'vacuum'],'end-wall':[0.35,''],'dec':[0.2,''],'diagnostic':[0.12,'']},[0.2,'low']);}
+function applyOverlay(){var on=(FID==='Simulated');
+  Object.values(layerGroups).forEach(function(l){l.group.traverse(function(o){
+    if(!o.isMesh)return;if(plasmaMeshes.indexOf(o)>=0)return;
+    var nm=o.userData&&o.userData.name;if(!nm)return;
+    if(on){
+      if(!o.userData._omat){if(!(o.material&&o.material.isMeshStandardMaterial))return;o.userData._omat=o.material;}
+      var fv=fieldVal(nm);o.material=heatMat(fv[0],o.userData._omat.transparent,o.userData._omat.opacity);
+      o.material.clippingPlanes=cutOn?[clipPlane]:null;o.userData._fdisp=fv[1];o.userData._fval=fv[0];
+    }else if(o.userData._omat){o.material=o.userData._omat;o.userData._omat=null;o.material.clippingPlanes=cutOn?[clipPlane]:null;o.userData._fdisp=null;}
+  });});
+  if(on){ // overlay is a data view, not a beauty shot — kill the bloom and calm the plasma so the heat-map is readable
+    if(bloom)bloom.strength=0.06;
+    plasmaMeshes.forEach(function(m){if(m.material&&m.material.emissive)m.material.emissiveIntensity=0.28;});
+  }
+  var lg=document.getElementById('ovlegend');if(lg)lg.style.display=on?'block':'none';if(on)updateLegend();}
+var OVCAP={
+  flux:{breeder:['0','1.97 MW/m²','Fast-neutron wall loading — the first wall peaks; ex-vessel coils are shielded. Representative field, full map needs 3-D MCNP/OpenMC.'],
+        burner:['0','1.17 MW/m²','Low-neutron: the central-cell wall carries most of a small budget (f_n 5.44%). Representative, needs MCNP.']},
+  thermal:{breeder:['0','8.5 MW/m² · divertor','Surface heat flux — the divertor is binding at 90% radiated fraction. Representative, needs conjugate-heat CFD.'],
+           burner:['0','2.5 MW/m² · end-wall','No divertor — the flux-expanded end-wall and DEC carry the load. Representative, needs CFD.']},
+  stress:{breeder:['0','~410 MPa · TF hoop','Structural utilisation — magnets and centre stack govern. Screening estimate, needs winding-pack FEA.'],
+          burner:['0','26.49 T · plug throat','The 26.49 T plug governs. B² screening only — needs bore-resolved FEA before sign-off.']},
+  asbuilt:{breeder:['in-tol','out-of-tol','Representative as-built deviation vs the frozen design (synthetic). Red = out-of-tolerance → Material Review Board + re-analysis. Receiving structure for real CMM / laser-tracker data.'],
+           burner:['in-tol','out-of-tol','Representative as-built deviation vs the frozen design (synthetic). Red = out-of-tolerance → MRB. Receiving structure for real metrology data.']}};
+function updateLegend(){var c=OVCAP[OVERLAY_FIELD][M];if(!c)return;
+  document.getElementById('ol-lo').textContent=c[0];document.getElementById('ol-hi').textContent=c[1];
+  document.getElementById('ol-cap').textContent=c[2];}
+function setField(f,el){OVERLAY_FIELD=f;document.querySelectorAll('#ovlegend .olbtns button').forEach(function(b){b.classList.toggle('on',b===el);});
+  if(FID==='Simulated')applyOverlay();else updateLegend();}
+
+/* layer panel */
+function renderLayerPanel(){var names=Object.keys(layerGroups);document.getElementById('lcount').textContent=names.length+' systems';
+  document.getElementById('lrows').innerHTML=names.map(function(n){var l=layerGroups[n];var c='#'+l.color.toString(16).padStart(6,'0');
+    return '<div class="lrow'+(l.on?'':' off')+'"><span class="sw" style="background:'+c+';color:'+c+'"></span><span class="nm" onclick="toggleLayer(\''+n.replace(/'/g,"")+'\')">'+n+'</span><span class="iso" onclick="isolate(\''+n.replace(/'/g,"")+'\')">ISO</span><span class="eye" onclick="toggleLayer(\''+n.replace(/'/g,"")+'\')">'+(l.on?'◉':'○')+'</span></div>';}).join('');}
+function toggleLayer(n){var l=layerGroups[n];if(!l)return;l.on=!l.on;l.group.visible=l.on;renderLayerPanel();}
+function allLayers(on){Object.values(layerGroups).forEach(function(l){l.on=on;l.group.visible=on;});renderLayerPanel();}
+function isolate(n){Object.keys(layerGroups).forEach(function(k){var l=layerGroups[k];l.on=(k===n);l.group.visible=l.on;});renderLayerPanel();}
+function resetIso(){allLayers(true);}
+
+/* cutaway (clip plane) + exploded radial build */
+var EXPF={'Magnet Systems':3.2,'Mirror Magnet Coils':2.6,'End Plugs & Throats':2.6,'Direct Energy Conversion':3.6,
+  'Outer Wall & Structure':2.2,'Vacuum Vessel':1.7,'Blanket & Fuel Cycle':1.2,
+  'Plasma Diagnostics':4.0,'Divertor & PFCs':-1.6,'Plasma & Magnetic Fields':0,'Central-Cell Plasma':0};
+function setCutaway(v){cutOn=(+v)>0;clipPlane.constant=8-(+v/100)*16;applyClipState();}
+function applyClipState(){var planes=cutOn?[clipPlane]:null;
+  Object.values(layerGroups).forEach(function(l){l.group.traverse(function(o){if(o.isMesh&&o.material){
+    (Array.isArray(o.material)?o.material:[o.material]).forEach(function(m){m.clippingPlanes=planes;m.clipShadows=true;});}});});}
+function setExplode(v){var amt=(+v/100)*2.0;
+  Object.keys(layerGroups).forEach(function(n){var f=(EXPF[n]!==undefined?EXPF[n]:1.5);layerGroups[n].group.position.y=f*amt;});}
+function applyExplodeState(){var s=document.getElementById('expSlider');if(s)setExplode(s.value);}
+
+/* readout / geo */
+function renderReadout(){var r=document.getElementById('readout');
+  if(M==='breeder')r.innerHTML=rd('Fusion gain Q','3.424','')+rd('Fusion power','88.7','MW')+rd('Plasma current','9.86','MA')+rd('Tritium','4.0','kg/yr')+rd('β_N','1.53','/4.2');
+  else r.innerHTML=rd('Engineering Q_E','1.309','')+rd('Neutron frac','5.44','%')+rd('Net @440 m','+850','MWe')+rd('T_i','90','keV')+rd('B_m throat','17','T');}
+function rd(l,n,u){return '<div class="rlab">'+l+'</div><div class="rbig">'+n+' <small>'+u+'</small></div>';}
+function renderGeo(){var g=document.getElementById('geo');
+  if(M==='breeder')g.innerHTML='<b>Spherical tokamak</b><br>R₀ <b>1.2 m</b> · a <b>0.48 m</b><br>A <b>2.5</b> · κ <b>2.0</b> · δ <b>−0.30</b> (neg.)<br>B₀ <b>8 T</b> · B_peak <b>16.84 T</b>';
+  else g.innerHTML='<b>Tandem mirror</b><br>a_c <b>0.86 m</b> · β_c <b>0.55</b><br>B_m <b>17 T</b> throat<br>55 / 440 / 1400 m housings';}
+
+/* labels */
+var hoverName='';
+function buildLabels(){document.querySelectorAll('.lbl').forEach(function(e){e.remove();});
+  labelAnchors.forEach(function(a){var d=document.createElement('div');d.className='lbl '+(a.color||'');d.innerHTML=a.name+(a.sub?' <small>'+a.sub+'</small>':'');d.style.display='none';document.getElementById('stage').appendChild(d);a.el=d;});}
+function toggleLabels(el){showLabels=!showLabels;el.classList.toggle('on',showLabels);if(!showLabels)labelAnchors.forEach(function(a){if(a.el)a.el.style.display='none';});}
+function onMove(e){if(!raycaster)return;var rect=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(mouse,camera);var meshes=[];Object.values(layerGroups).forEach(function(l){if(l.on)l.group.traverse(function(o){if(o.isMesh)meshes.push(o);});});
+  var hit=raycaster.intersectObjects(meshes,true)[0];
+  hoverName=(hit&&hit.object.userData&&hit.object.userData.name)?hit.object.userData.name:'';
+  renderer.domElement.style.cursor=hoverName?'pointer':'grab';}
+/* hover-only labels: show just the part under the cursor */
+function updateLabels(){var w=window.innerWidth,h=window.innerHeight-(document.body.classList.contains('embed')?0:52),off=(document.body.classList.contains('embed')?0:52);
+  labelAnchors.forEach(function(a){if(!a.el)return;
+    if(!showLabels||a.name!==hoverName){a.el.style.display='none';return;}
+    var vis=layerGroups[a.mesh.userData.layer]&&layerGroups[a.mesh.userData.layer].on;if(!vis){a.el.style.display='none';return;}
+    var p=new THREE.Vector3();a.mesh.getWorldPosition(p);p.project(camera);if(p.z>1){a.el.style.display='none';return;}
+    a.el.style.display='block';a.el.style.left=((p.x*0.5+0.5)*w)+'px';a.el.style.top=((-p.y*0.5+0.5)*h+off)+'px';});}
+
+/* picking */
+function onClick(e){var rect=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(mouse,camera);var meshes=[];Object.values(layerGroups).forEach(function(l){if(l.on)l.group.traverse(function(o){if(o.isMesh)meshes.push(o);});});
+  var hit=raycaster.intersectObjects(meshes,true)[0];if(hit&&hit.object.userData&&hit.object.userData.name)openInspect(hit.object.userData);}
+function openInspect(u){document.getElementById('i-lead').textContent=(M==='breeder'?'HYPERION breeder':'D–³He burner')+' · '+u.layer;
+  document.getElementById('i-title').textContent=u.name;
+  var extra='';
+  if(FID==='Simulated'&&u._fdisp!==undefined&&u._fdisp!==null){
+    var fl={flux:'Neutron flux',thermal:'Thermal load',stress:'Structural stress'}[OVERLAY_FIELD];
+    var c='#'+rampColor(u._fval||0).getHexString();
+    extra='<div class="irow" style="border-top:1px solid var(--line2);margin-top:6px;padding-top:8px"><span class="il"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:'+c+';margin-right:6px"></span>'+fl+' (as-simulated)</span><span class="iv" style="color:'+c+'">'+(u._fdisp||('rel '+(u._fval||0).toFixed(2)))+'</span></div>';
+  }
+  document.getElementById('i-body').innerHTML=(u.meas||[]).map(function(p){return '<div class="irow"><span class="il">'+p[0]+'</span><span class="iv">'+p[1]+'</span></div>';}).join('')+extra;
+  document.getElementById('i-foot').innerHTML='<span class="prov">◈ frozen design point</span> Reproduced from the open Zenodo deposit · <a class="doi" href="https://doi.org/'+DOI[M]+'" target="_blank" rel="noopener">DOI '+DOI[M]+'</a> (CC BY 4.0).';
+  document.getElementById('inspect').classList.add('on');document.getElementById('scrim').classList.add('on');}
+function closeInspect(){document.getElementById('inspect').classList.remove('on');document.getElementById('scrim').classList.remove('on');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeInspect();});
+
+function setMachine(m){if(m===M)return;M=m;document.querySelectorAll('#mtoggle button').forEach(function(b){b.classList.toggle('on',b.dataset.m===m);});build();}
+function onResize(){var w=window.innerWidth,h=window.innerHeight-(document.body.classList.contains('embed')?0:52);camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);if(composer)composer.setSize(w,h);}
+var t=0;
+function animate(){requestAnimationFrame(animate);t+=0.006;
+  var base=fidBase();
+  plasmaMeshes.forEach(function(m){if(m.material&&m.material.emissive)m.material.emissiveIntensity=base+Math.sin(t*3)*0.08;});
+  stepParticles();controls.update();updateLabels();
+  if(composer)composer.render();else renderer.render(scene,camera);}
+
+/* bind view-control sliders programmatically (unambiguous scope) */
+(function(){var cs=document.getElementById('cutSlider'),es=document.getElementById('expSlider'),bl=document.getElementById('b-len'),bx=document.getElementById('b-x');
+  if(cs)cs.addEventListener('input',function(){setCutaway(this.value);});
+  if(es)es.addEventListener('input',function(){setExplode(this.value);});
+  if(bl)bl.addEventListener('input',updBurner);
+  if(bx)bx.addEventListener('input',updBurner);})();
+
+/* embed + cross-frame sync */
+if(location.search.indexOf('embed')>=0)document.body.classList.add('embed');
+window.addEventListener('message',function(e){var d=e.data||{};if(d.kfeMachine&&d.kfeMachine!==M)setMachine(d.kfeMachine);if(d.kfeFidelity){FID=d.kfeFidelity;applyFidelity();}
+  if(d.kfeSnap){try{if(composer)composer.render();else renderer.render(scene,camera);
+    var src=renderer.domElement,c=document.createElement('canvas');c.width=src.width;c.height=src.height;var g=c.getContext('2d');
+    g.drawImage(src,0,0);
+    // bake the attribution watermark into the exported image; if a viewer id is supplied, stamp it too (forensic)
+    var fs=Math.max(11,Math.round(c.height*0.020));g.font=fs+'px monospace';g.textAlign='right';
+    g.fillStyle='rgba(211,172,95,0.55)';g.fillText('◈ KRONOS FUSION ENERGY · kronosfusionenergy.com/3D_Model',c.width-18,c.height-18);
+    if(d.kfeStamp){g.fillStyle='rgba(224,229,235,0.45)';g.font=Math.round(fs*0.8)+'px monospace';g.fillText(String(d.kfeStamp),c.width-18,c.height-18-fs*1.4);}
+    var url=c.toDataURL('image/png');(e.source||window.parent).postMessage({kfeSnapData:url},'*');
+  }catch(err){}}});
+function webglOK(){try{var c=document.createElement('canvas');return !!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){return false;}}
+function fb(msg){var L=document.getElementById('loading');if(L)L.innerHTML='<div style="max-width:340px;text-align:center;color:var(--dim);font-family:var(--fm);font-size:12px;line-height:1.6;padding:24px">'+msg+'</div>';}
+function bootReactor(){
+  if(!window.THREE||!THREE.OrbitControls){fb('The 3-D reactor needs an internet connection (3-D library from CDN).<br><br>Every other section of the model works offline.');return;}
+  if(!webglOK()){fb('This browser has WebGL turned off, so the 3-D reactor can’t render here.<br><br>Open on a desktop browser for the 3-D view — the analysis, blueprints and data tabs all work.');return;}
+  try{init();}catch(e){fb('The 3-D view couldn’t start on this device. The rest of the model still works.');}
+}
+if(window.THREE&&THREE.OrbitControls){bootReactor();}else{window.addEventListener('load',bootReactor);}
+</script>
