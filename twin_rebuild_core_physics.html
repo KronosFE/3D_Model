@@ -1072,8 +1072,8 @@ details.faq .fa b{color:var(--ink)}
     <div class="bpframe"><div id="bp-draw"></div></div>
     <div class="subhdr">CAD models · real OpenCASCADE B-rep (generated from the frozen parameters)</div>
     <div class="grid g3">
-      <div class="tile"><div class="th">HYPERION breeder</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Center stack · plasma · blanket · vessel · PF coils · divertor, built from R₀/a/κ. Import into SolidWorks / Fusion / FreeCAD.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="cad/breeder.step" download title="Owner download — ">⬇ breeder.step <span class="ownr">owner</span></a></div>
-      <div class="tile"><div class="th">Burner · Aegis / MetroVolt</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Central cell · 11 solenoid coils · plug coils · end tanks · vessel, built from a_c and the coil layout.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="cad/burner.step" download title="Owner download — ">⬇ burner.step <span class="ownr">owner</span></a></div>
+      <div class="tile"><div class="th">HYPERION breeder</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Center stack · plasma · blanket · vessel · PF coils · divertor, built from R₀/a/κ. Import into SolidWorks / Fusion / FreeCAD.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="lab/index.html" title="STEP models are available to the team in the Kronos Lab" download title="Owner download — ">⬇ breeder.step <span class="ownr">owner</span></a></div>
+      <div class="tile"><div class="th">Burner · Aegis / MetroVolt</div><div class="tbig" style="font-size:15px">STEP · parametric solid</div><div class="tsub">Central cell · 11 solenoid coils · plug coils · end tanks · vessel, built from a_c and the coil layout.</div><a class="lobtn owner-only" data-access="owner" style="margin-top:12px;display:inline-block;text-decoration:none" href="lab/index.html" title="STEP models are available to the team in the Kronos Lab" download title="Owner download — ">⬇ burner.step <span class="ownr">owner</span></a></div>
       <div class="tile"><div class="th">Provenance</div><div class="tsub">Real B-rep solids via CadQuery on OpenCASCADE 7.7 — not a mesh, not a mock. <b class="gold">Representative to frozen parameters</b>, not as-built (that needs component CAD). CC BY 4.0.</div></div>
     </div>
     <div class="foot" id="bp-foot"></div>
@@ -2541,7 +2541,7 @@ function stackBar(l,narrow,ext,mx){
     '<span class="rv">$'+(narrow+ext)+'</span></div>';
 }
 /* PUBLIC BUILD: economics figures are proprietary and are NOT shipped in this file.
-   The full-numbers version is kept internally (00 - DO NOT PUBLISH/_3D_MODEL_INTERNAL). */
+   The full-numbers version is kept with the private build. */
 function renderEcon(){
   var lock='<div class="card dark" style="line-height:1.6"><b class="gold">🔒 Economics is Kronos team-only.</b> Levelized cost of energy, the cost stack, helium-3 pricing, tritium unit cost, capital &amp; financing terms, and the holistic comparison are proprietary and are not published here. Kronos team members see the full economics after signing in.<div style="margin-top:12px"><button class="btn sm" onclick="if(typeof gateLogin===\'function\')gateLogin()">Sign in to view ↗</button></div></div>';
   var b=function(id,h){var el=document.getElementById(id);if(el)el.innerHTML=h;};
@@ -2883,7 +2883,7 @@ function dimLine(x1,y1,x2,y2,label){var mx=(x1+x2)/2,my=(y1+y2)/2;
 
 /* Real CAD projection (OpenCASCADE hidden-line from the STEP model) on drafting-paper panel */
 function drawCADProj(d){
-  var pre=(M==='breeder'?'HYP':'BRN'),f='cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg'),step='cad/'+(M==='breeder'?'breeder.step':'burner.step');
+  var pre=(M==='breeder'?'HYP':'BRN'),f='data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420'><rect width='100%25' height='100%25' fill='%23eef1f5'/><text x='50%25' y='46%25' text-anchor='middle' font-family='Menlo,monospace' font-size='18' fill='%234a5560'>CAD PROJECTIONS %26 STEP MODELS</text><text x='50%25' y='56%25' text-anchor='middle' font-family='Menlo,monospace' font-size='13' fill='%238a5a2a'>available to the team in the Kronos Lab</text></svg>',step='lab/index.html';
   return '<div style="background:#eef1f5;border:1px solid #c7ced6;border-radius:6px;padding:12px">'+
     '<div style="display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:#4a5560;border-bottom:1px solid #c7ced6;padding-bottom:7px;margin-bottom:10px">'+
     '<span>OPENCASCADE HIDDEN-LINE PROJECTION · FROM THE STEP MODEL</span><span>KFE-'+pre+'-002B · iso</span></div>'+
@@ -4569,8 +4569,8 @@ async function ensurePyodide(){
   setSolverStatus('loading NumPy…');
   await py.loadPackage('numpy');
   setSolverStatus('loading the deposit evaluator (dt_evaluator.py)…');
-  var kc=await (await fetch('solver/kronos_clean.py')).text();
-  var dt=await (await fetch('solver/dt_evaluator.py')).text();
+  var kc=await (await fetch('assets/engine/kronos_clean.py')).text();
+  var dt=await (await fetch('assets/engine/dt_evaluator.py')).text();
   py.FS.writeFile('kronos_clean.py',kc);py.FS.writeFile('dt_evaluator.py',dt);
   py.runPython("import sys\nif '.' not in sys.path: sys.path.insert(0,'.')\nimport numpy as np\nif not hasattr(np,'trapezoid'): np.trapezoid=np.trapz");
   _pyReady=py;return py;

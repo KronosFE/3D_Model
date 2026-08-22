@@ -1,79 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Program — Kronos Model</title>
-<meta name="description" content="The Kronos program record: reproducible studies, the roadmap with its stated gates, readiness reviews, and the published Zenodo deposits everything traces to.">
+<meta name="description" content="The Kronos program record: 31 fully reproducible public studies across the breeder and burner tracks, the high-fidelity code adapters, the frozen-anchor regression, and the open Zenodo deposits everything traces to.">
 <link rel="stylesheet" href="../assets/style.css?v=3">
 </head>
 <body>
-
 <nav class="topnav" id="kfe-nav"><div class="in"></div></nav>
-
 <div class="wrap">
-  <div class="eyebrow">Program · <span class="snum" style="border:none;padding:0">section 03</span></div>
+  <div class="eyebrow">Program · <span class="snum" style="border:none;padding:0">section 03 · the open record</span></div>
   <h1>The open record.</h1>
+  <p class="lede">Kronos is the fusion company that shows its work. Of <b>223 research studies</b> in the
+  program, the <b>31</b> below are fully reproducible — pre-registered, citation-audited, with their data — and
+  that is the bar for appearing here. In-progress work stays in the <a href="../lab/index.html">Lab</a> until it clears it.</p>
 
-  <p class="lede">Kronos is the fusion company that shows its work. This section is the program's public
-  record: every completed study that is <b>fully reproducible</b> — pre-registered, citation-audited, with
-  its data — plus the roadmap and its stated gates. A study earns its place here by being reproducible;
-  in-progress work stays in the Lab until it clears that bar.</p>
+  <div class="stats">
+    <div class="stat"><div class="n">223</div><div class="l">research studies</div></div>
+    <div class="stat"><div class="n">31</div><div class="l">public &amp; reproducible</div></div>
+    <div class="stat"><div class="n">19/19</div><div class="l">regression checks pass</div></div>
+    <div class="stat"><div class="n">7</div><div class="l">hi-fi code adapters</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">open Zenodo deposits</div></div>
+  </div>
 
-  <div class="sechead"><h2>Landing in Phase 2</h2></div>
+  <div class="sechead"><h2>Two machines, from the frozen anchors</h2></div>
+  <div class="grid">
+    <div class="card"><h3>Breeder — HYPERION</h3>
+      <div class="tiles">
+        <div class="tile hero"><div class="k">fusion gain Q</div><div class="v">3.424</div></div>
+        <div class="tile"><div class="k">fusion power</div><div class="v">88.7<span class="u"> MW</span></div></div>
+        <div class="tile"><div class="k">plasma current</div><div class="v">9.86<span class="u"> MA</span></div></div>
+        <div class="tile"><div class="k">tritium @ TBR 1.8</div><div class="v">4.00<span class="u"> kg/fpy</span></div></div>
+      </div>
+      <p style="margin-top:10px">A strategic-materials <b>platform, not a power plant</b> — success is gain, TBR, He-3 and neutrons. Not yet tritium self-sufficient at 3-D TBR; that is the gate being driven to close.</p></div>
+    <div class="card"><h3>Burner — Aegis / MetroVolt</h3>
+      <div class="tiles">
+        <div class="tile hero"><div class="k">engineering gain Q_E</div><div class="v">1.318</div></div>
+        <div class="tile"><div class="k">neutron fraction</div><div class="v">5.44<span class="u"> %</span></div></div>
+        <div class="tile"><div class="k">fusion power</div><div class="v">4298<span class="u"> MW</span></div></div>
+        <div class="tile"><div class="k">plug potential φ_i</div><div class="v">248.8<span class="u"> keV</span></div></div>
+      </div>
+      <p style="margin-top:10px"><b>Plug-gated, not net-power today.</b> Every result is conditional on retiring the central-cell plug, which the WHAM-class experiment tests. Fleet power figures are design points, never stated as demonstrated.</p></div>
+  </div>
+
+  <div class="sechead"><h2>Reproducible studies</h2><span class="snum">public tier · by track</span></div>
   <div class="grid">
     <div class="card">
-      <h3>Reproducible studies</h3>
-      <p>The registry-driven map of the completed, public-tier studies across the breeder and burner
-      tracks — each linked to its data and its deposit.</p>
-      <span class="badge gold">ARRIVING · PHASE 2</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h3>Aegis (burner)</h3><span class="snum">8 reproducible</span></div>
+      <table class="ft"><thead><tr><th>ID</th><th>Study</th><th>Artifacts</th></tr></thead><tbody><tr><td>A2</td><td><b>Siting and survivability</b></td><td>4 csv · 0 py</td></tr><tr><td>A3</td><td><b>Personnel-proximity radiation</b></td><td>5 csv · 0 py</td></tr><tr><td>A4</td><td><b>He-3 fuel security</b></td><td>1 csv · 0 py</td></tr><tr><td>A5</td><td><b>Defense-grade RAMI</b></td><td>5 csv · 0 py</td></tr><tr><td>A6</td><td><b>Self-fuelled demonstrator</b></td><td>4 csv · 0 py</td></tr><tr><td>A7</td><td><b>DoD federal licensing</b></td><td>3 csv · 0 py</td></tr><tr><td>A8</td><td><b>Load-profile fit</b></td><td>5 csv · 0 py</td></tr><tr><td>DF3</td><td><b>Survivability hardening</b></td><td>4 csv · 0 py</td></tr></tbody></table>
+      <div style="margin-top:10px"><a class="doi-pill" href="https://doi.org/10.5281/zenodo.21746479">DEPOSIT <b>10.5281/zenodo.21746479</b></a></div>
     </div>
     <div class="card">
-      <h3>Roadmap &amp; readiness</h3>
-      <p>The build roadmap with its honest gates, milestone reviews, and construction-readiness
-      material from the full twin compendium.</p>
-      <span class="badge gold">ARRIVING · PHASE 2</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h3>Burner — shared</h3><span class="snum">3 reproducible</span></div>
+      <table class="ft"><thead><tr><th>ID</th><th>Study</th><th>Artifacts</th></tr></thead><tbody><tr><td>BURNER-SHARED</td><td><b>BURNER-SHARED</b></td><td>3 csv · 0 py</td></tr><tr><td>P56</td><td><b>Burner closure audit</b></td><td>8 csv · 0 py</td></tr><tr><td>gate1-thermal-barrier-push</td><td><b>gate1-thermal-barrier-push</b></td><td>4 csv · 0 py</td></tr></tbody></table>
+      <div style="margin-top:10px"><a class="doi-pill" href="https://doi.org/10.5281/zenodo.21746479">DEPOSIT <b>10.5281/zenodo.21746479</b></a></div>
     </div>
-  </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h3>Hyperion (breeder)</h3><span class="snum">18 reproducible</span></div>
+      <table class="ft"><thead><tr><th>ID</th><th>Study</th><th>Artifacts</th></tr></thead><tbody><tr><td>H1</td><td><b>Tritium self-sufficiency</b></td><td>3 csv · 4 py</td></tr><tr><td>H10</td><td><b>Steady state sustainment</b></td><td>4 csv · 1 py</td></tr><tr><td>H11</td><td><b>licensing</b></td><td>5 csv · 1 py</td></tr><tr><td>H12</td><td><b>environmental</b></td><td>4 csv · 1 py</td></tr><tr><td>H2</td><td><b>Bootstrap net-power go-no-go</b></td><td>4 csv · 3 py</td></tr><tr><td>H3</td><td><b>Materials facility</b></td><td>4 csv · 3 py</td></tr><tr><td>H4</td><td><b>Isotope Co-Production</b></td><td>1 csv · 1 py</td></tr><tr><td>H5</td><td><b>He-3 separation</b></td><td>2 csv · 1 py</td></tr><tr><td>H7</td><td><b>NT kappa stability delta-banking</b></td><td>4 csv · 1 py</td></tr><tr><td>H8</td><td><b>disruptions</b></td><td>3 csv · 1 py</td></tr><tr><td>H9</td><td><b>exhaust divertor engineering</b></td><td>3 csv · 4 py</td></tr><tr><td>HC-A</td><td><b>HC-A</b></td><td>2 csv · 7 py</td></tr><tr><td>HC-B</td><td><b>HC-B</b></td><td>1 csv · 2 py</td></tr><tr><td>P56</td><td><b>Platform mission</b></td><td>4 csv · 2 py</td></tr><tr><td>R1</td><td><b>Extrapolation ledger</b></td><td>1 csv · 0 py</td></tr><tr><td>R3</td><td><b>Upgradability</b></td><td>1 csv · 1 py</td></tr><tr><td>R4</td><td><b>Post-diction</b></td><td>1 csv · 1 py</td></tr><tr><td>de-risk</td><td><b>de-risk</b></td><td>6 csv · 4 py</td></tr></tbody></table>
+      <div style="margin-top:10px"><a class="doi-pill" href="https://doi.org/10.5281/zenodo.21746157">DEPOSIT <b>10.5281/zenodo.21746157</b></a></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h3>Robustness</h3><span class="snum">2 reproducible</span></div>
+      <table class="ft"><thead><tr><th>ID</th><th>Study</th><th>Artifacts</th></tr></thead><tbody><tr><td>BC1</td><td><b>BC1</b></td><td>1 csv · 0 py</td></tr><tr><td>BC2</td><td><b>BC2</b></td><td>1 csv · 0 py</td></tr></tbody></table>
+      <div style="margin-top:10px"></div>
+    </div></div>
 
-  <div class="sechead"><h2>Published today</h2></div>
+  <div class="sechead"><h2>The engine's high-fidelity adapters</h2></div>
+  <div class="card"><p>One anchor-tested engine sits behind every number. Where a full high-fidelity code has not yet been run, the engine stands in with a documented reduced-order surrogate and says so — tagged [T], naming the code that will retire it. The source is open in <a href="https://github.com/KronosFE/3D_Model/tree/main/engine">engine/</a>.</p>
+  <table class="ft"><thead><tr><th>Adapter</th><th>Real codes</th><th>Retired by</th></tr></thead><tbody><tr><td>EdgeSOL</td><td>solps, b2.5, eirene</td><td>SOLPS-ITER (edge/SOL plasma-neutral transport)</td></tr><tr><td>Gyrokinetic <span class="badge gold" style="margin:0 0 0 6px;padding:2px 8px">operating</span></td><td>gene, cgyro, gs2, tglf</td><td>GENE / CGYRO / GS2 / TGLF (gyrokinetic turbulence)</td></tr><tr><td>KineticMirror</td><td>cql3d, cql3d-m, cql3dm</td><td>CQL3D-m (bounce-averaged Fokker-Planck, mirror)</td></tr><tr><td>Neoclassical</td><td>neo, sfincs</td><td>NEO / SFINCS (neoclassical drift-kinetic)</td></tr><tr><td>NucData</td><td>njoy, njoy2016, sandy</td><td>NJOY / SANDY (evaluated nuclear-data processing)</td></tr><tr><td>StructFEA</td><td>ansys, comsol, elmerfem, elmer</td><td>ANSYS / COMSOL / Elmer (structural FEA)</td></tr><tr><td>SyncTransport</td><td>spece, cyneq</td><td>SPECE / CYNEQ-class (synchrotron radiation transport)</td></tr></tbody></table></div>
+
+  <div class="sechead"><h2>Open deposits</h2></div>
+  <div class="grid3"><a class="cardlink" href="https://doi.org/10.5281/zenodo.21746157"><div class="card glow"><h3>Breeder — Hyperion (v2: 21795620)</h3><p style="font-family:var(--mono);font-size:12px;color:var(--gold)">10.5281/zenodo.21746157</p><p>41 studies flow into this deposit · CC BY 4.0</p><span class="go">Open on Zenodo →</span></div></a><a class="cardlink" href="https://doi.org/10.5281/zenodo.21746479"><div class="card glow"><h3>Burner — Tandem Mirror</h3><p style="font-family:var(--mono);font-size:12px;color:var(--gold)">10.5281/zenodo.21746479</p><p>121 studies flow into this deposit · CC BY 4.0</p><span class="go">Open on Zenodo →</span></div></a><a class="cardlink" href="https://doi.org/10.5281/zenodo.21842514"><div class="card glow"><h3>REBCO Magnet &amp; Tape</h3><p style="font-family:var(--mono);font-size:12px;color:var(--gold)">10.5281/zenodo.21842514</p><p>3 studies flow into this deposit · CC BY 4.0</p><span class="go">Open on Zenodo →</span></div></a><a class="cardlink" href="https://doi.org/10.5281/zenodo.21842864"><div class="card glow"><h3>Direct Energy Conversion</h3><p style="font-family:var(--mono);font-size:12px;color:var(--gold)">10.5281/zenodo.21842864</p><p>3 studies flow into this deposit · CC BY 4.0</p><span class="go">Open on Zenodo →</span></div></a><a class="cardlink" href="https://doi.org/10.5281/zenodo.21842371"><div class="card glow"><h3>AI-ML-Quantum Control</h3><p style="font-family:var(--mono);font-size:12px;color:var(--gold)">10.5281/zenodo.21842371</p><p>1 studies flow into this deposit · CC BY 4.0</p><span class="go">Open on Zenodo →</span></div></a></div>
+
+  <div class="sechead"><h2>Go deeper</h2></div>
   <div class="grid3">
-    <div class="card">
-      <h3>The papers</h3>
-      <p>The five peer-reviewable design papers — breeder, burner, REBCO magnets, direct energy
-      conversion, and AI/quantum control.</p>
-      <span class="go"><a href="https://www.kronosfusionenergy.com/research">Research &amp; publications →</a></span>
-    </div>
-    <div class="card">
-      <h3>The deposits</h3>
-      <p>Open Access engines, data, and reproduction runbooks:
-      <b style="color:var(--ink)">10.5281/zenodo.21746157</b> (breeder) ·
-      <b style="color:var(--ink)">10.5281/zenodo.21746479</b> (burner). CC BY 4.0.</p>
-      <span class="go"><a href="https://zenodo.org/communities/kronos_fusion_energy">The Zenodo community →</a></span>
-    </div>
-    <div class="card">
-      <h3>The knowledge base</h3>
-      <p>The 1,000-page technical library and the computing library — the long-form context behind
-      every number on these pages.</p>
-      <span class="go"><a href="https://www.kronosfusionenergy.com/technical">Technical library →</a></span>
-    </div>
+    <a class="cardlink" href="roadmap.html"><div class="card glow"><h3>Roadmap &amp; milestones</h3><p>Dated commitments and the gates each stage must clear.</p><span class="go">Open →</span></div></a>
+    <a class="cardlink" href="readiness.html"><div class="card glow"><h3>Readiness &amp; risks</h3><p>TRL/MRL by system and what would close each open risk.</p><span class="go">Open →</span></div></a>
+    <a class="cardlink" href="computing.html"><div class="card glow"><h3>Computing</h3><p>HPC &amp; quantum compute, the algorithm library, the AI-native stack.</p><span class="go">Open →</span></div></a>
   </div>
 
-  <div class="gapbox">
-    <b class="t">Honest gates — carried, never softened</b>
-    The breeder is a strategic-materials <b>platform, not a power plant</b> — success is measured in gain,
-    TBR, He-3 and neutrons. The burner is <b>plug-gated, not net-power today</b> — its results are
-    conditional on retiring the central-cell plug, which the WHAM-class experiment tests. No economics
-    appears anywhere in this public record.
-  </div>
+  <div class="gapbox"><b class="t">Honest gates — carried, never softened</b>
+  No economics appears anywhere in this public record. Breeder = platform (never framed via electricity). Burner = plug-gated.
+  Headline numbers are read from the frozen anchor file by construction — not hand-typed.</div>
 
-  <div class="foot">
-    <span>KRONOS FUSION ENERGY · Kronos Model</span>
-    <span>Conceptual design and simulation study; no machine has been built</span>
-  </div>
+  <div class="foot"><span>KRONOS FUSION ENERGY · Kronos Model</span><span>Conceptual design and simulation study; no machine has been built</span></div>
 </div>
-
 <script src="../assets/core.js?v=3"></script>
 <script src="../assets/nav.js?v=1"></script>
-</body>
-</html>
+</body></html>

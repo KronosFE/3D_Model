@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /twin.html
+Disallow: /twin_rebuild_core_physics.html
+Disallow: /twin_3d_reactor.html
+Disallow: /Physics_Validation_Simulation/
+Sitemap: https://www.kronosfusionenergy.com/3D_Model/sitemap.xml

@@ -295,7 +295,7 @@ function clearScene(){Object.values(layerGroups).forEach(function(l){scene.remov
 function build(){clearScene();if(M==='breeder')buildBreeder();else buildBurner();
   renderLayerPanel();renderReadout();renderGeo();buildLabels();applyFidelity();applyClipState();applyExplodeState();
   document.getElementById('bctrl').classList.toggle('on',M==='burner');if(M==='burner')updBurner();
-  updateSchem();if(cadOn)document.getElementById('cadimg').src='../cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg');
+  updateSchem();if(cadOn)document.getElementById('cadimg').src='data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420'><rect width='100%25' height='100%25' fill='%23eef2f6'/><text x='50%25' y='46%25' text-anchor='middle' font-family='Menlo,monospace' font-size='18' fill='%2333506b'>CAD PROJECTIONS %26 STEP MODELS</text><text x='50%25' y='56%25' text-anchor='middle' font-family='Menlo,monospace' font-size='13' fill='%238a5a2a'>available to the team in the Kronos Lab</text></svg>';
   frameCamera();}
 var cadOn=false;
 function updateSchem(){var el=document.getElementById('schemnote');if(!el)return;
@@ -303,7 +303,7 @@ function updateSchem(){var el=document.getElementById('schemnote');if(!el)return
     ? 'Schematic — geometry representative of the frozen design (A 2.5 · κ 2.0 · δ −0.30); not an as-built CAD render. See “CAD view” for the B-rep projection.'
     : 'Schematic — tandem-mirror topology representative of the frozen design (not to length-scale: central cell is 55–1400 m). See “CAD view” for the B-rep projection.';}
 function toggleCAD(){cadOn=!cadOn;var v=document.getElementById('cadview'),b=document.getElementById('cadbtn');
-  if(cadOn){document.getElementById('cadimg').src='../cad/'+(M==='breeder'?'breeder_front.svg':'burner_front.svg');v.classList.add('on');if(b)b.classList.add('on');}
+  if(cadOn){document.getElementById('cadimg').src='data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420'><rect width='100%25' height='100%25' fill='%23eef2f6'/><text x='50%25' y='46%25' text-anchor='middle' font-family='Menlo,monospace' font-size='18' fill='%2333506b'>CAD PROJECTIONS %26 STEP MODELS</text><text x='50%25' y='56%25' text-anchor='middle' font-family='Menlo,monospace' font-size='13' fill='%238a5a2a'>available to the team in the Kronos Lab</text></svg>';v.classList.add('on');if(b)b.classList.add('on');}
   else{v.classList.remove('on');if(b)b.classList.remove('on');}}
 /* default framing — zoomed out a bit, per machine */
 function frameCamera(){
