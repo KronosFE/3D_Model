@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blanket neutronics — Kronos Model</title>
+<meta name="description" content="Solve the breeding-blanket neutronics live in your browser: change Li-6 enrichment, blanket thickness, multiplier and coverage and watch net TBR recompute on the deposited engine. The surrogate OpenMC retires; request the full Monte-Carlo run to HPC.">
+<link rel="stylesheet" href="../assets/style.css?v=3">
+<style>
+  .solve{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:var(--r);padding:24px;margin-top:20px}
+  .solve.locked{opacity:.4;pointer-events:none;filter:saturate(.5)}
+  .duo{display:grid;grid-template-columns:320px 1fr;gap:30px}@media(max-width:900px){.duo{grid-template-columns:1fr}}
+  .ctl{margin:14px 0 4px}
+  .ctl label{font-size:11px;letter-spacing:1.2px;color:var(--mut);text-transform:uppercase;font-weight:600;display:flex;justify-content:space-between;margin-bottom:7px;gap:8px}
+  .ctl label output{color:var(--ink);font-size:13px;letter-spacing:0;font-family:var(--mono);font-weight:400}
+  input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold) var(--fill,50%),var(--line2) var(--fill,50%));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--gold);border:2.5px solid #071021;box-shadow:0 0 0 1px var(--gold-deep);cursor:pointer}
+  .seg{display:flex;gap:6px;margin-top:6px}
+  .seg button{flex:1;font:600 12px var(--sans);color:var(--mut);background:rgba(7,16,33,.6);border:1px solid var(--line2);border-radius:8px;padding:8px;cursor:pointer}
+  .seg button.on{color:#0a1322;background:var(--gold);border-color:var(--gold-deep)}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 12px}
+  .tile{background:rgba(7,16,33,.6);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .tile .k{font-size:9.5px;letter-spacing:1.4px;color:var(--dim);text-transform:uppercase;font-weight:600}
+  .tile .v{font-size:26px;margin-top:3px;font-variant-numeric:tabular-nums;font-weight:600}.tile .u{font-size:12px;color:var(--mut)}
+  .tile.hero{border-color:var(--gold-deep);background:linear-gradient(180deg,rgba(232,196,118,.08),rgba(7,16,33,.6))}.tile.hero .v{color:var(--gold);font-size:30px}
+  .tile.good .v{color:var(--teal)}.tile.bad .v{color:var(--bad)}
+  .status{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:8px}
+  .prov{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+  .prov b{color:var(--gold);font-weight:500}
+  .qbtn{font:600 13px var(--sans);background:var(--navy);color:#fff;border:1px solid var(--line2);border-radius:8px;padding:10px 16px;cursor:pointer;margin-top:6px}
+  .qbtn:hover{border-color:var(--gold-deep)}
+  .qout{font-family:var(--mono);font-size:11.5px;color:var(--mut);background:#071021;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;white-space:pre-wrap;display:none}
+</style></head>
+<body>
+<nav class="topnav" id="kfe-nav"><div class="in"></div></nav>
+<div class="wrap">
+  <div class="eyebrow">Physics · live instrument · <span class="snum" style="border:none;padding:0">neutronics</span></div>
+  <h1>Solve the blanket.</h1>
+  <p class="lede">This is the deposited breeding-blanket neutronics, <b>running live in your browser</b> — change the
+  design and net TBR recomputes on the actual engine (a reduced-order surrogate; <b>OpenMC retires it</b>). Before the
+  controls unlock it re-derives the frozen blanket point (net TBR <b>0.742</b>). When you want first-principles
+  transport, request the full OpenMC run — it goes to the HPC queue.</p>
+
+  <div class="boot" id="boot"><div class="bar"><i></i><i></i><i></i></div><span class="cursor"></span></div>
+
+  <div class="solve locked" id="solver">
+    <div class="duo">
+      <div id="knobs"></div>
+      <div>
+        <div class="tiles" id="tiles"></div>
+        <div id="badges"></div>
+        <div class="status" id="sstatus"></div>
+        <div style="margin-top:16px">
+          <button class="qbtn" id="qbtn">⌁ Request the full OpenMC run →</button>
+          <div class="qout" id="qout"></div>
+        </div>
+        <div class="prov" id="prov"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gapbox"><b class="t">Honest gate</b> Net TBR must exceed <b>1.0</b> for tritium self-sufficiency.
+  At the frozen 3-D coverage the breeder is <b>net-deficit</b> (net TBR 0.742) — that is the gate the program drives
+  to close (studies H1, H6). Local TBR &gt; 1 is necessary but not sufficient; penetrations and coverage set the net.</div>
+
+  <div class="pagenav">
+    <a href="../machine/reactor-3d.html"><span class="lab">Machine</span>◂ the 3D reactor</a>
+    <a href="../machine/materials.html"><span class="lab">Machine</span>Materials &amp; neutronics ▸</a>
+  </div>
+  <div class="foot"><span>KRONOS FUSION ENERGY · Kronos Model</span><span>Conceptual design and simulation study; no machine has been built · runs in your browser</span></div>
+</div>
+
+<script src="../assets/core.js?v=3"></script>
+<script src="../assets/nav.js?v=1"></script>
+<script>
+const ENGINE_BASE=(window.LAB_CONFIG&&window.LAB_CONFIG.ENGINE_BASE)||"../engine/kronos_toolkit/";
+const FILES=["verify/tags.py","neutronics/analytic.py","neutronics/api.py"];
+const ANCHOR={net_tbr:[0.7424,0.001], local_tbr:[1.1517,0.001]};
+const KNOBS=[
+ ["li6_enrichment","Li-6 enrichment",0.0,1.0,0.01,0.9,"fraction"],
+ ["blanket_thickness_m","Blanket thickness",0.30,1.50,0.01,0.8,"m"],
+ ["coverage","Coverage",0.0,1.0,0.01,0.92,"fraction"]];
+const MULT=["Be","Pb","none"]; let mult="Be";
+const $=id=>document.getElementById(id); let py=null;
+function line(cls,t){const b=$('boot');b.innerHTML+=`<div class="${cls}" style="opacity:1">${t}</div>`;}
+function fillRange(s){const p=(s.value-s.min)/(s.max-s.min)*100;s.style.setProperty('--fill',p+'%');}
+function vals(){const o={};KNOBS.forEach(k=>o[k[0]]=parseFloat($('k-'+k[0]).value));o.multiplier=mult;return o;}
+function renderKnobs(){
+  $('knobs').innerHTML=KNOBS.map(k=>`<div class="ctl"><label>${k[1]}<output id="o-${k[0]}">${k[5]}</output></label>
+    <input type="range" id="k-${k[0]}" min="${k[2]}" max="${k[3]}" step="${k[4]}" value="${k[5]}"></div>`).join('')
+    +`<div class="ctl"><label>Multiplier</label><div class="seg" id="mseg">${MULT.map(m=>`<button data-m="${m}" class="${m==mult?'on':''}">${m}</button>`).join('')}</div></div>`;
+  KNOBS.forEach(k=>{const s=$('k-'+k[0]);fillRange(s);s.addEventListener('input',()=>{$('o-'+k[0]).textContent=(+s.value).toFixed(2);fillRange(s);solveNow();});});
+  document.querySelectorAll('#mseg button').forEach(b=>b.addEventListener('click',()=>{mult=b.dataset.m;document.querySelectorAll('#mseg button').forEach(x=>x.classList.toggle('on',x.dataset.m==mult));solveNow();}));
+}
+function solve(p){return JSON.parse(py.runPython(`import json; json.dumps(_tbr(${p.li6_enrichment}, ${p.blanket_thickness_m}, '${p.multiplier}', ${p.coverage}))`));}
+function fmt(v,d){return Number(v).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});}
+function solveNow(){const t0=performance.now();let r;try{r=solve(vals());}catch(e){$('sstatus').textContent='solver error: '+e;return;}
+  const ms=(performance.now()-t0)|0, ok=r.net_tbr>=1.0;
+  $('tiles').innerHTML=`<div class="tile hero ${ok?'good':'bad'}"><div class="k">net TBR</div><div class="v">${fmt(r.net_tbr,4)}</div></div>
+   <div class="tile"><div class="k">local TBR</div><div class="v">${fmt(r.local_tbr,4)}</div></div>
+   <div class="tile"><div class="k">penetration derate</div><div class="v" style="font-size:20px">${fmt(r.penetration_derate,3)}</div></div>`;
+  $('badges').innerHTML=`<span class="badge gold">surrogate · [T]</span>`+(ok?'<span class="badge" style="color:var(--teal);border:1px solid var(--teal);background:rgba(110,201,178,.1)">self-sufficient</span>':'<span class="badge warnb">net-deficit — TBR &lt; 1</span>');
+  $('sstatus').textContent=`solved in ${ms} ms · deposited neutronics surrogate · deterministic`;
+}
+$('qbtn').addEventListener('click',()=>{
+  const run={code:'openmc',inputs:vals(),executor:'hpc',purpose:'Full Monte-Carlo TBR at this blanket design',requested_by:'blanket-instrument',priority:'P2'};
+  const sb=window.LAB_CONFIG&&window.LAB_CONFIG.SUPABASE_URL;
+  $('qout').style.display='block';
+  if(sb){ $('qout').textContent='Dispatching to the Lab run queue (Supabase)…';
+    import('https://esm.sh/@supabase/supabase-js@2').then(m=>{const c=m.createClient(window.LAB_CONFIG.SUPABASE_URL,window.LAB_CONFIG.SUPABASE_ANON_KEY);
+      return c.from('lab_runs').insert({code:'openmc',study:'blanket TBR',params:JSON.stringify(run.inputs),priority:'P2',status:'requested'});})
+      .then(()=>$('qout').textContent='✓ Queued for OpenMC on HPC. Track it in the Lab → Run queue.').catch(e=>$('qout').textContent='queue error: '+e);
+  } else {
+    $('qout').textContent='Run request (sign in to the Lab to dispatch to HPC):\n'+JSON.stringify(run,null,2)+'\n\n→ card: openmc · container apptainer://openmc · anchor neutronics.net_tbr';
+  }
+});
+(async()=>{try{
+  line('','▸ loading WebAssembly Python runtime …');
+  const mod=await import('https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.mjs');py=await mod.loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/'});
+  line('ok','✓ Python ready — the neutronics engine is pure-math (no NumPy needed)');
+  // minimal package: empty __init__s break the scipy-heavy core import chain
+  py.FS.mkdirTree('/kt/kronos_toolkit/verify');py.FS.mkdirTree('/kt/kronos_toolkit/neutronics');
+  py.FS.writeFile('/kt/kronos_toolkit/__init__.py','');py.FS.writeFile('/kt/kronos_toolkit/verify/__init__.py','');
+  py.FS.writeFile('/kt/kronos_toolkit/neutronics/__init__.py','from .api import tbr\n');
+  for(const f of FILES){const t=await(await fetch(ENGINE_BASE+f,{cache:'no-cache'})).text();py.FS.writeFile('/kt/kronos_toolkit/'+f,t);}
+  py.runPython(`import sys; sys.path.insert(0,'/kt')
+from kronos_toolkit.neutronics.api import tbr
+def _tbr(li6, thk, mult, cov):
+    r = tbr(li6_enrichment=li6, blanket_thickness_m=thk, multiplier=mult, coverage=cov, force_analytic=True)
+    return {k: (float(v) if isinstance(v,(int,float)) else v) for k,v in r.value.items()}`);
+  line('ok','✓ kronos_toolkit.neutronics imported — re-deriving the frozen blanket point …');
+  const r=solve({li6_enrichment:0.9,blanket_thickness_m:0.8,multiplier:'Be',coverage:0.92});let allok=true;
+  for(const [k,[v,tol]] of Object.entries(ANCHOR)){const ok=Math.abs(r[k]-v)<=tol;allok=allok&&ok;
+    line(ok?'ok':'fail',`${ok?'✓':'✗'} ${k} → <span class="val">${fmt(r[k],4)}</span> <span class="dim">(anchor ${v}, atol ${tol})</span>`);}
+  if(allok){line('ok','▸ engine verified against the frozen anchor — controls unlocked.');$('solver').classList.remove('locked');
+    $('prov').innerHTML='provenance — surrogate <b>[T]</b> · retired by <b>OpenMC</b> (Monte-Carlo neutron transport) · engine card <b>openmc</b> · license permissive · anchor <b>neutronics.net_tbr</b>';
+    renderKnobs();solveNow();}
+  else line('fail','✗ anchor deviation — controls stay locked.');
+}catch(e){line('fail','✗ '+e);}})();
+</script></body></html>
