@@ -23,7 +23,7 @@ EXPORTER_THRESHOLD = 1.0     # kg-T/fpy above which the plant is a net exporter
 
 def build_rows():
     rows = []
-    t_burn = tritium_burn_rate()      # ~4.97 kg-T/fpy at 88.7 MW
+    t_burn = tritium_burn_rate()      # ~4.77 kg-T/fpy at 85.0 MW
     for net in NET_TBR_LADDER:
         surplus = surplus_kg_per_fpy(net)
         rows.append(dict(

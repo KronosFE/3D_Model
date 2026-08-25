@@ -676,7 +676,7 @@ details.faq .fa b{color:var(--ink)}
     <div id="bm-charts"></div>
     <div class="subhdr">The burner is a different class</div>
     <div class="card dark" style="line-height:1.6">The D–³He tandem-mirror <b class="pink">burner (Aegis · MetroVolt)</b> is not a tokamak and is not measured by the metrics above. Its figure of merit is <b>net electric output</b>: engineering gain Q_E ≈ 1.31 at the closing design point, delivering net <b>+104 / +850 / +2832 MWe</b> across central-cell lengths of 55 / 440 / 1400 m — subject to the plug-density requirement documented on the Physics and Methodology pages.</div>
-    <div class="foot">Reference values are the devices' published headline figures. Field row: on-axis for ITER / SPARC / NSTX-U; <b>peak-at-conductor</b> for Hyperion's HTS coils — the two bases are not directly comparable. Hyperion figures are the frozen computed design point (Q 3.424, P_fus 88.7 MW, I_p 9.86 MA).</div>
+    <div class="foot">Reference values are the devices' published headline figures. Field row: on-axis for ITER / SPARC / NSTX-U; <b>peak-at-conductor</b> for Hyperion's HTS coils — the two bases are not directly comparable. Hyperion figures are the frozen computed design point (Q 3.076, P_fus 85.0 MW, I_p 9.66 MA).</div>
   </section>
 
   <!-- ================= MILESTONES (#10) ================= -->
@@ -1411,10 +1411,10 @@ var DP = {
       {lab:'Z_eff',n:'1.16',u:'',frac:.29}
     ],
     score:[
-      ['Fusion gain  Q','3.424','SOLVED — P_fus/P_aux','pass'],
-      ['Fusion power  P_fus','88.7 MW','COMPUTED','pass'],
+      ['Fusion gain  Q','3.076','SOLVED — P_fus/P_aux','pass'],
+      ['Fusion power  P_fus','85.0 MW','COMPUTED','pass'],
       ['Neutron power  P_n','70.7 MW','f_n 0.797','pass'],
-      ['Plasma current  I_p','9.86 MA','1.50 boot + 8.36 driven','pass'],
+      ['Plasma current  I_p','9.66 MA','1.50 boot + 8.36 driven','pass'],
       ['Toroidal field  B₀','8.0 T','SCAN lever','gate'],
       ['Peak coil field  B_peak','16.84 T','≤ 20.1 T [HAR23]','pass'],
       ['Neutron wall load','1.97 MW/m²','19.7 dpa/fpy','gate'],
@@ -1613,7 +1613,7 @@ function notesLoad(){var t=document.getElementById('tk-notes');if(t)t.value=lsGe
 /* --- compare (#122) --- */
 function compareOpen(){toolkitClose();var id='cmp-modal';var ex=document.getElementById(id);if(ex)ex.remove();
   var rows=[['Type','D–T spherical tokamak','D–³He tandem mirror'],['Product','Tritium · neutrons · ³He','Net electricity'],
-    ['Gain','Q ≈ 3.42','Q_E ≈ 1.31'],['Fusion power','88.7 MW','200 MW class'],['Neutron fraction','~80% (D–T)','~5.4% (low-neutron)'],
+    ['Gain','Q ≈ 3.42','Q_E ≈ 1.31'],['Fusion power','85.0 MW','200 MW class'],['Neutron fraction','~80% (D–T)','~5.4% (low-neutron)'],
     ['Peak field','16.84 T on-conductor','26.49–39.74 T plug pair'],['Net electric','product is fuel, not MWe','+104 / +850 / +2832 MWe (55/440/1400 m)'],
     ['Binding gate','H₉₈ + 90% divertor radiated','plug-density ratio ~16']];
   var burnerLen='<div style="overflow-x:auto"><table class="score"><thead><tr><th>Housing</th><th>Length</th><th>Net electric</th></tr></thead><tbody>'+
@@ -1630,7 +1630,7 @@ function compareOpen(){toolkitClose();var id='cmp-modal';var ex=document.getElem
 function specSheet(){var mach=(M==='burner')?'Burner (D–³He tandem mirror) · Aegis / MetroVolt':'Breeder — Hyperion (D–T spherical tokamak)';
   var doi=(M==='burner')?'10.5281/zenodo.21746479':'10.5281/zenodo.21746157';
   var rows=(M==='burner')?[['Engineering gain Q_E','1.309'],['Neutron fraction','5.44%'],['Ion temperature','90 keV'],['Plug field (pair)','26.49–39.74 T'],['Net electric','+104 / +850 / +2832 MWe (55/440/1400 m)'],['Binding requirement','plug-density ratio ≈ 16']]:
-    [['Fusion gain Q','3.424'],['Fusion power','88.7 MW'],['Plasma current','9.86 MA'],['Peak field','16.84 T'],['Triangularity δ','−0.30'],['Tritium output','4.0 kg/yr (TBR 1.8)'],['Confinement','H₉₈ = 1.0 (key assumption)']];
+    [['Fusion gain Q','3.076'],['Fusion power','85.0 MW'],['Plasma current','9.66 MA'],['Peak field','16.84 T'],['Triangularity δ','−0.30'],['Tritium output','4.0 kg/yr (TBR 1.8)'],['Confinement','H₉₈ = 1.0 (key assumption)']];
   var w=window.open('','_blank');if(!w)return;
   w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Kronos spec sheet — '+mach+'</title>'+
     '<style>body{font-family:Arial,sans-serif;color:#111;max-width:720px;margin:30px auto;padding:0 20px}h1{font-size:20px}h2{font-size:13px;color:#666;font-weight:normal;margin-top:2px}table{border-collapse:collapse;width:100%;margin-top:16px}td{border-bottom:1px solid #ddd;padding:8px 6px;font-size:13px}td:first-child{color:#555;width:45%}.n{font-size:11px;color:#888;margin-top:20px}@media print{body{margin:0}}</style></head><body>'+
@@ -1864,7 +1864,7 @@ function buildSliders(){
   });
   document.getElementById('sliders').innerHTML=h;
   document.getElementById('slider-note').innerHTML=(M==='breeder'
-    ? 'Frozen anchor: Q 3.424 · P_fus 88.7 MW · I_p 9.86 MA · T 4.0 kg/yr (TBR 1.8). Tritium tracks the TBR lever (demonstrated Be blanket TBR 1.34 → ~1.7 kg/yr).'
+    ? 'Frozen anchor: Q 3.076 · P_fus 85.0 MW · I_p 9.66 MA · T 4.0 kg/yr (TBR 1.8). Tritium tracks the TBR lever (demonstrated Be blanket TBR 1.34 → ~1.7 kg/yr).'
     : 'Frozen anchor: Q_E 1.309 · f_n 5.44% · net +850 MWe @ 440 m at x 0.30. Sweep reproduced on common/mirror.py (M-46).');
 }
 function onSlide(id,v){sliderState[id]=parseFloat(v);
@@ -1879,7 +1879,7 @@ function updatePhysics(){
   if(M==='breeder'){
     var TBR=sliderState.TBR, B0=sliderState.B0, Ti=sliderState.Ti0, H=sliderState.H98;
     // frozen anchors
-    var Q0=3.424,Pf0=88.7,Pn0=70.7,Ip0=9.86,T0=4.0;
+    var Q0=3.076,Pf0=85.0,Pn0=70.7,Ip0=9.66,T0=4.0;
     // transparent 0-D excursions around anchor (illustrative)
     var Pf=Pf0*Math.pow(Ti/15,1.3)*Math.pow(B0/8,0.6)*Math.pow(H,1.5);
     var Q=Q0*Math.pow(H,1.5)*Math.pow(Ti/15,0.8);
@@ -1892,9 +1892,9 @@ function updatePhysics(){
       roCard('Tritium output',Trit.toFixed(2),'kg/yr','at TBR '+TBR.toFixed(2))+
       roCard('Neutron wall',(1.97*Pf/Pf0).toFixed(2),'MW/m²','14 MeV first wall');
     eqs.innerHTML=
-      eqCard('Power-balance gain','Q = P_fus / P_aux','= 88.66 / 25.89 = 3.424 (frozen)')+
+      eqCard('Power-balance gain','Q = P_fus / P_aux','= 85.04 / 25.89 = 3.076 (frozen)')+
       eqCard('Confinement — IPB98(y,2)','τ_E = 0.0562·H·I_p^0.93·B_T^0.15·n^0.41·R^1.97·κ^0.78·P^-0.69','τ_E = 0.374 s at H₉₈ 1.0')+
-      eqCard('Bootstrap (Sauter)','f_bs = I_boot / I_p','= 1.50 / 9.86 = 0.152')+
+      eqCard('Bootstrap (Sauter)','f_bs = I_boot / I_p','= 1.50 / 9.66 = 0.155')+
       eqCard('Tritium duty','1.87 ≤ T[kg/yr] ≤ 4.0','TBR 1.8 → 4.0 · demonstrated 1.34 → ~1.7');
   } else {
     var x=sliderState.x, w=winInterp(x);
@@ -1960,7 +1960,7 @@ function drawWindow(){
    Data reproduced from the deposits (frozen-consistent):
    Breeder — data/dt_scan.csv (frozen config 22021) + blanket TBR
    Burner  — common/mh/design_point/operating_window.csv + H59_beta_sensitivity.csv */
-var WB={"breeder": {"frozen": {"B0": 8.0, "Ti0": 15.0, "q95": 3.0, "kappa": 2.0, "TBR_dt": 1.8, "Q": 3.424, "P_fus": 88.66, "betaN": 1.532, "T": 4.0, "wall": 1.966, "Ip": 9.86}, "sweeps": {"B0": [[3.0, 0.061, 12.5, 4.085, 0.562, 0.276, false], [5.0, 0.406, 34.6, 2.451, 1.562, 0.768, false], [8.0, 3.424, 88.7, 1.532, 4.0, 1.966, true], [12.0, 999, 199.5, 1.021, 8.999, 4.423, false], [16.0, 999, 354.6, 0.766, 15.998, 7.863, false], [20.0, 999, 554.1, 0.613, 24.997, 12.285, false]], "Ti0": [[15.0, 3.424, 88.7, 1.532, 4.0, 1.966, true], [20.0, 2.053, 160.9, 2.043, 7.257, 3.566, false], [30.0, 0.878, 305.8, 3.064, 13.809, 6.78, false], [60.0, 0.158, 588.7, 6.128, 26.686, 13.046, false], [100.0, 0.037, 728.0, 10.213, 33.204, 16.12, false]], "q95": [[3.0, 3.424, 88.7, 1.532, 4.0, 1.966, true], [5.0, 0.454, 31.9, 1.532, 1.44, 0.708, false]], "kappa": [[2.0, 3.424, 88.7, 1.532, 4.0, 1.966, true], [2.6, 999, 285.7, 1.532, 12.889, 5.085, false]], "TBR_dt": [[1.1, 3.424, 88.7, 1.532, 0.523, 1.966, false], [1.5, 3.424, 88.7, 1.532, 2.509, 1.966, true], [1.8, 3.424, 88.7, 1.532, 4.0, 1.966, true]]}}, "burner": {"window": {"ne": [[8e+19, 1.0119, 5.005, 50.6, 83.4, true], [1e+20, 1.0593, 5.092, 79.1, 84.61, true], [1.2e+20, 1.1004, 5.161, 114.0, 85.59, true], [1.5e+20, 1.1542, 5.243, 178.4, 86.8, true], [1.8e+20, 1.2016, 5.309, 257.1, 87.78, true], [2.2000000000000003e+20, 1.258, 5.381, 384.4, 88.87, true], [2.6e+20, 1.3091, 5.439, 537.3, 89.78, true], [3e+20, 1.3554, 5.434, 715.3, 89.91, true]], "x_he3": [[0.15, 0.9325, 13.044, 487.1, 87.12, true], [0.2, 1.1345, 9.523, 520.8, 88.44, true], [0.25, 1.2745, 7.14, 536.2, 89.29, true], [0.3, 1.3091, 5.439, 537.3, 89.78, true], [0.35, 1.244, 4.178, 527.0, 89.91, true], [0.4, 1.1212, 3.229, 507.9, 89.91, true], [0.45, 0.9831, 2.494, 481.6, 89.6, true], [0.5, 0.8541, 1.92, 449.7, 89.0, true]]}, "beta": [[0.5, 1.1113, true], [0.55, 1.3091, true], [0.6, 1.5763, true]], "frozen": {"x_he3": 0.3, "ne": 2.6e+20, "Q_E": 1.309, "f_n": 5.44, "P_fus": 537.3, "beta_c": 0.55}}};
+var WB={"breeder":{"frozen":{"B0":8.0,"Ti0":15.0,"q95":3.0,"kappa":2.0,"TBR_dt":1.8,"Q":3.076,"P_fus":85.04,"betaN":1.532,"T":3.836,"wall":1.885,"Ip":9.66},"sweeps":{"B0":[[3.0,0.057,12.0,4.085,0.539,0.265,true],[5.0,0.379,33.2,2.451,1.499,0.736,true],[8.0,3.076,85.0,1.532,3.836,1.885,true],[12.0,999,191.3,1.021,8.632,4.242,false],[16.0,999,340.2,0.766,15.345,7.541,false],[20.0,999,531.5,0.613,23.976,11.784,false]],"Ti0":[[15.0,3.076,85.0,1.532,3.836,1.885,true],[20.0,1.876,154.3,2.043,6.961,3.421,true],[30.0,0.814,293.3,3.064,13.246,6.503,true],[60.0,999,564.7,6.128,25.596,12.513,false],[100.0,999,698.2,10.213,31.848,15.462,false]],"q95":[[3.0,3.076,85.0,1.532,3.836,1.885,true],[5.0,0.423,30.6,1.532,1.381,0.679,true]],"kappa":[[2.0,3.076,85.0,1.532,3.836,1.885,true],[2.6,999,273.2,1.532,12.325,4.862,true]],"TBR_dt":[[1.1,3.076,85.0,1.532,0.501,1.885,true],[1.5,3.076,85.0,1.532,2.407,1.885,true],[1.8,3.076,85.0,1.532,3.836,1.885,true]]}},"burner":{"window":{"ne":[[8e+19,1.0119,5.005,50.6,83.4,true],[1e+20,1.0593,5.092,79.1,84.61,true],[1.2e+20,1.1004,5.161,114.0,85.59,true],[1.5e+20,1.1542,5.243,178.4,86.8,true],[1.8e+20,1.2016,5.309,257.1,87.78,true],[2.2000000000000003e+20,1.258,5.381,384.4,88.87,true],[2.6e+20,1.3091,5.439,537.3,89.78,true],[3e+20,1.3554,5.434,715.3,89.91,true]],"x_he3":[[0.15,0.9325,13.044,487.1,87.12,true],[0.2,1.1345,9.523,520.8,88.44,true],[0.25,1.2745,7.14,536.2,89.29,true],[0.3,1.3091,5.439,537.3,89.78,true],[0.35,1.244,4.178,527.0,89.91,true],[0.4,1.1212,3.229,507.9,89.91,true],[0.45,0.9831,2.494,481.6,89.6,true],[0.5,0.8541,1.92,449.7,89.0,true]]},"beta":[[0.5,1.1113,true],[0.55,1.3091,true],[0.6,1.5763,true]],"frozen":{"x_he3":0.3,"ne":2.6e+20,"Q_E":1.309,"f_n":5.44,"P_fus":537.3,"beta_c":0.55}}};
 var WBCFG={
   breeder:{
     src:'dt_scan.csv · config 22021',doi:'10.5281/zenodo.21746157',
@@ -2104,24 +2104,24 @@ var EQCAT={
     deriv:[['n̄ (line-avg density)','4.09×10²⁰ m⁻³'],['T_i0','15 keV'],['τ_E','0.374 s'],['n̄·T·τ','2.29×10²¹ keV·s/m³'],['D–T ignition threshold','~3×10²¹'],['Regime','driven, sub-ignition','bad']],
     note:'A breeder is run <b>driven</b> (Q 3.42), not ignited — the neutrons and tritium are the product.'},
    {n:'Energy confinement — IPB98(y,2)',f:'τ_E = 0.0562·H·I_p^0.93·B^0.15·n^0.41·R^1.97·κ^0.78·P^-0.69',r:'0.374 <small>s</small>',
-    deriv:[['H₉₈','1.00'],['I_p','9.86 MA'],['B₀','8 T'],['n̄','4.09×10²⁰'],['R₀','1.2 m'],['κ','2.0'],['τ_E','0.374 s']],
+    deriv:[['H₉₈','1.00'],['I_p','9.66 MA'],['B₀','8 T'],['n̄','4.09×10²⁰'],['R₀','1.2 m'],['κ','2.0'],['τ_E','0.374 s']],
     note:'H₉₈ = 1.0 is the assumed confinement quality (A < 2.5 extrapolates IPB98; declared caveat).'},
    {n:'Bootstrap fraction (Sauter)',f:'f_bs = I_boot / I_p',r:'0.152',
-    deriv:[['I_boot','1.50 MA'],['I_driven','8.36 MA'],['I_p total','9.86 MA'],['f_bs','0.152']],
+    deriv:[['I_boot','1.50 MA'],['I_driven','8.36 MA'],['I_p total','9.66 MA'],['f_bs','0.152']],
     note:'Steady-state: bootstrap + driven current continuously sustained (H29).'},
    {n:'Normalized beta',f:'β_N = β_t · a·B₀ / I_p',r:'1.532 <small>/ 4.2</small>',
     deriv:[['β_t','3.93 %'],['β_N','1.532'],['no-wall NSTX limit','4.2 [SAB10]'],['Margin','well below limit','ok']],
     note:'Respects the 4.2 no-wall NSTX-class limit with wide margin.'}
   ]},
   {g:'Fusion & Power',items:[
-   {n:'Fusion power (D–T)',f:'P_fus = n_D·n_T·⟨σv⟩·E_DT·V_p',r:'88.7 <small>MW</small>',
-    deriv:[['⟨σv⟩ D–T @15 keV','≈2.5×10⁻²² m³/s'],['E_DT','17.6 MeV'],['V_p','10.9 m³'],['P_fus','88.66 MW']],
+   {n:'Fusion power (D–T)',f:'P_fus = n_D·n_T·⟨σv⟩·E_DT·V_p',r:'85.0 <small>MW</small>',
+    deriv:[['⟨σv⟩ D–T @15 keV','≈2.5×10⁻²² m³/s'],['E_DT','17.6 MeV'],['V_p','10.9 m³'],['P_fus','85.04 MW']],
     note:'Bosch-Hale reactivity; cross-sections EXFOR/ENDF-sourced.'},
    {n:'Neutron / charged split',f:'P_n = f_n · P_fus',r:'70.7 <small>MW</small>',
     deriv:[['f_n','0.797'],['P_n (14 MeV)','70.67 MW'],['P_chg (3.5 MeV α)','17.99 MW']],
     note:'The 14 MeV neutron power is the irradiation product that breeds tritium.'},
-   {n:'Fusion gain — SOLVED',f:'Q = P_fus / P_aux',r:'3.424',
-    deriv:[['P_fus','88.66 MW'],['P_aux','25.89 MW'],['Q','3.424']],
+   {n:'Fusion gain — SOLVED',f:'Q = P_fus / P_aux',r:'3.076',
+    deriv:[['P_fus','85.04 MW'],['P_aux','25.89 MW'],['Q','3.076']],
     note:'Solved from the power balance — NOT the withdrawn scaled 1.889 (H02).'},
    {n:'Bremsstrahlung radiation',f:'P_br = C·Z_eff·n_e²·√T_e·V',r:'3.25 <small>MW</small>',
     deriv:[['Z_eff','1.158'],['n̄','4.09×10²⁰'],['P_br','3.25 MW'],['P_sync','1.57 MW']],note:''},
@@ -2167,7 +2167,7 @@ var EQCAT={
 var TILES={
  breeder:[
   {th:'Ignition Analysis',big:'Q 3.42',bcls:'',st:'SUB-IGNITION · driven',stcls:'gate',sub:'nTτ 2.29×10²¹ &lt; 3×10²¹ — a breeder is driven, not ignited.',
-   detail:[['Fusion gain Q','3.424'],['Triple product','2.29×10²¹'],['P_aux','25.89 MW'],['Regime','driven / sub-ignition','bad']]},
+   detail:[['Fusion gain Q','3.076'],['Triple product','2.29×10²¹'],['P_aux','25.89 MW'],['Regime','driven / sub-ignition','bad']]},
   {th:'Stress & Thermal',big:'1.97 MW/m²',bcls:'',st:'wall & coil OK',stcls:'pass',sub:'B_peak 16.84 T ≤ 20.1 T; 19.7 dpa/fpy → ~2.5 fpy life.',
    detail:[['Neutron wall load','1.97 MW/m²'],['B_peak','16.84 T ≤ 20.1'],['damage','19.7 dpa/fpy'],['component life','~2.5 fpy','bad']]},
   {th:'Risk & UQ',big:'H₉₈ = 1.0',bcls:'',st:'assumptions declared',stcls:'gate',sub:'δ-sign open (~2.1% on I_p); damage-life-limited CF; ash f_He4 0.05 conservative.',
@@ -2243,8 +2243,8 @@ var HW={
     detail:[['material','tungsten monoblocks'],['config','lower single-null'],['plasma volume','10.9 m³']]}
   ]},
   {g:'Plasma & Confinement',cards:[
-   {th:'Plasma current',big:'9.86',unit:'MA',st:'boot + driven',stcls:'pass',sub:'Flat-top current; bootstrap 1.50 MA (f_bs 0.152), remainder current-driven.',
-    detail:[['I_p','9.86 MA'],['bootstrap','1.50 MA (f_bs 0.152)'],['driven','8.36 MA'],['q₉₅','3.0']]},
+   {th:'Plasma current',big:'9.66',unit:'MA',st:'boot + driven',stcls:'pass',sub:'Flat-top current; bootstrap 1.50 MA (f_bs 0.152), remainder current-driven.',
+    detail:[['I_p','9.66 MA'],['bootstrap','1.50 MA (f_bs 0.152)'],['driven','8.36 MA'],['q₉₅','3.0']]},
    {th:'Energy confinement',big:'0.374',unit:'s (τ_E)',st:'H₉₈ 1.0',stcls:'pass',sub:'IPB98(y,2) at H₉₈ 1.0 — confinement quality dominates the uncertainty.',
     detail:[['τ_E','0.374 s'],['H₉₈','1.0'],['scaling','IPB98(y,2)'],['A<2.5','extrapolated (declared)']]},
    {th:'Normalised β',big:'1.53',unit:'β_N / 4.2',st:'stable margin',stcls:'pass',sub:'β_N well below the NSTX no-wall limit of 4.2.',
@@ -2252,7 +2252,7 @@ var HW={
   ]},
   {g:'Heating & Current Drive',cards:[
    {th:'Auxiliary power',big:'25.9',unit:'MW',st:'NBI + RF',stcls:'pass',sub:'External heating + current drive; sets the Q = P_fus/P_aux gain.',
-    detail:[['P_aux','25.9 MW'],['P_fus','88.7 MW'],['Q','3.424'],['drive','NBI / RF']]},
+    detail:[['P_aux','25.9 MW'],['P_fus','85.0 MW'],['Q','3.076'],['drive','NBI / RF']]},
    {th:'Ion temperature',big:'15',unit:'keV (T_i0)',st:'core',stcls:'pass',sub:'Core ion temperature at the frozen point; Greenwald fraction 0.30.',
     detail:[['T_i0','15 keV'],['f_G','0.30'],['fuel','D–T']]}
   ]},
@@ -2353,9 +2353,9 @@ var DATASTD=[
  {th:'EXFOR / ENDF',big:'nuclear data',st:'sourced',live:true,sub:'Fusion cross-sections from EXFOR experimental entries — nothing extrapolated (H42).',
   url:'https://www-nds.iaea.org/exfor/',
   detail:[['reactivities','9 reactions'],['EXFOR-sourced','5'],['out-of-range requests','0','ok'],['verification','H42 PASS']]},
- {th:'ITER baseline',big:'15 MA',st:'benchmarked',live:true,sub:'Hyperion’s 9.86 MA is ~⅔ of the ITER 15 MA baseline (Kim 2018).',
+ {th:'ITER baseline',big:'15 MA',st:'benchmarked',live:true,sub:'Hyperion’s 9.66 MA is ~⅔ of the ITER 15 MA baseline (Kim 2018).',
   url:'https://doi.org/10.1088/1741-4326/aab034',
-  detail:[['ITER I_p','15 MA'],['Hyperion I_p','9.86 MA'],['ratio','~0.66 (⅔)'],['source','Kim 2018']]},
+  detail:[['ITER I_p','15 MA'],['Hyperion I_p','9.66 MA'],['ratio','~0.66 (⅔)'],['source','Kim 2018']]},
  {th:'IPB98(y,2)',big:'confinement',st:'applied',live:false,sub:'The standard tokamak energy-confinement scaling; τ_E solved at H₉₈ 1.0.',
   detail:[['scaling','IPB98(y,2)'],['H₉₈','1.0'],['τ_E (breeder)','0.374 s'],['caveat','A<2.5 extrapolates (declared)']]}
 ];
@@ -2402,8 +2402,8 @@ function inspectRef(i){
 var SCN={
  breeder:[{id:'startup',name:'D–T startup → steady breed',
    phases:[['Startup',.15],['Current ramp',.25],['Heating',.2],['Steady breed',.3],['Hold',.1]],
-   out:[['Fusion gain Q',3.424,''],['Fusion power',88.7,'MW'],['Plasma current',9.86,'MA'],['Tritium',4.0,'kg/yr']],
-   act:[['B₀ setpoint',8,'T'],['I_p setpoint',9.86,'MA'],['Aux heating',25.9,'MW'],['Blanket TBR',1.8,'']]}],
+   out:[['Fusion gain Q',3.076,''],['Fusion power',85.0,'MW'],['Plasma current',9.66,'MA'],['Tritium',4.0,'kg/yr']],
+   act:[['B₀ setpoint',8,'T'],['I_p setpoint',9.66,'MA'],['Aux heating',25.9,'MW'],['Blanket TBR',1.8,'']]}],
  burner:[{id:'ign',name:'D–³He ignition ramp',
    phases:[['Startup',.15],['Field ramp',.2],['Fueling',.2],['Burn',.3],['Steady',.15]],
    out:[['Engineering Q_E',1.309,''],['Fusion power',537,'MW'],['Net @ 440 m',850,'MWe'],['T_i',90,'keV']],
@@ -2460,7 +2460,7 @@ function loReset(){loStop();loP=0;loRender();}
 var EVID={
  breeder:{tiles:[['Reproducibility','0.0e+00','bitwise rel diff','pass'],['Validation','23','checks · V01–V23','pass'],['Open deposit','CC BY 4.0','DOI …21746157','pass'],['Patent','US 12,009,112','granted','pass']],
   checks:[['V01','Frozen design point reproduces','worst rel 0.0e+00 (bitwise, NumPy 2.x)','PASS'],
-   ['V02','Gain is SOLVED not scaled','Q 3.4239 from power balance','PASS'],
+   ['V02','Gain is SOLVED not scaled','Q 3.0763 from power balance','PASS'],
    ['V03','Fuel follows purpose (min I_p)','D–T 4.93 MA vs D–D 15.52 MA','PASS'],
    ['V04','Closing-config counts','D–T no-wall 213/10800','PASS'],
    ['…','V05–V23 (19 more)','field/blanket/current-drive checks','PASS']]},
@@ -2599,7 +2599,7 @@ function inspectLayer(i){var l=STACK[i];openInspect('AI/ML control stack · '+l[
 
 /* ================= ASK THE TWIN (Phase 26) + reporting (27) ================= */
 var QA=[
- ['What is the fusion gain?', {breeder:['Hyperion’s gain is <b>Q 3.424</b>, solved from the power balance (P_fus 88.66 MW / P_aux 25.89 MW) — not a scaled estimate.','V02 · DOI 10.5281/zenodo.21746157'],
+ ['What is the fusion gain?', {breeder:['Hyperion’s gain is <b>Q 3.076</b>, solved from the power balance (P_fus 85.04 MW / P_aux 25.89 MW) — not a scaled estimate.','V02 · DOI 10.5281/zenodo.21746157'],
    burner:['The burner’s engineering gain is <b>Q_E 1.309</b> (plasma Q_p 3.544), with ions-only direct conversion at η 0.70.','M-45 · DOI 10.5281/zenodo.21746479']}],
  ['Is the burner aneutronic?', {breeder:['That’s the burner — but for context, the breeder is deliberately neutron-<i>rich</i> (f_n 0.797): its 14 MeV neutrons breed the tritium.','H01 · DOI 10.5281/zenodo.21746157'],
    burner:['<b>No — it is low-neutron, not aneutronic</b> (M-43). f_n is 5.44% at the design point and falls to 2.77% at x 0.43, still net-positive.','M-43 · DOI 10.5281/zenodo.21746479']}],
@@ -2607,7 +2607,7 @@ var QA=[
    burner:['The end-plug density: <b>n_p/n_c = 16 → 347× the GDT-measured value</b> (H53). At n_p/n_c 10 the machine does not close (Q_E 0.67).','H53 · DOI 10.5281/zenodo.21746479']}],
  ['How much tritium does the breeder make?', {breeder:['<b>4.0 kg/yr at TBR 1.8</b>; the demonstrated Be-blanket TBR 1.34 gives ~1.7 kg/yr — roughly 2× world commercial tritium flow.','H34 · DOI 10.5281/zenodo.21746157'],
    burner:['Tritium is the breeder’s product; the burner runs on D–³He and produces a small D–D tritium by-product only.','M-45 · DOI 10.5281/zenodo.21746479']}],
- ['How does the current compare to ITER?', {breeder:['Hyperion runs <b>9.86 MA — about two-thirds of ITER’s 15 MA baseline</b> (bootstrap 1.50 + driven 8.36 MA).','Kim 2018 · DOI 10.1088/1741-4326/aab034'],
+ ['How does the current compare to ITER?', {breeder:['Hyperion runs <b>9.66 MA — about two-thirds of ITER’s 15 MA baseline</b> (bootstrap 1.50 + driven 8.36 MA).','Kim 2018 · DOI 10.1088/1741-4326/aab034'],
    burner:['The burner is a tandem mirror, not a tokamak — it has no plasma current in the ITER sense; confinement is magnetic-mirror.','M-45 · DOI 10.5281/zenodo.21746479']}]
 ];
 function renderAsk(){
@@ -2618,9 +2618,9 @@ function renderAsk(){
 }
 /* ---- Phase 44: retrieval over the deposit corpus ---- */
 var CORPUS=[
- ['breeder','The breeder’s fusion gain is Q 3.424, solved from the power balance (P_fus 88.66 MW / P_aux 25.89 MW) — not a scaled estimate.','V02 · DOI 21746157'],
- ['breeder','Fusion power is 88.7 MW; neutron power 70.7 MW at neutron fraction f_n 0.797. The 14 MeV neutrons breed the tritium.','H01 · DOI 21746157'],
- ['breeder','Plasma current is 9.86 MA (bootstrap 1.50 + driven 8.36) — about two-thirds of ITER’s 15 MA baseline.','V01 · Kim 2018'],
+ ['breeder','The breeder’s fusion gain is Q 3.076, solved from the power balance (P_fus 85.04 MW / P_aux 25.89 MW) — not a scaled estimate.','V02 · DOI 21746157'],
+ ['breeder','Fusion power is 85.0 MW; neutron power 70.7 MW at neutron fraction f_n 0.797. The 14 MeV neutrons breed the tritium.','H01 · DOI 21746157'],
+ ['breeder','Plasma current is 9.66 MA (bootstrap 1.50 + driven 8.36) — about two-thirds of ITER’s 15 MA baseline.','V01 · Kim 2018'],
  ['breeder','The breeder is a deuterium–tritium spherical tokamak: aspect ratio 2.5, major radius R0 1.2 m, elongation 2.0, B0 8 T, peak conductor field 16.84 T.','config 22021'],
  ['breeder','Tritium output is 4.0 kg/yr at TBR 1.8; the demonstrated Be blanket TBR 1.34 gives about 1.7 kg/yr — roughly twice world commercial tritium flow.','H34 · DOI 21746157'],
  ['breeder','Helium-3 co-product is about 1.97 kg/yr, independent of the blanket.','freeze 2026-08'],
@@ -2671,7 +2671,7 @@ function askQ(i){
 }
 function genReport(){
   var d=M==='breeder'
-   ?['Operational Validation Summary — HYPERION breeder',['Design point Q 3.424 reproduces to 0.0e+00 (bitwise).','23 validation checks (V01–V23) PASS.','Tritium 4.0 kg/yr at TBR 1.8; first-wall life ~2.5 fpy (damage-limited).','Open item: H₉₈ 1.0 / A 2.5 IPB98 extrapolation declared.']]
+   ?['Operational Validation Summary — HYPERION breeder',['Design point Q 3.076 reproduces to 0.0e+00 (bitwise).','23 validation checks (V01–V23) PASS.','Tritium 4.0 kg/yr at TBR 1.8; first-wall life ~2.5 fpy (damage-limited).','Open item: H₉₈ 1.0 / A 2.5 IPB98 extrapolation declared.']]
    :['Operational Validation Summary — D–³He burner',['Design point Q_E 1.309 reproduces (26 params, worst rel 2.5e-11).','45 validation checks (H41–H80) PASS.','Low-neutron f_n 5.44%; net +104/+850/+2832 MWe at 55/440/1400 m.','Open item: n_p/n_c 16 = 347× GDT (requirement-class).']];
   document.getElementById('report-preview').innerHTML='<div class="card dark" style="margin-top:12px"><div class="mono" style="font-size:11px;color:var(--gold);letter-spacing:.08em">'+d[0]+'</div><ul style="font-size:12px;color:var(--ink);margin:10px 0 0;padding-left:18px;line-height:1.7">'+d[1].map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';
   document.getElementById('report-sign').innerHTML='<div class="caveat" style="margin-top:12px"><b>⚠ Draft — awaiting human signature.</b> The twin compiled this automatically. It cannot be submitted until a qualified human reviews and signs. AI compiles; a person authorizes.</div>';
@@ -2680,8 +2680,8 @@ function genReport(){
 function reportData(){
   return M==='breeder'
    ?{title:'Operational Validation Summary — HYPERION breeder',doi:'10.5281/zenodo.21746157',
-     kv:[['Fusion gain Q','3.424'],['Fusion power','88.7 MW'],['Plasma current','9.86 MA'],['β_N','1.532 / 4.2'],['Tritium','4.0 kg/yr'],['τ_E','0.374 s']],
-     bullets:['Design point Q 3.424 reproduces to 0.0e+00 (bitwise) from dt_evaluator.py, run in-browser.','23 validation checks (V01–V23): 14 PASS, 5 informative, 4 requirement-class.','Tritium 4.0 kg/yr at TBR 1.8; first-wall life ~2.5 fpy (damage-limited).','Open item: H₉₈ 1.0 and A 2.5 IPB98 extrapolation declared; δ-sign open.']}
+     kv:[['Fusion gain Q','3.076'],['Fusion power','85.0 MW'],['Plasma current','9.66 MA'],['β_N','1.532 / 4.2'],['Tritium','4.0 kg/yr'],['τ_E','0.374 s']],
+     bullets:['Design point Q 3.076 reproduces to 0.0e+00 (bitwise) from dt_evaluator.py, run in-browser.','23 validation checks (V01–V23): 14 PASS, 5 informative, 4 requirement-class.','Tritium 4.0 kg/yr at TBR 1.8; first-wall life ~2.5 fpy (damage-limited).','Open item: H₉₈ 1.0 and A 2.5 IPB98 extrapolation declared; δ-sign open.']}
    :{title:'Operational Validation Summary — D–³He burner',doi:'10.5281/zenodo.21746479',
      kv:[['Engineering Q_E','1.309'],['Neutron fraction','5.44 %'],['Net @ 440 m','+850 MWe'],['T_i','90 keV'],['B_m throat','17 T'],['T_e/T_i','0.998']],
      bullets:['Design point Q_E 1.309 reproduces (26 parameters, worst rel 2.5e-11).','45 validation checks (H41–H80): 24 PASS, 7 informative, 14 requirement-class.','Low-neutron f_n 5.44%; net +104/+850/+2832 MWe at 55/440/1400 m.','Largest open item: n_p/n_c = 16 = 347× GDT-measured (requirement-class).']};
@@ -3221,11 +3221,11 @@ var VVMETH={A:'Analysis',T:'Test',I:'Inspection',D:'Demonstration'};
 var ANALAB={structural:'Structural',thermal:'Thermal',em:'Electromagnetic',neutronics:'Neutronics',physics:'Physics Engine'};
 var REQS={
  breeder:[
-  {id:'REQ-B01',txt:'Fusion gain Q ≥ 3.0 at the design point',sys:'Plasma physics',m:'A',st:'verified',ana:'physics',cats:['gain','design-point'],note:'Q 3.424 — reproduces bitwise from config 22021.'},
+  {id:'REQ-B01',txt:'Fusion gain Q ≥ 3.0 at the design point',sys:'Plasma physics',m:'A',st:'verified',ana:'physics',cats:['gain','design-point'],note:'Q 3.076 — reproduces bitwise from config 22021.'},
   {id:'REQ-B02',txt:'Tritium breeding self-sufficient (TBR ≥ 1.05)',sys:'Blanket & fuel cycle',m:'A',st:'model',ana:'neutronics',cats:['blanket','fuel-cycle'],note:'Blanket scan meets it; a 3-D MCNP with real ports/penetrations (the TBR killers) is still required.'},
   {id:'REQ-B03',txt:'Peak on-conductor field ≤ 20.1 T (REBCO limit)',sys:'Magnet systems',m:'A',st:'verified',ana:'structural',cats:['magnet','field-lever'],note:'B_peak 16.84 T — 16% margin.'},
   {id:'REQ-B04',txt:'MHD stability — β_N below the no-wall limit',sys:'Plasma physics',m:'A',st:'verified',ana:'structural',cats:['stability'],note:'β_N 1.53 vs 4.2 no-wall.'},
-  {id:'REQ-B05',txt:'Plasma current sustained (I_p, current drive)',sys:'Current drive',m:'A',st:'verified',ana:'em',cats:['current','current-drive'],note:'9.86 MA flat-top.'},
+  {id:'REQ-B05',txt:'Plasma current sustained (I_p, current drive)',sys:'Current drive',m:'A',st:'verified',ana:'em',cats:['current','current-drive'],note:'9.66 MA flat-top.'},
   {id:'REQ-B06',txt:'First-wall lifetime ≥ 2 fpy at 1.97 MW/m²',sys:'First wall / PFC',m:'A',st:'model',ana:'neutronics',cats:['power-density'],note:'Needs a dpa + gas-production (He/H appm) MCNP map and irradiated-material data.'},
   {id:'REQ-B07',txt:'Divertor exhaust within target material limits',sys:'Divertor / PFC',m:'A',st:'model',ana:'thermal',cats:['exhaust'],note:'Binding: the 90% radiative fraction is aggressive — needs SOLPS edge-transport + conjugate-heat CFD.'},
   {id:'REQ-B08',txt:'Structure survives disruption/EM + seismic loads',sys:'Structure / vessel',m:'T',st:'open',ana:'structural',cats:[],note:'Needs full transient FEA and, ultimately, a tested vessel article — no deposit check covers it yet.'},
@@ -3481,11 +3481,11 @@ var PCS={
  breeder:[
   ['Vertical stability','Z position','Flux loops · Mirnov','In-vessel + PF coils','~10 kHz','VDE-stable'],
   ['Shape / boundary','Boundary flux','Magnetics','PF / CS coils','~1 kHz','κ 2.0 · δ −0.30'],
-  ['Plasma current','I_p','Rogowski','Current drive + OH','~1 kHz','9.86 MA'],
+  ['Plasma current','I_p','Rogowski','Current drive + OH','~1 kHz','9.66 MA'],
   ['Density','n_e / Greenwald','Interferometry','Gas + pellet fuelling','~100 Hz','f_G 0.30'],
   ['Divertor detachment','Target T_e / radiated frac','Spectroscopy · Langmuir','Impurity seeding','~100 Hz','90% radiated (binding)'],
   ['Disruption avoidance','Proximity-to-limit','Multi-diagnostic + ML','Mitigation trigger','~kHz','avoid; else mitigate'],
-  ['Burn / heating','T_i / P_fus','Neutron · Thomson','NBI / RF','~Hz','Q 3.424']
+  ['Burn / heating','T_i / P_fus','Neutron · Thomson','NBI / RF','~Hz','Q 3.076']
  ],
  burner:[
   ['Plug confinement','Plug potential φ / n_p','End-loss analyzer','ECH · plug drive','~kHz','n_p/n_c 16 (requirement)'],
@@ -4012,9 +4012,9 @@ function renderPubs(){
 var BM=[
  {k:'Major radius R₀ (m)',rows:[['ITER',6.2],['Hyperion',2.4],['SPARC',1.85],['NSTX-U',0.94]]},
  {k:'Headline field (T)',note:'on-axis for ITER/SPARC/NSTX-U · peak-at-coil for Hyperion',rows:[['Hyperion',16.84],['SPARC',12.2],['ITER',5.3],['NSTX-U',1.0]]},
- {k:'Plasma current Iₚ (MA)',rows:[['ITER',15],['Hyperion',9.86],['SPARC',8.7],['NSTX-U',2.0]]},
+ {k:'Plasma current Iₚ (MA)',rows:[['ITER',15],['Hyperion',9.66],['SPARC',8.7],['NSTX-U',2.0]]},
  {k:'Fusion gain Q',rows:[['SPARC',11],['ITER',10],['Hyperion',3.42],['NSTX-U',0.0]]},
- {k:'Fusion power (MW)',rows:[['ITER',500],['SPARC',140],['Hyperion',88.7],['NSTX-U',0.0]]}
+ {k:'Fusion power (MW)',rows:[['ITER',500],['SPARC',140],['Hyperion',85.0],['NSTX-U',0.0]]}
 ];
 function renderBenchmarks(){
   document.getElementById('bm-charts').innerHTML='<div class="grid g2">'+BM.map(function(m){
@@ -4147,7 +4147,7 @@ function renderLibrary(){
 }
 /* ================= CHANGELOG (#110) ================= */
 var CHANGELOG=[
- ['Aug 2026','Design freeze','Publication design freeze established — the frozen point every panel reproduces (breeder Q 3.424 / 88.7 MW; burner Q_E 1.309).'],
+ ['Aug 2026','Design freeze','Publication design freeze established — the frozen point every panel reproduces (breeder Q 3.076 / 85.0 MW; burner Q_E 1.309).'],
  ['Aug 2026','Five open deposits published','Breeder, burner, REBCO, DEC and AI/ML/Quantum records live on Zenodo (CC BY 4.0).'],
  ['Aug 2026','Reproducibility verified','182 / 182 integrity checks pass; Tier-1 byte + Tier-2 tolerance reproduction.'],
  ['Aug 2026','3-D model — public build','Interactive model with live in-browser breeder solver, maturity tags, open-risk dashboard, and public teaser + reviewer detail.'],
@@ -4277,7 +4277,7 @@ function renderMatLab(){
 var SYS=[
  {n:'Fuel cycle & tritium plant',g:'screening',fn:'Stores, purifies and recycles the hydrogen isotopes; extracts and banks helium-3.',br:'Tritium output 4.0 kg/yr (TBR 1.8 target) + He-3 co-production; cryo-distillation; HazCat 2 confinement, multiple barriers.',bu:'D–³He fuel handling; ³He feed + recycle; low tritium inventory (low-neutron).'},
  {n:'Cryogenics plant',g:'screening',fn:'Cools the superconducting magnets and cold mass to operating temperature.',br:'4.5 K magnet cooling + 20 K stage; cold mass ≈ 608 t; He refrigeration.',bu:'4.5 K high-field plug + central-cell coils; larger cold mass at length.'},
- {n:'Heating & current drive',g:'model',fn:'Brings the plasma to temperature and (breeder) drives the plasma current.',br:'P_aux ≈ 25.9 MW (NBI + RF); current drive supports I_p 9.86 MA (bootstrap-assisted).',bu:'Central-cell + plug heating; ambipolar potential maintenance.'},
+ {n:'Heating & current drive',g:'model',fn:'Brings the plasma to temperature and (breeder) drives the plasma current.',br:'P_aux ≈ 25.9 MW (NBI + RF); current drive supports I_p 9.66 MA (bootstrap-assisted).',bu:'Central-cell + plug heating; ambipolar potential maintenance.'},
  {n:'Vacuum & pumping',g:'model',fn:'Holds ultra-high vacuum in the vessel and pumps exhaust.',br:'Base pressure ≈ 1.2×10⁻⁸ Pa; cryopumps + roughing; conformal to the D-vessel.',bu:'Linear vessel + expander end-tanks provide large pumping area.'},
  {n:'Power conversion & balance of plant',g:'frozen',fn:'Turns fusion output into electricity.',br:'Thermal path — blanket heat to a power cycle (product is fuel/isotopes, not net grid MWe).',bu:'Direct energy conversion (DEC), ion-only η ≈ 0.70 — charged particles straight to electricity, no steam cycle.'},
  {n:'Power supplies & converters',g:'model',fn:'Feeds the coils, heating and plant loads; conditions grid interface.',br:'CS/PF converters, magnet supplies, plant auxiliaries.',bu:'Plug/central-cell coil supplies; DEC grid-tie converters.'},
@@ -4323,7 +4323,7 @@ var FAQ=[
  ],
  ['The physics — the hard questions',
   ['Is the burner aneutronic?','<b>No — it is low-neutron, not aneutronic.</b> Residual D–D and D–T burn-up reactions give a neutron fraction of about 5.44%, roughly 10–15× cleaner than a mainstream D–T tokamak — but not zero. We never call it aneutronic.'],
-  ['What is the fusion gain?','The breeder reaches fusion gain Q ≈ 3.424 (fusion power ÷ auxiliary power) at its frozen point. The burner reaches an engineering Q_E ≈ 1.309 at its closing point.'],
+  ['What is the fusion gain?','The breeder reaches fusion gain Q ≈ 3.076 (fusion power ÷ auxiliary power) at its frozen point. The burner reaches an engineering Q_E ≈ 1.309 at its closing point.'],
   ['Does the burner really make net electricity?','At the design point, yes — net +104 / +850 / +2832 MWe by housing length. <b>Important caveat, stated openly:</b> this is requirement-class — it depends on achieving a plug-to-central density ratio of 16. Below that it does not close, and we show that.'],
   ['What is "negative triangularity (δ −0.30)"?','It describes the plasma’s cross-section — the "D" opens outward toward the wall rather than inward. It is the value the published equilibrium is built on, and the 3-D model shows it faithfully.'],
   ['What are the biggest open risks?','Breeder: the divertor’s required ~90% radiated-power fraction. Burner: the plug-density requirement and helium-3 supply. Magnets: the high-field plug needs a bore-resolved structural analysis — currently flagged as a requirement-class gate, not a solved result.']
@@ -4413,7 +4413,7 @@ function renderUQ(){
   // feasibility
   document.getElementById('uq-feas').innerHTML=
     '<div class="tile"><div class="th">P(Q ≥ 3)</div><div class="tbig">'+(UQ.feas.Q_ge_3*100).toFixed(0)+'%</div><div class="tst"><span class="pill '+(UQ.feas.Q_ge_3>=.5?'pass':'gate')+'">of 2000 samples</span></div></div>'+
-    '<div class="tile"><div class="th">P(Q ≥ 3.424 frozen)</div><div class="tbig">'+(UQ.feas.Q_ge_frozen*100).toFixed(0)+'%</div><div class="tst"><span class="pill gate">at or above frozen</span></div></div>'+
+    '<div class="tile"><div class="th">P(Q ≥ 3.076 frozen)</div><div class="tbig">'+(UQ.feas.Q_ge_frozen*100).toFixed(0)+'%</div><div class="tst"><span class="pill gate">at or above frozen</span></div></div>'+
     '<div class="tile"><div class="th">Biggest lever</div><div class="tbig" style="font-size:16px">H₉₈ confinement</div><div class="tst"><span class="pill gate">ΔQ '+tmax.toFixed(1)+'</span></div></div>';
 }
 
@@ -4715,7 +4715,7 @@ function anaThermal(){
       mbar('Cryostat 4 K heat leak','12','kW','20',true,'cold-mass thermal budget')+
       mbar('Blanket coolant ΔP (PbLi MHD)','1.8','MPa','2.5',true,'MHD pressure drop — screening')+
       '</div>'+
-      '<div style="margin:12px 0">'+anaSplit('Power balance — where the 88.7 MW of fusion power goes',
+      '<div style="margin:12px 0">'+anaSplit('Power balance — where the 85.0 MW of fusion power goes',
         [['Neutrons → blanket',70.9,'var(--gold)'],['α + aux → SOL',17.8,'var(--pink)']],'MW')+'</div>'+
       '<p class="note" style="margin:6px 0 12px">The divertor is the binding thermal constraint: the required <b>90% radiative fraction is aggressive</b> and the single most important thermal risk. Detachment control is the enabling technology.</p>'+
       nextList([['CFD','Conjugate heat transfer on divertor monoblocks (water/He) — target-surface temperature field'],
@@ -4747,7 +4747,7 @@ function anaEM(){
       'screen',
       '<div class="anagrid">'+
       mbar('On-axis toroidal field B₀','8.0','T','8.0',false,'design value')+
-      mbar('Plasma current I_p','9.86','MA','9.86',false,'flat-top')+
+      mbar('Plasma current I_p','9.66','MA','9.66',false,'flat-top')+
       mbar('Quench detection + dump (design)','2.0','s','3.0',true,'hot-spot temperature limit')+
       mbar('Peak conductor temperature on quench','150','K','200',true,'REBCO hot-spot criterion')+
       mbar('Terminal voltage on dump','8.5','kV','12',true,'insulation withstand — screening')+

@@ -1,8 +1,8 @@
 {
  "schema": "phase2-registry-public/v1",
- "generated": "2026-08-22T15:32:11+00:00",
+ "generated": "2026-08-25T20:38:23+00:00",
  "counts": {
-  "studies_total": 223,
+  "studies_total": 238,
   "public": 31,
   "hifi_adapters": 7,
   "deposits": 5
@@ -13,10 +13,10 @@
   "regression_passed": 19,
   "design_points": {
    "breeder": {
-    "Q": 3.4239,
-    "P_fus_MW": 88.6604,
-    "Ip_MA": 9.8599,
-    "T_kg_yr": 3.9995,
+    "Q": 3.0763,
+    "P_fus_MW": 85.0406,
+    "Ip_MA": 9.6565,
+    "T_kg_yr": 3.8362,
     "f_n": 0.7971
    },
    "burner": {
@@ -434,13 +434,13 @@
    "title": "Breeder \u2014 Hyperion (v2: 21795620)",
    "doi": "10.5281/zenodo.21746157",
    "url": "https://doi.org/10.5281/zenodo.21746157",
-   "study_count": 41
+   "study_count": 46
   },
   {
    "title": "Burner \u2014 Tandem Mirror",
    "doi": "10.5281/zenodo.21746479",
    "url": "https://doi.org/10.5281/zenodo.21746479",
-   "study_count": 121
+   "study_count": 128
   },
   {
    "title": "REBCO Magnet & Tape",
@@ -458,7 +458,7 @@
    "title": "AI-ML-Quantum Control",
    "doi": "10.5281/zenodo.21842371",
    "url": "https://doi.org/10.5281/zenodo.21842371",
-   "study_count": 1
+   "study_count": 2
   }
  ]
 }

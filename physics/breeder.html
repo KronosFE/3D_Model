@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Breeder | Kronos Live Physics</title>
-<meta name="description" content="Drive HYPERION's D–T breeder physics live: ion temperature, density, field, aspect ratio, and the tritium-breeding lever, on the deposited pure-NumPy engine (DOI 10.5281/zenodo.21746157). Re-derives Q 3.424, 88.7 MW, 9.86 MA before unlocking.">
+<meta name="description" content="Drive HYPERION's D–T breeder physics live: ion temperature, density, field, aspect ratio, and the tritium-breeding lever, on the deposited pure-NumPy engine (DOI 10.5281/zenodo.21746157). Re-derives Q 3.076, 85.0 MW, 9.66 MA before unlocking.">
 <link rel="stylesheet" href="../assets/style.css?v=2">
 </head>
 <body>
@@ -19,7 +19,7 @@
   on <code style="font-family:var(--mono);font-size:13px">kronos_clean</code> kernels — pure NumPy, no economics),
   running the frozen HYPERION point: R₀ 1.2 m, A 2.5, B₀ 8 T, T<sub>i0</sub> 15 keV, TBR 1.8. HYPERION's bar is
   <b>fusion gain only</b> — it makes tritium, helium-3 and 14 MeV neutrons, not electricity. Move the knobs; gain,
-  power, current, neutron fraction and net tritium recompute from the power balance, live. Q 3.424 is <b>solved</b>,
+  power, current, neutron fraction and net tritium recompute from the power balance, live. Q 3.076 is <b>solved</b>,
   not scaled.</p>
 
   <div class="vhero" style="margin-bottom:16px">
@@ -57,7 +57,7 @@
         <button class="chip" id="copylink">🔗 Copy link to this point</button>
         <div id="badges" style="margin-top:12px"></div>
         <p style="font-size:12.5px;color:var(--dim);margin-top:14px">Tritium is a <b>blanket lever</b>: the demonstrated
-        beryllium-multiplied blanket (TBR 1.34) gives <b>~1.7 kg/yr</b>, scaling to the <b>4 kg/yr</b> national-duty target
+        beryllium-multiplied blanket (TBR 1.34) gives <b>~1.6 kg/yr</b>, scaling to the <b>3.84 kg/yr</b> national-duty target
         at an advanced blanket (TBR 1.8). Duty band is 1.87–4.0 kg T/yr (the requirement row). TBR 1.1/1.5/1.8 is the
         deposited lever — 14 MeV D–T neutrons support blanket multiplication that 2.45 MeV D–D neutrons cannot.</p>
       </div>
@@ -130,12 +130,12 @@
         <div style="font:700 17px/1.2 ui-monospace,Menlo,monospace;color:#e8c476;margin:8px 0 4px">41× / 168×</div>
         <div style="font-size:12px;color:#93a4bd;line-height:1.5">burner wall-loading below the breeder — Aegis 41×, MetroVolt 168×; cleaner as ³He rises</div></div>
     </div>
-    <p style="font-size:12px;color:var(--dim);margin-top:11px;line-height:1.5">Same frozen physics (Q 3.424, 88.7 MW). These are <b>design requirements shown with their conditions</b> — achievable with known solutions, <b>not yet demonstrated hardware</b>. Remote federal siting and tritium containment are designed in from the outset. Open: the Ag-108m waste residual (needs a certified-heat assay + regulatory determination) and the absolute activated-inventory run. No cost figures are shown here.</p>
+    <p style="font-size:12px;color:var(--dim);margin-top:11px;line-height:1.5">Same frozen physics (Q 3.076, 85.0 MW). These are <b>design requirements shown with their conditions</b> — achievable with known solutions, <b>not yet demonstrated hardware</b>. Remote federal siting and tritium containment are designed in from the outset. Open: the Ag-108m waste residual (needs a certified-heat assay + regulatory determination) and the absolute activated-inventory run. No cost figures are shown here.</p>
   </div>
 
   <div class="gapbox"><b class="t">Read the badges honestly</b>
   HYPERION is <i>sized to the requirement</i>, not to a physics optimum: the duty badge trips when net tritium leaves
-  the 1.87–4.0 kg/yr band, and the closure badge needs on-duty <b>and</b> β<sub>N</sub> below the NSTX no-wall 4.2
+  the 1.79–3.84 kg/yr band, and the closure badge needs on-duty <b>and</b> β<sub>N</sub> below the NSTX no-wall 4.2
   <b>and</b> peak coil field within the demonstrated 20.1 T. Availability is damage-life-limited and the triangularity
   sign is a declared caveat — both are stated open problems, not hidden. Source:
   <a href="https://doi.org/10.5281/zenodo.21746157">the breeder deposit</a>.</div>
@@ -193,7 +193,7 @@ function readout(){
   $('t_bpk').parentElement.className='tile'+(!r.coil_ok?' bad':(r.B_peak>18?' warn':''));
   $('t_tkg').parentElement.className='tile'+(!r.on_duty?' warn':'');
   let b='';
-  b+='<span class="badge '+(r.on_duty?'gold':'warnb')+'">'+(r.on_duty?'on duty — net T in the 1.87–4.0 kg/yr band':'off duty — net T outside 1.87–4.0 kg/yr')+'</span>';
+  b+='<span class="badge '+(r.on_duty?'gold':'warnb')+'">'+(r.on_duty?'on duty — net T in the 1.79–3.84 kg/yr band':'off duty — net T outside 1.79–3.84 kg/yr')+'</span>';
   if(!r.coil_ok)b+='<span class="badge warnb">peak coil field beyond the demonstrated 20.1 T</span>';
   if(!r.beta_ok_nowall)b+='<span class="badge warnb">β_N beyond the NSTX no-wall 4.2 ceiling</span>';
   if(r.closes_nowall)b+='<span class="badge gold">closes at the no-wall limit</span>';
@@ -270,7 +270,7 @@ blanket, and the D–T 14 MeV neutron via the blanket, minus the tritons burned 
 <h4>Reading the tiles &amp; badges</h4>
 <ul>
 <li><b>Gain Q</b> is the headline; the power-balance bar shows how P<sub>fus</sub> splits into charged (stays) and neutron (the breeding product).</li>
-<li><b>On duty</b> = net tritium inside the 1.87–4.0 kg/yr requirement band. <b>Closes at the no-wall limit</b> = on-duty AND β<sub>N</sub>&lt;4.2 AND coil field ≤20.1 T.</li>
+<li><b>On duty</b> = net tritium inside the 1.79–3.84 kg/yr requirement band. <b>Closes at the no-wall limit</b> = on-duty AND β<sub>N</sub>&lt;4.2 AND coil field ≤20.1 T.</li>
 <li>Tiles turn amber near a limit and red past it (β<sub>N</sub> ceiling, coil field, off-duty).</li>
 </ul>
 
