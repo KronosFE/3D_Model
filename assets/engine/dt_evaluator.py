@@ -68,9 +68,9 @@ RHO = np.linspace(1e-3, 1.0, 161)
 
 
 # ------------------------------------------------------------ geometry/current
-def geom(R0, A, kappa, B0, q95, delta=0.4):
-    """delta = 0.4 recovered by inversion from the original scan (row 912
-    reproduces Ip = 40.933 MA to 5 figures at delta = 0.4)."""
+def geom(R0, A, kappa, B0, q95, delta=-0.30):
+    """delta = -0.30 (canonical negative triangularity, corrected 2026-08-24; studies H7/P6).
+    The prior +0.4 was a legacy Mode-C artifact. Reproduces the frozen HYPERION point at -0.30."""
     a = R0 / A
     eps = a / R0
     Ip = _ip_from_q95(R0, a, B0, q95, kappa, delta)

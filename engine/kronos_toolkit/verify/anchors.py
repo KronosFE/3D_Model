@@ -2,20 +2,24 @@
 
 # ============================================================================
 # BREEDER — config 22021 from dt_scan.csv (dt_evaluator + kronos_clean)
+# 2026-08-24: triangularity corrected to canonical NT delta=-0.30 (studies H7/P6).
+#   The prior delta=+0.4 was a legacy Mode-C artifact; anchors below re-derived at
+#   -0.30 (reduced-order, H98=1.0). NOTE: final headline Q is pending the CGYRO
+#   Dimits/quiet-basin confinement result (may recover above this if H98>1).
 # ============================================================================
 BREEDER_DP = dict(
     fuel="DT", R0=1.2, A=2.5, kappa=2.0, B0=8.0, q95=3.0,
     fG=0.3, Ti0=15.0, TBR_dt=1.8, TBR_dd=1.0,
     H98=1.0, tau_p=2.0, alphaT=1.0, alphaN=0.0, f_he4=0.05,
-    sync_cal=6.51, cf=1.0, delta=0.4,
+    sync_cal=6.51, cf=1.0, delta=-0.30,
 )
 
 BREEDER_ANCHORS = dict(
-    Q=dict(value=3.4239126323794142, atol=1e-4, key="Q"),
-    P_fus_MW=dict(value=88.66042413162667, atol=0.5, key="P_fus_MW"),
-    Ip_MA=dict(value=9.859860317460319, atol=0.01, key="Ip_MA"),
-    T_kg_yr=dict(value=3.999522478898722, atol=0.01, key="T_kg_yr"),
-    f_n=dict(value=0.7971196297987467, atol=1e-4, key="f_n"),
+    Q=dict(value=3.0763264804593597, atol=1e-4, key="Q"),
+    P_fus_MW=dict(value=85.04057711654414, atol=0.5, key="P_fus_MW"),
+    Ip_MA=dict(value=9.65648253968254, atol=0.01, key="Ip_MA"),
+    T_kg_yr=dict(value=3.836229108166553, atol=0.01, key="T_kg_yr"),
+    f_n=dict(value=0.797119629798747, atol=1e-4, key="f_n"),
 )
 
 # ============================================================================

@@ -23,7 +23,7 @@ def _ip_from_q95(R0, a, B0, q95, kappa, delta):
     return (5.0 * a**2 * B0 / (R0 * q95)) * shape * (1.17 - 0.65 * eps) / (1 - eps**2)**2
 
 
-def _geom(R0, A, kappa, B0, q95, delta=0.4):
+def _geom(R0, A, kappa, B0, q95, delta=-0.30):
     a = R0 / A
     Ip = _ip_from_q95(R0, a, B0, q95, kappa, delta)
     R_cp = R0 - a - INBOARD_BUILD
@@ -82,7 +82,7 @@ def _burn_fraction_direct(nD, T_keV, tau_p):
 
 def evaluate_breeder(fuel, R0, A, kappa, B0, q95, fG, Ti0, TBR_dt, TBR_dd=1.0,
                      H98=1.0, tau_p=2.0, alphaT=1.0, alphaN=0.0, f_he4=0.0,
-                     sync_cal=None, cf=1.0, delta=0.4):
+                     sync_cal=None, cf=1.0, delta=-0.30):
     """One breeder configuration -> one row dict. Nothing frozen; every field computed."""
     sync_cal = SYNC_CAL if sync_cal is None else sync_cal
     g = _geom(R0, A, kappa, B0, q95, delta)
