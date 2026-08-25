@@ -14,7 +14,7 @@ var SECTIONS=[
       ['Instructional film','instructional_video.html']]},
   {key:'physics', label:'Physics',  href:'physics/index.html', sub:[
       ['Governing Physics','physics/index.html'],['Breeder','physics/breeder.html'],
-      ['Burner','physics/burner.html'],['Reactivity','physics/reactivity.html'],['Blanket','physics/blanket.html'],
+      ['Burner','physics/burner.html'],['Reactivity','physics/reactivity.html'],['Blanket','physics/blanket.html'],['Divertor','physics/divertor.html'],
       ['Validation & UQ','physics/validation.html'],
       ['Environment','physics/environment.html'],['Deposits','physics/deposits.html']]},
   {key:'program', label:'Program',  href:'program/index.html', sub:[
