@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Core turbulence — Kronos Model</title>
+<meta name="description" content="Solve core gyrokinetic turbulence live: as the temperature gradient rises past the critical value, transport stiffens and the confinement multiplier falls. Reduced-order surrogate; GENE / CGYRO retire it.">
+<link rel="stylesheet" href="../assets/style.css?v=3">
+<style>
+  .solve{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);border-radius:var(--r);padding:24px;margin-top:20px}
+  .solve.locked{opacity:.4;pointer-events:none;filter:saturate(.5)}
+  .duo{display:grid;grid-template-columns:320px 1fr;gap:30px}@media(max-width:900px){.duo{grid-template-columns:1fr}}
+  .ctl{margin:13px 0 4px}
+  .ctl label{font-size:11px;letter-spacing:1.2px;color:var(--mut);text-transform:uppercase;font-weight:600;display:flex;justify-content:space-between;margin-bottom:7px;gap:8px}
+  .ctl label output{color:var(--ink);font-size:13px;letter-spacing:0;font-family:var(--mono);font-weight:400}
+  input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold) var(--fill,50%),var(--line2) var(--fill,50%));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--gold);border:2.5px solid #071021;box-shadow:0 0 0 1px var(--gold-deep);cursor:pointer}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 12px}
+  .tile{background:rgba(7,16,33,.6);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .tile .k{font-size:9.5px;letter-spacing:1.4px;color:var(--dim);text-transform:uppercase;font-weight:600}
+  .tile .v{font-size:24px;margin-top:3px;font-variant-numeric:tabular-nums;font-weight:600}.tile .u{font-size:12px;color:var(--mut)}
+  .tile.hero{border-color:var(--gold-deep);background:linear-gradient(180deg,rgba(232,196,118,.08),rgba(7,16,33,.6))}.tile.hero .v{color:var(--gold);font-size:28px}
+  .tile.good .v{color:var(--teal)}.tile.bad .v{color:var(--bad)}
+  .status{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:8px}
+  .prov{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.prov b{color:var(--gold);font-weight:500}
+  .qbtn{font:600 13px var(--sans);background:var(--navy);color:#fff;border:1px solid var(--line2);border-radius:8px;padding:10px 16px;cursor:pointer;margin-top:6px}.qbtn:hover{border-color:var(--gold-deep)}
+  .qout{font-family:var(--mono);font-size:11.5px;color:var(--mut);background:#071021;border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:10px;white-space:pre-wrap;display:none}
+</style></head>
+<body>
+<nav class="topnav" id="kfe-nav"><div class="in"></div></nav>
+<div class="wrap">
+  <div class="eyebrow">Physics · live instrument · <span class="snum" style="border:none;padding:0">core turbulence</span></div>
+  <h1>Solve the turbulence.</h1>
+  <p class="lede">The reason confinement is hard, live: drive the normalized temperature gradient <b>a/L_Ti</b> past the critical value and turbulent transport <b>stiffens</b> — the effective confinement multiplier <b>H_eff</b> collapses. Reduced-order surrogate; <b>GENE / CGYRO</b> (the operating HPC workstream) retire it.</p>
+
+  <div class="boot" id="boot"><div class="bar"><i></i><i></i><i></i></div><span class="cursor"></span></div>
+
+  <div class="solve locked" id="solver">
+    <div class="duo">
+      <div id="knobs"></div>
+      <div>
+        <div class="tiles" id="tiles"></div>
+        <div id="badges"></div>
+        <div class="status" id="sstatus"></div>
+        <div style="margin-top:16px"><button class="qbtn" id="qbtn">⌁ Request the full GENE / CGYRO run →</button><div class="qout" id="qout"></div></div>
+        <div class="prov" id="prov"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gapbox"><b class="t">Honest gate</b> There is no hard limit here — this is the confinement mechanism. Above the critical gradient the transport is <b>stiff</b> (gradient-clamped); the effective multiplier H_eff sets how much the turbulence degrades confinement. GENE / CGYRO resolve the real spectrum.</div>
+
+  <div class="pagenav">
+    <a href="../machine/reactor-3d.html"><span class="lab">Machine</span>◂ the 3D reactor</a>
+    <a href="magnets.html"><span class="lab">Physics</span>Magnet stress ▸</a>
+  </div>
+  <div class="foot"><span>KRONOS FUSION ENERGY · Kronos Model</span><span>Conceptual design and simulation study; no machine has been built · runs in your browser</span></div>
+</div>
+
+<script src="../assets/core.js?v=3"></script>
+<script src="../assets/nav.js?v=1"></script>
+<script>
+const ENGINE_BASE=(window.LAB_CONFIG&&window.LAB_CONFIG.ENGINE_BASE)||"../engine/kronos_toolkit/";
+const FILES=["verify/tags.py","core/constants.py","hifi/base.py","hifi/adapters.py"];
+const ADAPTER="gyrokinetic", ARGS=["a_over_LTi", "a_over_LTe", "Ti_keV", "B_T"], ANCHOR={"key": "H_eff", "value": 0.6896551724137931, "atol": 0.0001}, HERO={"key": "H_eff", "label": "confinement multiplier H_eff", "unit": "", "dec": 4}, TILES=[{"key": "chi_i", "label": "\u03c7_i", "unit": " m\u00b2/s", "dec": 1}, {"key": "chi_e", "label": "\u03c7_e", "unit": " m\u00b2/s", "dec": 1}, {"key": "chi_gyrobohm", "label": "\u03c7 gyro-Bohm", "unit": " m\u00b2/s", "dec": 1}], GATE=null;
+const KNOBS=[["a_over_LTi", "Ion temp gradient a/L_Ti", 0.0, 8.0, 0.1, 3.0, ""], ["a_over_LTe", "Electron temp gradient a/L_Te", 0.0, 8.0, 0.1, 3.0, ""], ["Ti_keV", "Ion temperature", 1, 200, 1, 20, "keV"], ["B_T", "Magnetic field", 1, 30, 0.5, 3.0, "T"]], QCODE="cgyro", QSTUDY="core turbulence", PROV="provenance \u2014 surrogate <b>[T]</b> \u00b7 retired by <b>GENE / CGYRO</b> (gyrokinetic turbulence) \u00b7 engine card <b>cgyro</b> \u00b7 anchor <b>hifi.gyrokinetic</b>";
+const $=id=>document.getElementById(id); let py=null;
+function line(cls,t){$('boot').innerHTML+=`<div class="${cls}" style="opacity:1">${t}</div>`;}
+function fillRange(s){s.style.setProperty('--fill',((s.value-s.min)/(s.max-s.min)*100)+'%');}
+function vals(){const o={};KNOBS.forEach(k=>o[k[0]]=parseFloat($('k-'+k[0]).value));return o;}
+function renderKnobs(){
+  $('knobs').innerHTML=KNOBS.map(k=>`<div class="ctl"><label>${k[1]}<output id="o-${k[0]}">${k[5]}${k[6]?' '+k[6]:''}</output></label>
+    <input type="range" id="k-${k[0]}" min="${k[2]}" max="${k[3]}" step="${k[4]}" value="${k[5]}"></div>`).join('');
+  KNOBS.forEach(k=>{const s=$('k-'+k[0]);fillRange(s);s.addEventListener('input',()=>{$('o-'+k[0]).textContent=(+s.value).toFixed(2)+(k[6]?' '+k[6]:'');fillRange(s);solveNow();});});
+}
+function solve(p){const a=ARGS.map(n=>p[n]).join(', ');return JSON.parse(py.runPython(`import json; json.dumps(_solve(${a}))`));}
+function fmt(v,d){return Number(v).toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d});}
+function solveNow(){let r;try{r=solve(vals());}catch(e){$('sstatus').textContent='solver error: '+e;return;}
+  let ok=true; if(GATE){try{ok=eval(GATE.expr);}catch(e){ok=true;}}
+  const hv=r[HERO.key];
+  let h=`<div class="tile hero ${GATE?(ok?'good':'bad'):''}"><div class="k">${HERO.label}</div><div class="v">${fmt(hv,HERO.dec)}${HERO.unit?'<span class="u">'+HERO.unit+'</span>':''}</div></div>`;
+  h+=TILES.map(t=>`<div class="tile"><div class="k">${t.label}</div><div class="v" style="font-size:20px">${fmt(r[t.key],t.dec)}${t.unit?'<span class="u">'+t.unit+'</span>':''}</div></div>`).join('');
+  $('tiles').innerHTML=h;
+  let badge=`<span class="badge gold">surrogate · [T]</span>`;
+  if(GATE) badge+= ok?`<span class="badge" style="color:var(--teal);border:1px solid var(--teal);background:rgba(110,201,178,.1)">${GATE.ok}</span>`:`<span class="badge warnb">${GATE.bad}</span>`;
+  else if(GATE===null && ('above_threshold' in r)) badge+= r.above_threshold?`<span class="badge gold">above critical gradient — turbulence-limited</span>`:`<span class="badge" style="color:var(--teal);border:1px solid var(--teal);background:rgba(110,201,178,.1)">below threshold — no turbulent transport</span>`;
+  $('badges').innerHTML=badge;
+  $('sstatus').textContent='reduced-order surrogate · deterministic';
+}
+$('qbtn').addEventListener('click',()=>{
+  const run={code:QCODE,inputs:vals(),executor:'hpc',purpose:'Full '+QCODE+' run',requested_by:'twin-instrument',priority:'P2'};
+  const sb=window.LAB_CONFIG&&window.LAB_CONFIG.SUPABASE_URL; $('qout').style.display='block';
+  if(sb){ $('qout').textContent='Dispatching to the Lab run queue…';
+    import('https://esm.sh/@supabase/supabase-js@2').then(m=>{const c=m.createClient(window.LAB_CONFIG.SUPABASE_URL,window.LAB_CONFIG.SUPABASE_ANON_KEY);
+      return c.from('lab_runs').insert({code:QCODE,study:QSTUDY,params:JSON.stringify(run.inputs),priority:'P2',status:'requested'});})
+      .then(()=>$('qout').textContent='✓ Queued on HPC. Track it in the Lab → Run queue.').catch(e=>$('qout').textContent='queue error: '+e);
+  } else $('qout').textContent='Run request (sign in to the Lab to dispatch to HPC):\n'+JSON.stringify(run,null,2)+'\n\n→ card: '+QCODE;
+});
+(async()=>{try{
+  line('','▸ loading WebAssembly Python runtime …');
+  const mod=await import('https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.mjs');py=await mod.loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/'});
+  line('ok','✓ Python ready — loading NumPy …'); await py.loadPackage('numpy'); line('ok','✓ NumPy ready');
+  py.FS.mkdirTree('/kt/kronos_toolkit/verify');py.FS.mkdirTree('/kt/kronos_toolkit/core');py.FS.mkdirTree('/kt/kronos_toolkit/hifi');
+  for(const d of ['','verify/','core/','hifi/'])py.FS.writeFile('/kt/kronos_toolkit/'+d+'__init__.py', d==='hifi/'?'from .adapters import ADAPTERS\n':'');
+  for(const f of FILES){const t=await(await fetch(ENGINE_BASE+f,{cache:'no-cache'})).text();py.FS.writeFile('/kt/kronos_toolkit/'+f,t);}
+  const PYSRC=["import sys; sys.path.insert(0,'/kt')",
+    "from kronos_toolkit.hifi import ADAPTERS",
+    "_ad = ADAPTERS['"+ADAPTER+"']",
+    "_args = "+JSON.stringify(ARGS),
+    "def _solve(*vals):",
+    "    kw = dict(zip(_args, vals))",
+    "    r = _ad.run(**kw)",
+    "    return {k:(float(v) if isinstance(v,(int,float)) else v) for k,v in r.value.items()}"].join("\n");
+  py.runPython(PYSRC);
+  line('ok','✓ kronos_toolkit.hifi '+ADAPTER+' imported — re-deriving the frozen anchor …');
+  const dfl={}; KNOBS.forEach(k=>dfl[k[0]]=k[5]);
+  const r=solve(dfl); const ok=Math.abs(r[ANCHOR.key]-ANCHOR.value)<=ANCHOR.atol;
+  line(ok?'ok':'fail',`${ok?'✓':'✗'} ${ANCHOR.key} → <span class="val">${fmt(r[ANCHOR.key],4)}</span> <span class="dim">(anchor ${fmt(ANCHOR.value,4)}, atol ${ANCHOR.atol})</span>`);
+  if(ok){line('ok','▸ engine verified against the frozen anchor — controls unlocked.');
+    $('prov').innerHTML=PROV; renderKnobs();$('solver').classList.remove('locked');solveNow();}
+  else line('fail','✗ anchor deviation — controls stay locked.');
+}catch(e){line('fail','✗ '+e);}})();
+</script></body></html>
