@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BU-L2-A4 — De-Risking Gate — Kronos Model</title>
+<meta name="description" content="BU-L2-A4: Strong-plug + RF alpha-channeling — independent local verification status.">
+<link rel="stylesheet" href="../../assets/style.css?v=3">
+<link rel="stylesheet" href="../../assets/twin.css?v=1">
+<style>
+.pill.run{background:rgba(45,212,191,.12);color:#2dd4bf;border:1px solid rgba(45,212,191,.35)}
+.pill.dimp{background:rgba(139,148,158,.10);color:#8b949e;border:1px solid rgba(139,148,158,.3)}
+.meta td{padding:6px 10px;border-bottom:1px solid var(--line)}
+.meta td:first-child{color:var(--dim);font-family:var(--fm);font-size:11px;text-transform:uppercase;letter-spacing:.08em;width:170px}
+</style>
+</head>
+<body>
+<nav class="topnav" id="kfe-nav"><div class="in"></div></nav>
+<div class="wrap">
+  <div class="eyebrow"><a href="../derisking.html" style="color:inherit;text-decoration:none">Physics · de-risking</a> · Burner — Aegis · MetroVolt</div>
+  <h1 style="font-family:var(--fm);font-size:26px">BU-L2-A4</h1>
+  <p class="lede">Strong-plug + RF alpha-channeling.</p>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap">
+      <h3>Verification status</h3><span class="pill dimp" style="padding:3px 12px">CLOUD · GPU</span>
+    </div>
+    <p>This gate runs at GPU-HPC scale (nonlinear kinetics / large 3-D / production MHD). It integrates into the model when its result is reproduced against the local verification chain.</p>
+    
+  </div>
+
+  <div class="card" style="padding:0"><table class="meta" style="width:100%;border-collapse:collapse">
+    <tr><td>Machine</td><td>Burner — Aegis · MetroVolt</td></tr>
+    <tr><td>Method · code</td><td class="mono" style="font-family:var(--fm);font-size:12px">Fokker-Planck+RF GPU</td></tr>
+    <tr><td>Compute class</td><td>GPU cloud (by design)</td></tr>
+    <tr><td>Numerical payload</td><td>—</td></tr>
+  </table></div>
+
+  <div class="card">
+    <h3>The reproduce-first rule</h3>
+    <p style="font-size:13px">A gate integrates into the interactive 3-D model only after it
+    <b>reproduces</b> on the verification chain — same physics, independent hardware, and (where
+    nuclear data is involved) an independent evaluated library. Cloud-scale gates join the moment
+    their results survive that check. Nothing on the model asks for trust.</p>
+  </div>
+
+  <div class="foot"><a href="../derisking.html">← back to the De-Risking Board</a> · board data:
+  <a href="../../data/derisk_board.json">derisk_board.json</a></div>
+</div>
+<script src="../../assets/nav.js?v=3"></script>
+</body>
+</html>
