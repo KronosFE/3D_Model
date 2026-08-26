@@ -1,0 +1,971 @@
+{
+ "generated": "2026-08-25",
+ "gates": [
+  {
+   "serial": "BR-L1-A1",
+   "machine": "breeder",
+   "title": "Breeder 0-D power & particle balance (config 22021)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A2",
+   "machine": "breeder",
+   "title": "Mission-point re-optimization (source-strength vs centrepost-life)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A3",
+   "machine": "breeder",
+   "title": "Near-aneutronic (He-3-rich) operating-point scan",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A4",
+   "machine": "breeder",
+   "title": "Reduced-order confinement quasilinear baseline",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A11",
+   "machine": "breeder",
+   "title": "Flux-driven integrated transport / profile prediction (TGYRO)",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A5",
+   "machine": "breeder",
+   "title": "3-D Monte-Carlo neutron transport (OpenMC ENDF/B-VIII.0)",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A6",
+   "machine": "breeder",
+   "title": "Tritium-cycle surplus & startup-inventory model",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A7",
+   "machine": "breeder",
+   "title": "Negative-triangularity (d=-0.30) design re-anchor & audit",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A12",
+   "machine": "breeder",
+   "title": "Free-boundary equilibrium + ideal-MHD stability",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A14",
+   "machine": "breeder",
+   "title": "Fast-ion (alpha) confinement + first-wall loading",
+   "status": "re-verifying",
+   "cls": "gate",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A8",
+   "machine": "breeder",
+   "title": "Tritium fuel-cycle dynamics",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A9",
+   "machine": "breeder",
+   "title": "Blanket thermal-hydraulics + walk-away decay-heat",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A10",
+   "machine": "breeder",
+   "title": "Activation inventory + waste classification",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A13",
+   "machine": "breeder",
+   "title": "Neutron damage (dpa) + component lifetime",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L1-A13b",
+   "machine": "breeder",
+   "title": "Centrepost life <-> inboard-shield trade-off",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-OUT-1",
+   "machine": "breeder",
+   "title": "Tritium self-sufficiency de-risked; export scale",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-OUT-2",
+   "machine": "breeder",
+   "title": "Helium-3 domestic flow",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-OUT-3",
+   "machine": "breeder",
+   "title": "14 MeV neutrons operating-class domestic source",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A1",
+   "machine": "shared",
+   "title": "Design-closure optimization (HC/BC corner mapping)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A2",
+   "machine": "shared",
+   "title": "Structured confinement & stability review",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A3",
+   "machine": "shared",
+   "title": "Electron-cyclotron / synchrotron radiation transport (CYTRAN-class)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A4",
+   "machine": "shared",
+   "title": "ML interatomic-potential alloy screen (CHGNet / pymatgen)",
+   "status": "running now",
+   "cls": "run",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A5",
+   "machine": "shared",
+   "title": "Global sensitivity & UQ (40k-sample Monte-Carlo)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A6",
+   "machine": "shared",
+   "title": "Formal V&V suite (MMS / GCI / Sobol / PCMM)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A7",
+   "machine": "shared",
+   "title": "Extrapolation ledger & multi-device post-diction (9-device)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A10",
+   "machine": "shared",
+   "title": "KRONOS reduced-order engine & frozen-anchor reproducibility suite",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A11",
+   "machine": "shared",
+   "title": "Physics-informed equilibrium surrogate (PINN)",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A12",
+   "machine": "shared",
+   "title": "Graph-NN state reconstruction & disruption/quench-precursor",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A13",
+   "machine": "shared",
+   "title": "Certifiable closed-loop control (CBF-certified safety clamp)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A14",
+   "machine": "shared",
+   "title": "Surrogate-accelerated Bayesian optimization UQ & calibration",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A15",
+   "machine": "shared",
+   "title": "Magnet digital-twin + quench-precursor detection",
+   "status": "re-run \u00b7 revised",
+   "cls": "gate",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A16",
+   "machine": "shared",
+   "title": "Quantum-inspired tensor-network kinetic solver (classical)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A17",
+   "machine": "shared",
+   "title": "Materials VQE proof-of-concept (classical simulator)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A18",
+   "machine": "shared",
+   "title": "Quantum-sensing diagnostics spec (NV / atomic / SQUID)",
+   "status": "re-run \u00b7 revised",
+   "cls": "gate",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A1",
+   "machine": "breeder",
+   "title": "Core turbulent transport Tier 1 ITG stiffness (TGLF validation)",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A1b",
+   "machine": "breeder",
+   "title": "Core turbulent transport Tier 1b finer-gradient Dimits",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A1c",
+   "machine": "breeder",
+   "title": "Core turbulent transport Tier 1c kinetic-e/EM/converged",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A1d",
+   "machine": "breeder",
+   "title": "Core turbulent transport Tier 1d design-space sensitivity",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A1e",
+   "machine": "breeder",
+   "title": "Core turbulent transport Tier 2 2-D flux map",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A2",
+   "machine": "breeder",
+   "title": "Triangularity re-anchor (d=-0.30) gyrokinetic",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A6",
+   "machine": "breeder",
+   "title": "Bootstrap current / neoclassical (NEO)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A7",
+   "machine": "breeder",
+   "title": "Neutronics / tritium breeding (OpenMC)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A8",
+   "machine": "breeder",
+   "title": "Materials discovery (ML screen)",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A9",
+   "machine": "breeder",
+   "title": "DFT validation of the alloys (Quantum ESPRESSO)",
+   "status": "running now",
+   "cls": "run",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A10",
+   "machine": "breeder",
+   "title": "Disruptions & runaway electrons",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11",
+   "machine": "breeder",
+   "title": "Power exhaust / divertor detachment",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11b",
+   "machine": "breeder",
+   "title": "Divertor closing window advanced-divertor requirement",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11b-s2",
+   "machine": "breeder",
+   "title": "Detachment validation edge-code step-2 (1-D SOL + ADAS)",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11b-s3",
+   "machine": "breeder",
+   "title": "Stacked-lever detachment validation (2-D edge code)",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11c",
+   "machine": "breeder",
+   "title": "Liquid-metal vapor-box divertor (Li vs Sn)",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11d",
+   "machine": "breeder",
+   "title": "Double-null divertor",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11e",
+   "machine": "breeder",
+   "title": "Snowflake divertor",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11f",
+   "machine": "breeder",
+   "title": "Strike-point sweeping",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11g",
+   "machine": "breeder",
+   "title": "Duty-cycle / pulsed operation",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11h",
+   "machine": "breeder",
+   "title": "Minimum-mission-power option",
+   "status": "re-run \u00b7 revised",
+   "cls": "gate",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A11-SUM",
+   "machine": "breeder",
+   "title": "Divertor portfolio stacking summary",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A12",
+   "machine": "breeder",
+   "title": "ML transport surrogate",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A13",
+   "machine": "breeder",
+   "title": "Collisionality (nu*) robustness of the quiet basin",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A1",
+   "machine": "shared",
+   "title": "Full 6-D kinetic plasma dynamics (quantum Hamiltonian sim)",
+   "status": "frontier",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A2",
+   "machine": "shared",
+   "title": "Exact materials electronic structure (quantum chemistry beyond DFT)",
+   "status": "frontier",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A3",
+   "machine": "shared",
+   "title": "Quantum optimization (design-space / fuel-cycle / fleet)",
+   "status": "frontier",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A4",
+   "machine": "shared",
+   "title": "Quantum machine-learning surrogates",
+   "status": "frontier",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A5",
+   "machine": "shared",
+   "title": "Quantum-enhanced diagnostics / sensing",
+   "status": "frontier",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A6",
+   "machine": "shared",
+   "title": "Fault-tolerant quantum-computation resource estimates",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L3-A7",
+   "machine": "shared",
+   "title": "Dated quantum-technology roadmap (thresholds vs time)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "ENV-A1",
+   "machine": "breeder",
+   "title": "Zero-carbon operation + lifecycle",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "ENV-A2",
+   "machine": "breeder",
+   "title": "Activation & radioactive waste (aneutronic edge)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "ENV-A3",
+   "machine": "breeder",
+   "title": "Inherent safety walk-away no meltdown",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "ENV-A4",
+   "machine": "breeder",
+   "title": "Fuel abundance + resource footprint",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "SC-BR-1",
+   "machine": "breeder",
+   "title": "Critical-materials supply chain (REBCO/6Li/Be/W)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "SC-BR-2",
+   "machine": "breeder",
+   "title": "Build & manufacturability (centrepost/6Li blanket/coil qual)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "SC-BR-3",
+   "machine": "breeder",
+   "title": "Site licensing & build sequence",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BU-L1-A1",
+   "machine": "burner",
+   "title": "Burner 0-D tandem-mirror power balance (Pastukhov-plug Mode-M)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BU-L1-A2",
+   "machine": "burner",
+   "title": "Plug-coil structural qualification (analytic thick-wall -> 3-D FEA)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "KX-L1-A9",
+   "machine": "burner",
+   "title": "Application-fit & commercial de-risking (defense / data-center)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BU-L1-A10",
+   "machine": "burner",
+   "title": "DEC direct-conversion efficiency",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "AG-L1-A1",
+   "machine": "burner",
+   "title": "Islanded / forward-base operation (Aegis)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "AG-L1-A2",
+   "machine": "burner",
+   "title": "Personnel-proximity dose + transportability (Aegis)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "MV-L1-A1",
+   "machine": "burner",
+   "title": "Data-center load-following + uptime (MetroVolt)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "MV-L1-A2",
+   "machine": "burner",
+   "title": "Waste-heat integration (MetroVolt)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "MV-L1-A3",
+   "machine": "burner",
+   "title": "Direct-DC delivery via DEC (MetroVolt)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BU-L2-A1",
+   "machine": "burner",
+   "title": "Fusion-product kinetic confinement",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BU-L2-A2",
+   "machine": "burner",
+   "title": "Design-space + net-gain database",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BU-L2-A3",
+   "machine": "burner",
+   "title": "WHAM benchmark",
+   "status": "re-verifying",
+   "cls": "gate",
+   "new": false
+  },
+  {
+   "serial": "BU-L2-A4",
+   "machine": "burner",
+   "title": "Strong-plug + RF alpha-channeling",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BU-L2-A5",
+   "machine": "burner",
+   "title": "Velocity-space microstability (DCLC / AIC loss-cone)",
+   "status": "queued",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "BU-L2-A6",
+   "machine": "burner",
+   "title": "Central-cell radial transport",
+   "status": "cloud \u00b7 GPU",
+   "cls": "dim",
+   "new": false
+  },
+  {
+   "serial": "SC-BU-1",
+   "machine": "burner",
+   "title": "Critical-materials supply chain (REBCO >=30T plug / alloys)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "SC-BU-2",
+   "machine": "burner",
+   "title": "Build & manufacturability (>=30T plug coil / two housings)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "SC-BU-3",
+   "machine": "burner",
+   "title": "Site licensing & build sequence",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": false
+  },
+  {
+   "serial": "BR-L2-A16",
+   "machine": "breeder",
+   "title": "Neoclassical bootstrap & flows - first-principles (local)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A17",
+   "machine": "breeder",
+   "title": "Quasilinear turbulent transport - TGLF+TGYRO (local)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A18",
+   "machine": "breeder",
+   "title": "Linear gyrokinetic stability spectrum (local)",
+   "status": "re-run \u00b7 revised",
+   "cls": "gate",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A19",
+   "machine": "breeder",
+   "title": "Free-boundary equilibrium + ideal-MHD dW (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A20",
+   "machine": "breeder",
+   "title": "Fast-ion orbit-following + first-wall load (local)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A21",
+   "machine": "breeder",
+   "title": "Edge/SOL detachment 1-D/2-D (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A22",
+   "machine": "breeder",
+   "title": "CAD-faithful neutronics (STEP->DAGMC) (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A23",
+   "machine": "breeder",
+   "title": "Activation inventory + shutdown-dose R2S (local)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A24",
+   "machine": "breeder",
+   "title": "PKA spectra -> DPA cascades (local)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A25",
+   "machine": "breeder",
+   "title": "Tritium transport & permeation (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A26",
+   "machine": "breeder",
+   "title": "Microstructure KMC - He/H bubbles (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A27",
+   "machine": "breeder",
+   "title": "PMI sputtering & erosion (local)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A28",
+   "machine": "breeder",
+   "title": "Nuclear-data processing & UQ (local)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A29",
+   "machine": "breeder",
+   "title": "Radiated-power / impurity CR (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A30",
+   "machine": "breeder",
+   "title": "Systems / POPCON operating-point (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BU-L2-A7",
+   "machine": "burner",
+   "title": "Velocity-space microstability PIC (local)",
+   "status": "re-verifying",
+   "cls": "gate",
+   "new": true
+  },
+  {
+   "serial": "BU-L2-A8",
+   "machine": "burner",
+   "title": "RF & Fokker-Planck ray/kinetics (local)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A31",
+   "machine": "breeder",
+   "title": "Low-activation first-wall alloy - DFT composition-of-matter (Ti-W-Fe-Cr)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A32",
+   "machine": "breeder",
+   "title": "High-cohesion divertor alloy - DFT (Ta-Re-W-Ti-V)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A33",
+   "machine": "breeder",
+   "title": "Direct-energy-conversion electrode alloy - DFT (W-Ti-Cr-Ta-V)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A34",
+   "machine": "breeder",
+   "title": "Low-activation ductile breeder-blanket alloy - DFT (Al-Ti-Zr-Cr)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A35",
+   "machine": "breeder",
+   "title": "Refractory HEA family screen - ML + DFT (M1)",
+   "status": "running now",
+   "cls": "run",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A36",
+   "machine": "breeder",
+   "title": "Radiation-tolerant REBCO tape / conductor design (M4)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-L2-A37",
+   "machine": "breeder",
+   "title": "Expanded low-activation PFC alloy family (Re-free / Cu-Mo-free)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "KX-L1-A20",
+   "machine": "shared",
+   "title": "Fused strain + magnetization quench-precursor detector",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": true
+  },
+  {
+   "serial": "SC-BR-4",
+   "machine": "breeder",
+   "title": "Per-turn engineered pre-compression winding - NI REBCO Lorentz-strain flattening",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BR-OUT-4",
+   "machine": "breeder",
+   "title": "Indigenous closed fuel loop (D-T breeder -> He-3 -> D-3He burner)",
+   "status": "queued",
+   "cls": "dim",
+   "new": true
+  },
+  {
+   "serial": "BU-L1-A11",
+   "machine": "burner",
+   "title": "Strategic-isotope-foundry configuration (method)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": true
+  },
+  {
+   "serial": "KX-L1-A21",
+   "machine": "shared",
+   "title": "Coupled operating-current-window controller (centrepost-life <-> tritium-startup)",
+   "status": "re-run \u00b7 revised",
+   "cls": "gate",
+   "new": true
+  },
+  {
+   "serial": "SC-BR-5",
+   "machine": "breeder",
+   "title": "Li-6 supply routes ledger (stockpile/allied/enrichment builds vs Q2-2027)",
+   "status": "re-run \u2713",
+   "cls": "pass",
+   "new": true
+  }
+ ],
+ "counts": {
+  "tracked": 120,
+  "rerun": 66,
+  "running": 10,
+  "new": 30
+ }
+}
