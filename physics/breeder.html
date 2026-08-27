@@ -18,7 +18,7 @@
   <p class="lede">This is the deposited D–T breeder evaluator (<code style="font-family:var(--mono);font-size:13px">dt_evaluator.evaluate()</code>
   on <code style="font-family:var(--mono);font-size:13px">kronos_clean</code> kernels — pure NumPy, no economics),
   running the frozen HYPERION point: R₀ 1.2 m, A 2.5, B₀ 8 T, T<sub>i0</sub> 15 keV, TBR 1.8. HYPERION's bar is
-  <b>fusion gain only</b> — it makes tritium, helium-3 and 14 MeV neutrons, not electricity. Move the knobs; gain,
+  <b>fusion gain only</b> — it makes tritium (marginally; TBR lever 1.03–1.20), helium-3 and 14 MeV neutrons, not electricity (a category error for a breeder). Move the knobs; gain,
   power, current, neutron fraction and net tritium recompute from the power balance, live. Q 3.076 is <b>solved</b>,
   not scaled.</p>
 
@@ -57,8 +57,8 @@
         <button class="chip" id="copylink">🔗 Copy link to this point</button>
         <div id="badges" style="margin-top:12px"></div>
         <p style="font-size:12.5px;color:var(--dim);margin-top:14px">Tritium is a <b>blanket lever</b>: the demonstrated
-        beryllium-multiplied blanket (TBR 1.34) gives <b>~1.6 kg/yr</b>, scaling to the <b>3.84 kg/yr</b> national-duty target
-        at an advanced blanket (TBR 1.8). Duty band is 1.87–4.0 kg T/yr (the requirement row). TBR 1.1/1.5/1.8 is the
+        the frozen OpenMC lever (gate <b>BR-L2-A7</b>) reaches <b>TBR 1.03–1.06</b> (literal recipe) and <b>1.18–1.20</b> with a solid-Be layer — tritium is <b>marginal</b>, the solid-Be endpoint is the build basis
+        at an advanced blanket (TBR 1.8). The requirement is net TBR ≥ 1.0 — on-model with a thin 3–6% margin (closure H-C1). TBR 1.1/1.5/1.8 is the
         deposited lever — 14 MeV D–T neutrons support blanket multiplication that 2.45 MeV D–D neutrons cannot.</p>
       </div>
       <div>
@@ -135,11 +135,13 @@
 
   <div class="gapbox"><b class="t">Read the badges honestly</b>
   HYPERION is <i>sized to the requirement</i>, not to a physics optimum: the duty badge trips when net tritium leaves
-  the 1.79–3.84 kg/yr band, and the closure badge needs on-duty <b>and</b> β<sub>N</sub> below the NSTX no-wall 4.2
+  the marginal breeding band (net TBR ≥ 1.0; lever 1.03–1.20), and the closure badge needs on-model <b>and</b> β<sub>N</sub> below the NSTX no-wall 4.2
   <b>and</b> peak coil field within the demonstrated 20.1 T. Availability is damage-life-limited and the triangularity
   sign is a declared caveat — both are stated open problems, not hidden. Source:
   <a href="https://doi.org/10.5281/zenodo.21746157">the breeder deposit</a>.</div>
 
+  
+  <div class="gapbox"><b class="t">Disruptions — a first-class design fact (gate BR-L2-A10)</b> Current quench is fast: <b>τ<sub>CQ</sub> 7–19 ms</b> (reduced-order L/R on a NIMROD-verified equilibrium). The runaway-electron avalanche is <b>SEVERE</b> — E/E<sub>c</sub> ~1128, a multi-MA beam reaching ~70% of I<sub>p</sub> from a milliamp seed — so <b>SPI (shattered-pellet injection) mitigation is a hard design requirement, not a caveat</b>. Halo current at <b>35% of I<sub>p</sub></b> sets the vessel / first-wall mechanical load.</div>
   <div class="pagenav">
     <a href="index.html"><span class="lab">← Overview</span>The verification ceremony</a>
     <a href="burner.html" style="text-align:right"><span class="lab">Next instrument →</span>The Burner</a>
@@ -193,7 +195,7 @@ function readout(){
   $('t_bpk').parentElement.className='tile'+(!r.coil_ok?' bad':(r.B_peak>18?' warn':''));
   $('t_tkg').parentElement.className='tile'+(!r.on_duty?' warn':'');
   let b='';
-  b+='<span class="badge '+(r.on_duty?'gold':'warnb')+'">'+(r.on_duty?'on duty — net T in the 1.79–3.84 kg/yr band':'off duty — net T outside 1.79–3.84 kg/yr')+'</span>';
+  b+='<span class="badge '+(r.on_duty?'gold':'warnb')+'">'+(r.on_duty?'on model — tritium-marginal (net TBR ≥ 1.0)':'below breeding threshold (net TBR &lt; 1.0)')+'</span>';
   if(!r.coil_ok)b+='<span class="badge warnb">peak coil field beyond the demonstrated 20.1 T</span>';
   if(!r.beta_ok_nowall)b+='<span class="badge warnb">β_N beyond the NSTX no-wall 4.2 ceiling</span>';
   if(r.closes_nowall)b+='<span class="badge gold">closes at the no-wall limit</span>';
@@ -270,7 +272,7 @@ blanket, and the D–T 14 MeV neutron via the blanket, minus the tritons burned 
 <h4>Reading the tiles &amp; badges</h4>
 <ul>
 <li><b>Gain Q</b> is the headline; the power-balance bar shows how P<sub>fus</sub> splits into charged (stays) and neutron (the breeding product).</li>
-<li><b>On duty</b> = net tritium inside the 1.79–3.84 kg/yr requirement band. <b>Closes at the no-wall limit</b> = on-duty AND β<sub>N</sub>&lt;4.2 AND coil field ≤20.1 T.</li>
+<li><b>On duty</b> = net TBR ≥ 1.0 — tritium-marginal (lever 1.03–1.20, BR-L2-A7). <b>Closes at the no-wall limit</b> = on-duty AND β<sub>N</sub>&lt;4.2 AND coil field ≤20.1 T.</li>
 <li>Tiles turn amber near a limit and red past it (β<sub>N</sub> ceiling, coil field, off-duty).</li>
 </ul>
 

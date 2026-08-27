@@ -356,7 +356,7 @@ function buildBreeder(){
   var gB=addLayer('Blanket & Fuel Cycle',0xd3ac5f);
   var fw=part(gB,dShapeGeo(R0,a*0.92,kap,TRI,88),shell(0xb0b8c2,.22),'First wall',[['load','1.97 MW/m²'],['life','~2.5 fpy'],['shape','conformal · δ −0.30']],'',false);
   var bl=part(gB,dShapeGeo(R0,a*1.28,kap,TRI,80),shell(0xd3ac5f,.16),'Breeding blanket',
-    [['TBR','1.8 target (1.34 demo)'],['tritium','3.84 kg/yr'],['He-3','~1.97 kg/yr'],['materials','Li / Be']],'gold');
+    [['TBR','1.8 target (1.34 demo)'],['tritium (TBR)','1.03–1.20 lever'],['He-3','~1.97 kg/yr'],['materials','Li / Be']],'gold');
   var gW=addLayer('Outer Wall & Structure',0x8792a0);
   var ves=part(gW,new THREE.TorusGeometry(R0,a*1.62,20,52),shell(0x9aa6b4,.12),'Vacuum vessel',[['plasma volume','10.9 m³'],['R₀','1.2 m']],'');
   ves.rotation.x=Math.PI/2;ves.scale.set(1,1,kap*0.96);
