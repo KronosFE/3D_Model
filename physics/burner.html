@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Burner — closure | Kronos Live Physics</title>
-<meta name="description" content="The D–³He tandem-mirror burner (Mode M) reproducible closing point: engineering gain Q_E 1.31, f_n 5.44%, net electric that scales with central-cell length. Closure is requirement-class — it needs the end-plug density. DOI 10.5281/zenodo.21746479.">
+<meta name="description" content="The D–³He tandem-mirror burner (Mode M) reproducible closing point: engineering gain Q_E 1.318, f_n 5.44%, net electric that scales with central-cell length. Closure is requirement-class — it needs the end-plug density. DOI 10.5281/zenodo.21746479.">
 <link rel="stylesheet" href="../assets/style.css?v=4">
 </head>
 <body>
@@ -58,12 +58,12 @@
   deposit's own solver (<code style="font-family:var(--mono);font-size:13px">run_all.py</code> clean, DOI 10.5281/zenodo.21746479).
   At the design config (n<sub>p</sub>/n<sub>c</sub> 16, x(³He) 0.30, T<sub>i</sub> 90 keV, n<sub>e</sub> 2.6×10²⁰), engineering
   gain <b>Q<sub>E</sub> = 1.31</b> and neutron fraction <b>f_n 5.44%</b> are length-independent; the <b>net electric scales
-  with central-cell length</b>. Closure is <b>requirement-class, not demonstrated</b> — read the plug caveat below.</p>
+  with central-cell length</b>. <b>Closed-on-model</b> (Q<sub>E</sub> 1.318, buildable plug coil); <b>demonstrated</b> = the WHAM-scale plug-potential experiment (2028–30). One residual physics gate — read it below.</p>
 
   <div class="enginebar ok" id="ebar"><span class="dot"></span><span class="msg"></span></div>
 
   <div class="gapbox" style="border-color:#e28f6b">
-    <b class="t" style="color:#e28f6b">⚠ The mandatory caveat — closure is requirement-class, not demonstrated</b>
+    <b class="t" style="color:#e28f6b">⚠ The one residual physics gate — closed-on-model, not yet demonstrated (B-C3)</b>
     Q<sub>E</sub> 1.31 requires an end-plug density n<sub>p</sub>/n<sub>c</sub> ≈ 16 → plug density <b>4.16×10²¹ m⁻³ =
     347× the GDT-measured value</b> (26× the best published mirror design) — the design's <b>largest open item</b>. At the
     reference n<sub>p</sub>/n<sub>c</sub> = 10 the machine <b>does not close</b> (Q<sub>E</sub> 0.63, net −160 MW<sub>e</sub>).
@@ -136,10 +136,10 @@
   <div class="gapbox"><b class="t">The honest frozen card (Mode M)</b>
   Design point <b>x=0.30 → Q<sub>E</sub> 1.31, f_n 5.44%</b> (Q_p 3.54); reproduced on the deposit's own solver. Net electric
   <b>+104 / +850 / +2832 MW<sub>e</sub></b> at 55 / 440 (Aegis) / 1400 (MetroVolt) m. Descriptor: <b>low-neutron, NOT
-  aneutronic</b>. The physics closes on measured efficiencies — the hard part, done — but closure is
-  <b>requirement-class</b>: the plug density (347× GDT) is the largest open item, and the thermal barrier and electron
+  aneutronic</b>. The physics <b>closes on-model</b> on measured efficiencies — but demonstrated closure is
+  gated on <b>one experiment</b>: the plug ion-confining potential (112× GAMMA-10, never demonstrated; B-C3) is the single residual physics gate — the plug <b>coil is buildable</b> (stress ratio 0.26–0.37; that gate is retired). The thermal barrier and electron
   direct conversion remain named engineering gates. <b>Environment:</b> scheduled-replacement waste ≈ zero (0.035–0.144 first-wall changes in 30 yr); wall-loading
-  41× (Aegis) / 168× (MetroVolt) below the breeder. <b>Not frozen</b> (open): the plug-density requirement, lunar ³He,
+  41× (Aegis) / 168× (MetroVolt) below the breeder. <b>Open</b> (one physics gate + supply): the plug ion-confining potential (B-C3), lunar ³He,
   REBCO plug lifetime. Source: <a href="https://doi.org/10.5281/zenodo.21746479">the burner deposit</a> · frozen M-45…M-47.</div>
 
   <div class="pagenav">
@@ -172,7 +172,7 @@ function interp(col,x){
   return TRAJ[TRAJ.length-1][col];
 }
 const bar=$('ebar'); bar.querySelector('.msg').innerHTML=
-  '<span class="ok-t">frozen Mode-M closing point — reproduced on the deposit solver</span> — design point <span class="v">Q_E 1.31</span> · <span class="v">f_n 5.44%</span> · net scales <span class="v">+104 / +850 / +2832 MWe</span> (55 / 440 / 1400 m) · closure is requirement-class';
+  '<span class="ok-t">frozen Mode-M closing point — reproduced on the deposit solver</span> — design point <span class="v">Q_E 1.318</span> · <span class="v">f_n 5.44%</span> · net scales <span class="v">+104 / +850 / +2832 MWe</span> (55 / 440 / 1400 m) · closure is requirement-class';
 
 const sX=$('s_x');
 (function(){const h=KL.getHash();if(h.has('x'))sX.value=h.get('x');KL.fillRange(sX);})();
@@ -233,7 +233,7 @@ The plasma physics is inherited from the deposit, unchanged. These are the <b>fr
 <li><b>Low-neutron, never aneutronic.</b> Near-aneutronic (x≥0.45) does not close here — a named redesign option, not this machine.</li>
 </ul>
 <h4>⚠ The caveat that travels with every Q<sub>E</sub></h4>
-<p>Closure is <b>requirement-class, not demonstrated</b>: it needs plug density n<sub>p</sub>/n<sub>c</sub> ≈ 16 (4.16×10²¹ m⁻³ = 347× GDT-measured), the largest open item. At n<sub>p</sub>/n<sub>c</sub> = 10 the machine does not close (Q<sub>E</sub> 0.63).</p>
+<p><b>Closed-on-model</b>; <b>demonstrated</b> = WHAM plug-potential (2028–30). The single residual gate is the plug ion-confining potential; it needs plug density n<sub>p</sub>/n<sub>c</sub> ≈ 16 (4.16×10²¹ m⁻³ = 347× GDT-measured), the largest open item. At n<sub>p</sub>/n<sub>c</sub> = 10 the machine does not close (Q<sub>E</sub> 0.63).</p>
 <p style="color:#93a4bd;font-size:12.5px">Open (not frozen): the plug-density requirement, lunar ³He, REBCO plug lifetime. Source: burner deposit DOI 10.5281/zenodo.21746479. Conceptual design and simulation study; no machine has been built.</p>
 `});
 })();

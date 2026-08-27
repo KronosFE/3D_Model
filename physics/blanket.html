@@ -37,8 +37,9 @@
   <h1>Solve the blanket.</h1>
   <p class="lede">This is the deposited breeding-blanket neutronics, <b>running live in your browser</b> — change the
   design and net TBR recomputes on the actual engine (a reduced-order surrogate; <b>OpenMC retires it</b>). Before the
-  controls unlock it re-derives the frozen blanket point (net TBR <b>0.742</b>). When you want first-principles
-  transport, request the full OpenMC run — it goes to the HPC queue.</p>
+  controls unlock it re-derives the reduced-order blanket point. The <b>authoritative</b> TBR is the frozen OpenMC lever
+  (gate <b>BR-L2-A7</b>): <b>1.03–1.06</b> with the literal recipe, rising to <b>1.18–1.20</b> with a dedicated solid-Be layer —
+  the build basis. Tritium is <b>marginal</b>, not a surplus. The live surrogate below is directional; request the full OpenMC run for the lever.</p>
 
   <div class="boot" id="boot"><div class="bar"><i></i><i></i><i></i></div><span class="cursor"></span></div>
 
@@ -58,9 +59,11 @@
     </div>
   </div>
 
-  <div class="gapbox"><b class="t">Honest gate</b> Net TBR must exceed <b>1.0</b> for tritium self-sufficiency.
-  At the frozen 3-D coverage the breeder is <b>net-deficit</b> (net TBR 0.742) — that is the gate the program drives
-  to close (studies H1, H6). Local TBR &gt; 1 is necessary but not sufficient; penetrations and coverage set the net.</div>
+  <div class="gapbox"><b class="t">Honest gate — closure H-C1 (two-tier)</b> Tritium self-sufficiency needs net TBR ≥ 1.0. The frozen
+  OpenMC lever (gate <b>BR-L2-A7</b>) reaches <b>1.03–1.06</b> (literal recipe, Be packing 9.6–11.8 vol%) and <b>1.18–1.20</b> with a
+  dedicated 5 cm solid-Be layer — the build basis. Hyperion <b>closes on-model</b> as a breeder platform with a thin <b>3–6% margin</b>;
+  <b>demonstrated</b> = measured TBR at FOAK first-tritium (~2030–31). This reduced-order surrogate under-predicts the OpenMC lever —
+  treat it as directional. Net electricity is a category error, excluded.</div>
 
   <div class="pagenav">
     <a href="../machine/reactor-3d.html"><span class="lab">Machine</span>◂ the 3D reactor</a>
@@ -98,7 +101,7 @@ function solveNow(){const t0=performance.now();let r;try{r=solve(vals());}catch(
   $('tiles').innerHTML=`<div class="tile hero ${ok?'good':'bad'}"><div class="k">net TBR</div><div class="v">${fmt(r.net_tbr,4)}</div></div>
    <div class="tile"><div class="k">local TBR</div><div class="v">${fmt(r.local_tbr,4)}</div></div>
    <div class="tile"><div class="k">penetration derate</div><div class="v" style="font-size:20px">${fmt(r.penetration_derate,3)}</div></div>`;
-  $('badges').innerHTML=`<span class="badge gold">surrogate · [T]</span>`+(ok?'<span class="badge" style="color:var(--teal);border:1px solid var(--teal);background:rgba(110,201,178,.1)">self-sufficient</span>':'<span class="badge warnb">net-deficit — TBR &lt; 1</span>');
+  $('badges').innerHTML=`<span class="badge gold">surrogate · [T]</span>`+(ok?'<span class="badge" style="color:var(--teal);border:1px solid var(--teal);background:rgba(110,201,178,.1)">on-model · thin margin</span>':'<span class="badge gold">reduced-order — see the OpenMC lever 1.03–1.20</span>');
   $('sstatus').textContent=`solved in ${ms} ms · deposited neutronics surrogate · deterministic`;
 }
 $('qbtn').addEventListener('click',()=>{
