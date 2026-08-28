@@ -5,7 +5,7 @@
 One place for everything Kronos has designed, computed, and published:
 
 - **Machine** — the interactive 3D reactor (every component inspectable), hardware systems, materials & environment, the instructional film.
-- **Physics** — the live instruments: the deposited D–T breeder engine, the D–³He tandem-mirror closure map, and Bosch–Hale reactivity — running in your browser via WebAssembly Python. The engine re-derives the frozen design points (Q 3.424 · 88.7 MW · 9.86 MA) before any control unlocks. Validation, V&V and UQ with the live 19/19 anchor regression.
+- **Physics** — the live instruments: the deposited D–T breeder engine, the D–³He tandem-mirror closure map, and Bosch–Hale reactivity — running in your browser via WebAssembly Python. The engine re-derives the frozen design points (Q 3.076 · 85.0 MW · 9.66 MA) before any control unlocks. Validation, V&V and UQ with the live 19/19 anchor regression.
 - **Program** — the open record: every fully reproducible study (pre-registered, citation-audited, with data), the roadmap and its stated gates, readiness & risks, computing, and how to cite.
 - **Lab** — the team workspace (deep data, unlocked instruments, hi-fi run queue, Phase 3/4 board). Sign-in required; hosted on the Kronos private workspace, not in this repository.
 
