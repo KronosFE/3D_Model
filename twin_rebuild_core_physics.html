@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Kronos 3D Model — Core Systems + Physics Engine (rebuild slice)</title>
+<title>Kronos 3D Model — Core Systems + Physics Engine (rebuild slice)</title><meta property="og:image" content="https://www.kronosfusionenergy.com/__l5e/assets-v1/9153ca3a-2184-47d8-a388-f5f14558ab5b/kronos_preview_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:image" content="https://www.kronosfusionenergy.com/__l5e/assets-v1/9153ca3a-2184-47d8-a388-f5f14558ab5b/kronos_preview_1200x630.png"><meta name="twitter:card" content="summary_large_image"><meta property="og:type" content="website"><meta property="og:site_name" content="Kronos Fusion Energy"><meta property="og:title" content="Kronos 3D Model — Core Systems + Physics Engine (rebuild slice)"><meta name="theme-color" content="#0f141b"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Kronos Fusion Energy","url":"https://www.kronosfusionenergy.com","logo":"https://www.kronosfusionenergy.com/__l5e/assets-v1/9153ca3a-2184-47d8-a388-f5f14558ab5b/kronos_preview_1200x630.png"},{"@type":"WebSite","name":"Kronos Fusion Energy","url":"https://www.kronosfusionenergy.com"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1609,7 +1609,7 @@ var DP = {
       ['Fusion gain  Q','3.076','SOLVED — P_fus/P_aux','pass'],
       ['Fusion power  P_fus','85.0 MW','COMPUTED','pass'],
       ['Neutron power  P_n','70.7 MW','f_n 0.797','pass'],
-      ['Plasma current  I_p','9.66 MA','1.50 boot + 8.36 driven','pass'],
+      ['Plasma current  I_p','9.66 MA','1.50 boot + 8.16 driven','pass'],
       ['Toroidal field  B₀','8.0 T','SCAN lever','gate'],
       ['Peak coil field  B_peak','16.84 T','≤ 20.1 T [HAR23]','pass'],
       ['Neutron wall load','1.97 MW/m²','19.7 dpa/fpy','gate'],
@@ -1828,7 +1828,7 @@ function specSheet(){var mach=(M==='burner')?'Burner (D–³He tandem mirror) ·
     [['Fusion gain Q','3.076'],['Fusion power','85.0 MW'],['Plasma current','9.66 MA'],['Peak field','16.84 T'],['Triangularity δ','−0.30'],['Tritium output','4.0 kg/yr (TBR 1.8)'],['Confinement','H₉₈ = 1.0 (key assumption)']];
   var w=window.open('','_blank');if(!w)return;
   w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Kronos spec sheet — '+mach+'</title>'+
-    '<style>body{font-family:Arial,sans-serif;color:#111;max-width:720px;margin:30px auto;padding:0 20px}h1{font-size:20px}h2{font-size:13px;color:#666;font-weight:normal;margin-top:2px}table{border-collapse:collapse;width:100%;margin-top:16px}td{border-bottom:1px solid #ddd;padding:8px 6px;font-size:13px}td:first-child{color:#555;width:45%}.n{font-size:11px;color:#888;margin-top:20px}@media print{body{margin:0}}</style><meta property="og:image" content="https://www.kronosfusionenergy.com/__l5e/assets-v1/9153ca3a-2184-47d8-a388-f5f14558ab5b/kronos_preview_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:image" content="https://www.kronosfusionenergy.com/__l5e/assets-v1/9153ca3a-2184-47d8-a388-f5f14558ab5b/kronos_preview_1200x630.png"><meta name="twitter:card" content="summary_large_image"><meta property="og:type" content="website"><meta property="og:site_name" content="Kronos Fusion Energy"><meta property="og:title" content="Kronos 3D Model — Core Systems + Physics Engine (rebuild slice)"><meta name="theme-color" content="#0f141b"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"Kronos Fusion Energy","url":"https://www.kronosfusionenergy.com","logo":"https://www.kronosfusionenergy.com/__l5e/assets-v1/9153ca3a-2184-47d8-a388-f5f14558ab5b/kronos_preview_1200x630.png"},{"@type":"WebSite","name":"Kronos Fusion Energy","url":"https://www.kronosfusionenergy.com"}]}</script></head><body>'+
+    '<style>body{font-family:Arial,sans-serif;color:#111;max-width:720px;margin:30px auto;padding:0 20px}h1{font-size:20px}h2{font-size:13px;color:#666;font-weight:normal;margin-top:2px}table{border-collapse:collapse;width:100%;margin-top:16px}td{border-bottom:1px solid #ddd;padding:8px 6px;font-size:13px}td:first-child{color:#555;width:45%}.n{font-size:11px;color:#888;margin-top:20px}@media print{body{margin:0}}</style></head><body>'+
     '<h1>Kronos Fusion Energy — Design Spec Sheet</h1><h2>'+mach+' · frozen design point (Aug 2026)</h2>'+
     '<table>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td></tr>';}).join('')+'</table>'+
     '<div class="n">This is a model spec sheet — a design estimate under stated assumptions, not built hardware or a performance guarantee. Reproduces from Zenodo DOI '+doi+' (CC BY 4.0). © 2026 Kronos Fusion Energy, Inc. · U.S. Patent 12,009,112 + patents pending.</div>'+
@@ -2083,7 +2083,7 @@ function updatePhysics(){
     ro.innerHTML=
       roCard('Fusion gain Q',Q.toFixed(3),'',(Math.abs(Q-Q0)<.001?'frozen anchor':'0-D estimate'))+
       roCard('Fusion power',Pf.toFixed(1),'MW','P_n '+Pn.toFixed(1)+' MW · f_n 0.797')+
-      roCard('Plasma current',Ip0.toFixed(2),'MA','1.50 boot + 8.36 driven')+
+      roCard('Plasma current',Ip0.toFixed(2),'MA','1.50 boot + 8.16 driven')+
       roCard('Tritium output',Trit.toFixed(2),'kg/yr','at TBR '+TBR.toFixed(2))+
       roCard('Neutron wall',(1.97*Pf/Pf0).toFixed(2),'MW/m²','14 MeV first wall');
     eqs.innerHTML=
@@ -2301,8 +2301,8 @@ var EQCAT={
    {n:'Energy confinement — IPB98(y,2)',f:'τ_E = 0.0562·H·I_p^0.93·B^0.15·n^0.41·R^1.97·κ^0.78·P^-0.69',r:'0.374 <small>s</small>',
     deriv:[['H₉₈','1.00'],['I_p','9.66 MA'],['B₀','8 T'],['n̄','4.09×10²⁰'],['R₀','1.2 m'],['κ','2.0'],['τ_E','0.374 s']],
     note:'H₉₈ = 1.0 is the assumed confinement quality (A < 2.5 extrapolates IPB98; declared caveat).'},
-   {n:'Bootstrap fraction (Sauter)',f:'f_bs = I_boot / I_p',r:'0.152',
-    deriv:[['I_boot','1.50 MA'],['I_driven','8.36 MA'],['I_p total','9.66 MA'],['f_bs','0.152']],
+   {n:'Bootstrap fraction (Sauter)',f:'f_bs = I_boot / I_p',r:'0.155',
+    deriv:[['I_boot','1.50 MA'],['I_driven','8.16 MA'],['I_p total','9.66 MA'],['f_bs','0.155']],
     note:'Steady-state: bootstrap + driven current continuously sustained (H29).'},
    {n:'Normalized beta',f:'β_N = β_t · a·B₀ / I_p',r:'1.532 <small>/ 4.2</small>',
     deriv:[['β_t','3.93 %'],['β_N','1.532'],['no-wall NSTX limit','4.2 [SAB10]'],['Margin','well below limit','ok']],
@@ -2438,8 +2438,8 @@ var HW={
     detail:[['material','tungsten monoblocks'],['config','lower single-null'],['plasma volume','10.9 m³']]}
   ]},
   {g:'Plasma & Confinement',cards:[
-   {th:'Plasma current',big:'9.66',unit:'MA',st:'boot + driven',stcls:'pass',sub:'Flat-top current; bootstrap 1.50 MA (f_bs 0.152), remainder current-driven.',
-    detail:[['I_p','9.66 MA'],['bootstrap','1.50 MA (f_bs 0.152)'],['driven','8.36 MA'],['q₉₅','3.0']]},
+   {th:'Plasma current',big:'9.66',unit:'MA',st:'boot + driven',stcls:'pass',sub:'Flat-top current; bootstrap 1.50 MA (f_bs 0.155), remainder current-driven.',
+    detail:[['I_p','9.66 MA'],['bootstrap','1.50 MA (f_bs 0.155)'],['driven','8.16 MA'],['q₉₅','3.0']]},
    {th:'Energy confinement',big:'0.374',unit:'s (τ_E)',st:'H₉₈ 1.0',stcls:'pass',sub:'IPB98(y,2) at H₉₈ 1.0 — confinement quality dominates the uncertainty.',
     detail:[['τ_E','0.374 s'],['H₉₈','1.0'],['scaling','IPB98(y,2)'],['A<2.5','extrapolated (declared)']]},
    {th:'Normalised β',big:'1.53',unit:'β_N / 4.2',st:'stable margin',stcls:'pass',sub:'β_N well below the NSTX no-wall limit of 4.2.',
@@ -2802,7 +2802,7 @@ var QA=[
    burner:['The end-plug density: <b>n_p/n_c = 16 → 347× the GDT-measured value</b> (H53). At n_p/n_c 10 the machine does not close (Q_E 0.67).','H53 · DOI 10.5281/zenodo.21746479']}],
  ['How much tritium does the breeder make?', {breeder:['<b>4.0 kg/yr at TBR 1.8</b>; the demonstrated Be-blanket TBR 1.34 gives ~1.7 kg/yr — roughly 2× world commercial tritium flow.','H34 · DOI 10.5281/zenodo.21746157'],
    burner:['Tritium is the breeder’s product; the burner runs on D–³He and produces a small D–D tritium by-product only.','M-45 · DOI 10.5281/zenodo.21746479']}],
- ['How does the current compare to ITER?', {breeder:['Hyperion runs <b>9.66 MA — about two-thirds of ITER’s 15 MA baseline</b> (bootstrap 1.50 + driven 8.36 MA).','Kim 2018 · DOI 10.1088/1741-4326/aab034'],
+ ['How does the current compare to ITER?', {breeder:['Hyperion runs <b>9.66 MA — about two-thirds of ITER’s 15 MA baseline</b> (bootstrap 1.50 + driven 8.16 MA).','Kim 2018 · DOI 10.1088/1741-4326/aab034'],
    burner:['The burner is a tandem mirror, not a tokamak — it has no plasma current in the ITER sense; confinement is magnetic-mirror.','M-45 · DOI 10.5281/zenodo.21746479']}]
 ];
 function renderAsk(){
@@ -2815,7 +2815,7 @@ function renderAsk(){
 var CORPUS=[
  ['breeder','The breeder’s fusion gain is Q 3.076, solved from the power balance (P_fus 85.04 MW / P_aux 25.89 MW) — not a scaled estimate.','V02 · DOI 21746157'],
  ['breeder','Fusion power is 85.0 MW; neutron power 70.7 MW at neutron fraction f_n 0.797. The 14 MeV neutrons breed the tritium.','H01 · DOI 21746157'],
- ['breeder','Plasma current is 9.66 MA (bootstrap 1.50 + driven 8.36) — about two-thirds of ITER’s 15 MA baseline.','V01 · Kim 2018'],
+ ['breeder','Plasma current is 9.66 MA (bootstrap 1.50 + driven 8.16) — about two-thirds of ITER’s 15 MA baseline.','V01 · Kim 2018'],
  ['breeder','The breeder is a deuterium–tritium spherical tokamak: aspect ratio 2.5, major radius R0 1.2 m, elongation 2.0, B0 8 T, peak conductor field 16.84 T.','config 22021'],
  ['breeder','Tritium output is 4.0 kg/yr at TBR 1.8; the demonstrated Be blanket TBR 1.34 gives about 1.7 kg/yr — roughly twice world commercial tritium flow.','H34 · DOI 21746157'],
  ['breeder','Helium-3 co-product is about 1.97 kg/yr, independent of the blanket.','freeze 2026-08'],
@@ -4360,7 +4360,7 @@ var ALGO_DOI={breeder:'10.5281/zenodo.21746157',burner:'10.5281/zenodo.21746479'
 var ALGOS=[
  {cat:'Plasma & systems',name:'0-D power-balance evaluator (breeder)',purpose:'Solves the coupled confinement + fusion-reactivity + power balance for the breeder design point.',method:'Zero-dimensional systems model (dt_evaluator.py + kronos_clean.py, pure NumPy). Fusion power from ⟨σv⟩ reactivity; heating/loss balance sets τ_E and Q.',inp:'R₀, a, κ, B₀, Ti₀, nₑ, H₉₈, TBR',out:'Q, P_fus, P_n, I_p, β_N, τ_E, T (kg/yr)',runs:'In-browser (Pyodide)',basis:'VALIDATED',page:'physics',doi:'breeder'},
  {cat:'Plasma & systems',name:'Confinement scaling (IPB98(y,2) · H₉₈)',purpose:'Sets energy confinement time from the standard tokamak scaling law, scaled by the H₉₈ factor.',method:'τ_E = H₉₈ · τ_IPB98(I_p, B, n, P, R, a, κ, A). H₉₈ is the design\'s largest single uncertainty.',inp:'I_p, B, n, P_heat, geometry',out:'τ_E',runs:'In-browser (live)',basis:'SOURCED',page:'gov',doi:'breeder'},
- {cat:'Plasma & systems',name:'Bootstrap current fraction',purpose:'Splits plasma current into self-driven (bootstrap) and externally driven parts.',method:'I_p = I_bootstrap + I_driven (frozen: 1.50 + 8.36 MA, f_bs ≈ 0.152) from the pressure profile.',inp:'pressure profile, β',out:'f_bs, I_driven',runs:'Precomputed (frozen)',basis:'REDUCED-ORDER',page:'physics',doi:'breeder'},
+ {cat:'Plasma & systems',name:'Bootstrap current fraction',purpose:'Splits plasma current into self-driven (bootstrap) and externally driven parts.',method:'I_p = I_bootstrap + I_driven (frozen: 1.50 + 8.16 MA, f_bs ≈ 0.155) from the pressure profile.',inp:'pressure profile, β',out:'f_bs, I_driven',runs:'Precomputed (frozen)',basis:'REDUCED-ORDER',page:'physics',doi:'breeder'},
  {cat:'Plasma & systems',name:'Stability / β gate',purpose:'Feasibility gate on plasma pressure.',method:'β_N < 4.2 (no-wall NSTX limit) combined with damage-life and coil limits as the "closes" criterion.',inp:'β_N, B_peak, T (dpa-life)',out:'closes / does-not-close',runs:'In-browser (live)',basis:'SOURCED',page:'uq',doi:'breeder'},
  {cat:'Plasma & systems',name:'Burner closure / operating window',purpose:'Determines whether the D–³He burner produces net power and how much.',method:'Power ledger with DEC recovery over the fuel trajectory; Q_E and f_n vs x(³He), Ti, nₑ. Closure crosses ~x0.44.',inp:'x(³He), Ti, nₑ, B_throat',out:'Q_E, f_n, net MWe',runs:'Precomputed (frozen)',basis:'REDUCED-ORDER',page:'physics',doi:'burner'},
  {cat:'Plasma & systems',name:'Plug-density requirement (Frank Eq. 3.4)',purpose:'The binding condition for burner net power.',method:'φ_i = T_e · ln(n_p/n_c); net power requires plug-to-central density ratio n_p/n_c ≈ 16. A requirement, not a solved result.',inp:'T_e, target confining potential',out:'required n_p/n_c',runs:'Precomputed (frozen)',basis:'REQUIREMENT',page:'risks',doi:'burner'},
