@@ -632,6 +632,12 @@ details.faq .fa b{color:var(--ink)}
         g+='<text x="'+x+'" y="'+(y+22)+'" text-anchor="middle" font-family="monospace" font-size="9" fill="#9aa6b4">'+p[1]+'</text>';});
       svg.innerHTML=g;
     })();</script>
+  
+    <div class="lead" style="margin-top:22px">Strategic outputs · isotopes</div>
+    <div class="card ax-card" id="ax-iso">
+      <h3>The neutron economy — isotope production <span class="tag">14 MeV neutron source · activation</span></h3>
+      <div style="overflow-x:auto"><table class="ax-tab"><thead><tr><th>Isotope</th><th>Half-life</th><th>Application</th></tr></thead><tbody><tr><td class="mono">Mo-99</td><td class="mono">66 h</td><td>→ Tc-99m · the workhorse of medical imaging</td></tr><tr><td class="mono">Ac-225</td><td class="mono">10 d</td><td>targeted alpha therapy (oncology)</td></tr><tr><td class="mono">Tb-161</td><td class="mono">6.9 d</td><td>targeted beta/Auger therapy</td></tr><tr><td class="mono">Helium-3</td><td class="mono">stable</td><td>quantum sensing · cryogenics · neutron detection</td></tr></tbody></table></div><p class="ax-note">The breeder is a strategic-materials <strong>platform</strong>: its 14 MeV neutrons make medical isotopes that today depend on a handful of ageing reactors, and its decay-sourced helium-3 feeds quantum sensing and neutron detection. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gate 2.25.</p>
+    </div>
   </section>
 
   <!-- ================= REPRODUCIBILITY · 5 TESTS (public trust page) ================= -->
@@ -892,6 +898,18 @@ details.faq .fa b{color:var(--ink)}
     </div>
 
     <div class="foot" id="phys-foot"></div>
+  
+    <div class="lead" style="margin-top:22px">Fast ions · ASCOT5</div>
+    <div class="card ax-card" id="ax-alpha"><style>.ax-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:0 0 14px}.ax-tiles .t{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:6px;padding:10px 12px}.ax-tiles .k{font:9px var(--fm);color:var(--dim);letter-spacing:.06em;text-transform:uppercase}.ax-tiles .v{font:15px var(--fm);color:var(--ink);margin-top:3px}.ax-note{font-size:12px;color:var(--dim);line-height:1.7;margin:12px 0 0;max-width:82ch}.ax-note a{color:var(--gold)}.ax-svg{width:100%;max-width:640px;background:#1b222c;border:1px solid var(--line);border-radius:8px;display:block}table.ax-tab{width:100%;border-collapse:collapse;font-size:12px}table.ax-tab th{font:9px var(--fm);color:var(--dim);text-transform:uppercase;text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}table.ax-tab td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--ink)}table.ax-tab td.mono{font-family:var(--fm);color:var(--gold);font-size:11px}.ax-bar{height:22px;background:var(--panel2);border-radius:4px;overflow:hidden;position:relative;margin:4px 0}.ax-bar>span{position:absolute;top:0;bottom:0;border-radius:4px}</style>
+      <h3>Alpha / fast-ion confinement <span class="tag">ASCOT5 · orbit-following Monte-Carlo</span></h3>
+      <div class="ax-tiles"><div class="t"><div class="k">Alpha confinement</div><div class="v">99.98%</div></div><div class="t"><div class="k">Lost fraction</div><div class="v">0.02%</div></div><div class="t"><div class="k">First-wall peak</div><div class="v">1.89 MW/m²</div></div><div class="t"><div class="k">Code</div><div class="v">ASCOT5</div></div></div><p class="ax-note">Full-orbit following of the 3.5 MeV fusion alphas on the frozen equilibrium: <strong>99.98% are confined</strong> to thermalise in the core; the 0.02% prompt-loss sets a benign, well-spread first-wall load, consistent with the MHD margins. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gate BR-L1-A14.</p>
+    </div>
+  
+    <div class="lead" style="margin-top:22px">Fuels · reactivity</div>
+    <div class="card ax-card" id="ax-fuel">
+      <h3>Advanced-fuel scorecard — reactivity <span class="tag">Bosch-Hale ⟨σv⟩ · computed from the toolkit</span></h3>
+      <svg class="ax-svg" id="ax-fuel-svg" viewBox="0 0 620 300" role="img" aria-label="reactivity vs Ti"></svg><p class="ax-note">Maxwellian ⟨σv⟩ vs ion temperature, computed live from the open toolkit. D-T peaks near 60 keV and is easiest to ignite; <strong>D-³He</strong> needs far higher T but is low-neutron; D-D is weakest. The choice is physics, not the aneutronic ideal. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gate 2.27.</p><script>(function(){var D=[[6, 2.569949295055654e-23, 1.7205054275842077e-26, 3.099298049794755e-25], [8, 6.24853798348524e-23, 7.423434405359335e-26, 6.769467300983563e-25], [10, 1.1361654705836242e-22, 2.1260732682232593e-25, 1.180392345502797e-24], [15, 2.7399296107880806e-22, 1.1753899893632632e-24, 2.8709979064758607e-24], [20, 4.330201895538228e-22, 3.482112852415851e-24, 5.001606454167176e-24], [30, 6.680782799096398e-22, 1.3627306472222105e-23, 9.998842137315394e-24], [40, 7.997634213159335e-22, 3.1604475665803637e-23, 1.5484276587811065e-23], [60, 8.864425987304922e-22, 8.214528388935175e-23, 2.690534249484641e-23], [80, 8.84086782949874e-22, 1.3190087336267146e-22, 3.82663680966737e-23], [100, 8.4476624586658575e-22, 1.7184772663480245e-22, 4.925601945197827e-23], [150, 7.277355218059642e-22, 2.3398841885708405e-22, 7.407257259761206e-23]];var svg=document.getElementById("ax-fuel-svg");if(!svg)return;var W=620,H=300,ml=58,mr=90,mt=18,mb=40;var xs=D.map(function(d){return d[0];});function fx(x){var lo=Math.log10(xs[0]),hi=Math.log10(xs[xs.length-1]);return ml+(Math.log10(x)-lo)/(hi-lo)*(W-ml-mr);}var all=[];D.forEach(function(d){[1,2,3].forEach(function(i){if(d[i]>0)all.push(Math.log10(d[i]));});});var ymin=Math.min.apply(0,all),ymax=Math.max.apply(0,all);function fy(v){return H-mb-(Math.log10(v)-ymin)/(ymax-ymin)*(H-mt-mb);}function ln(i,c,lab){var pts=D.filter(function(d){return d[i]>0;}).map(function(d){return fx(d[0]).toFixed(1)+","+fy(d[i]).toFixed(1);}).join(" ");var last=D[D.length-1];return "<polyline points=\""+pts+"\" fill=\"none\" stroke=\""+c+"\" stroke-width=\"2\"/><text x=\""+(W-mr+6)+"\" y=\""+(fy(last[i])+3).toFixed(1)+"\" fill=\""+c+"\" font-family=\"monospace\" font-size=\"10\">"+lab+"</text>";}var g="";for(var k=Math.ceil(ymin);k<=Math.floor(ymax);k++){var y=fy(Math.pow(10,k));g+="<line x1=\""+ml+"\" y1=\""+y.toFixed(1)+"\" x2=\""+(W-mr)+"\" y2=\""+y.toFixed(1)+"\" stroke=\"rgba(255,255,255,.06)\"/><text x=\""+(ml-6)+"\" y=\""+(y+3).toFixed(1)+"\" text-anchor=\"end\" font-size=\"9\" fill=\"#9aa6b4\" font-family=\"monospace\">1e"+k+"</text>";}[6,10,20,40,100].forEach(function(tt){g+="<text x=\""+fx(tt).toFixed(1)+"\" y=\""+(H-mb+15)+"\" text-anchor=\"middle\" font-size=\"9\" fill=\"#9aa6b4\" font-family=\"monospace\">"+tt+"</text>";});svg.innerHTML=g+ln(1,"#d3ac5f","D-T")+ln(2,"#6bbd8a","D-³He")+ln(3,"#8fb4d9","D-D")+"<text x=\""+ml+"\" y=\"13\" fill=\"#9aa6b4\" font-family=\"monospace\" font-size=\"10\">sigmav (m³/s) vs T_i (keV, log)</text>";})();</script>
+    </div>
   </section>
 
   <!-- ================= ANALYSIS WORKBENCH ================= -->
@@ -1052,6 +1070,12 @@ details.faq .fa b{color:var(--ink)}
       <div class="card dark"><h3>Radiological picture</h3><div id="saf-radnote"></div></div>
     </div>
     <div class="foot" id="saf-foot"></div>
+  
+    <div class="lead" style="margin-top:22px">Disruptions</div>
+    <div class="card ax-card" id="ax-disr">
+      <h3>Disruptions & runaway electrons <span class="tag">a hard requirement, not a footnote</span></h3>
+      <div class="ax-tiles"><div class="t"><div class="k">Verdict</div><div class="v">named requirement</div></div><div class="t"><div class="k">Mitigation</div><div class="v">shattered-pellet / massive-gas</div></div><div class="t"><div class="k">Runaway control</div><div class="v">seed suppression + benign dissipation</div></div><div class="t"><div class="k">Gate</div><div class="v">2.12</div></div></div><p class="ax-note">Disruptions and the runaway-electron beams they can spawn are stated as a <strong>binding requirement</strong> with a named mitigation path, not hidden — a design that states its hard requirement, and the experiment that retires it, is engineering. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gate 2.12.</p>
+    </div>
   </section>
 
   <!-- ================= I&C / PCS / SIS (Phase 71 · Workstream E) ================= -->
@@ -1149,6 +1173,12 @@ details.faq .fa b{color:var(--ink)}
     <div id="gov-cat"></div>
 
     <div class="foot" id="gov-foot"></div>
+  
+    <div class="lead" style="margin-top:22px">Equilibrium & MHD</div>
+    <div class="card ax-card" id="ax-mhd">
+      <h3>Free-boundary equilibrium & ideal-MHD margins <span class="tag">FreeGS · Grad-Shafranov + δW</span></h3>
+      <div class="ax-tiles"><div class="t"><div class="k">Operating β_N</div><div class="v">1.53</div></div><div class="t"><div class="k">No-wall limit</div><div class="v">≈2.9</div></div><div class="t"><div class="k">With-wall (RWM)</div><div class="v">4.2</div></div><div class="t"><div class="k">Config</div><div class="v">double-null · κ2.0 · δ−0.30</div></div></div><div class="ax-bar" style="height:26px"><span style="left:0;width:33%;background:#6bbd8a"></span><span style="left:63%;width:2px;background:#d3ac5f"></span><span style="left:91%;width:2px;background:#e94f9c"></span></div><div style="font:9px var(--fm);color:var(--dim);margin-top:4px">operating 1.53 (green) · no-wall ≈2.9 (gold) · RWM 4.2 (pink)</div><p class="ax-note">Balanced double-null free-boundary solve (vertical instability fixed by mirror-circuit symmetry), then ideal-MHD δW: operating β_N sits comfortably below the no-wall limit with head-room to the RWM bound. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gates BR-L1-A12 · 2.15.</p>
+    </div>
   </section>
 
   <!-- ================= HARDWARE SYSTEMS ================= -->
@@ -1158,6 +1188,12 @@ details.faq .fa b{color:var(--ink)}
     <p class="sub" id="hw-sub"></p>
     <div id="hw-groups"></div>
     <div class="foot" id="hw-foot"></div>
+  
+    <div class="lead" style="margin-top:22px">Power conversion · DEC</div>
+    <div class="card ax-card" id="ax-dec">
+      <h3>Direct energy conversion — the electron channel <span class="tag">quasineutral expander · pre-registered bench</span></h3>
+      <div class="ax-tiles"><div class="t"><div class="k">Recovered stream</div><div class="v">electron-dominated</div></div><div class="t"><div class="k">Conversion</div><div class="v">direct (no thermal cycle)</div></div><div class="t"><div class="k">Concept</div><div class="v">ambipolar nozzle, reversed</div></div><div class="t"><div class="k">Housing</div><div class="v">Aegis · MetroVolt</div></div></div><svg class="ax-svg" viewBox="0 0 620 130" role="img" aria-label="DEC electron vs ion channel"><polygon points="300,65 560,25 560,105" fill="rgba(211,172,95,.10)" stroke="#3a4655"/><line x1="120" y1="55" x2="300" y2="55" stroke="#d3ac5f" stroke-width="4"/><line x1="120" y1="78" x2="300" y2="78" stroke="#8fb4d9" stroke-width="1.5"/><text x="122" y="46" fill="#d3ac5f" font-family="monospace" font-size="12">directed electron flow — the larger stream</text><text x="122" y="95" fill="#8fb4d9" font-family="monospace" font-size="11">ion flow</text><text x="470" y="68" fill="#9aa6b4" font-family="monospace" font-size="10">expander → electrodes</text></svg><p class="ax-note">The conventional framing describes the birth spectrum, not the axial loss channel: at reactor temperatures the recoverable stream is a directed <strong>electron</strong> flow no published converter recovers. A quasineutral two-species expander — the ambipolar nozzle run backward — with a pre-registered bench. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gate 1.4.</p>
+    </div>
   </section>
 
   <!-- ================= MATERIALS & NEUTRONICS ================= -->
@@ -1179,6 +1215,12 @@ details.faq .fa b{color:var(--ink)}
     <div id="mat-quench"></div>
     <div id="mat-qual"></div>
     <div class="foot" id="mat-foot"></div>
+  
+    <div class="lead" style="margin-top:22px">Materials · DFT</div>
+    <div class="card ax-card" id="ax-dft">
+      <h3>Materials discovery — DFT-validated alloys <span class="tag">Quantum ESPRESSO · DFT · ML pre-screen</span></h3>
+      <div style="overflow-x:auto"><table class="ax-tab"><thead><tr><th>Component</th><th>Alloy family</th><th>Design driver</th><th>Gate</th></tr></thead><tbody><tr><td>First-wall</td><td class="mono">Ti-W-Fe-Cr</td><td>low-activation, DBTT-managed</td><td class="mono">BR-L2-A31</td></tr><tr><td>Divertor</td><td class="mono">Ta-Re-W-Ti-V</td><td>high-cohesion, high-Z</td><td class="mono">BR-L2-A32</td></tr><tr><td>DEC electrode</td><td class="mono">W-Ti-Cr-Ta-V</td><td>conductive, sputter-resistant</td><td class="mono">BR-L2-A33</td></tr><tr><td>Breeder-blanket</td><td class="mono">Al-Ti-Zr-Cr</td><td>low-activation, ductile</td><td class="mono">BR-L2-A34</td></tr><tr><td>Refractory HEA</td><td class="mono">M1 family (ML+DFT)</td><td>screened space</td><td class="mono">BR-L2-A35</td></tr><tr><td>REBCO tape</td><td class="mono">radiation-tolerant</td><td>J_c retention</td><td class="mono">BR-L2-A36</td></tr><tr><td>Ta-free set</td><td class="mono">Cr-Ti-V-W variants</td><td>Re/Ta-free</td><td class="mono">BR-L2-A37</td></tr></tbody></table></div><p class="ax-note">ML interatomic-potential pre-screen, then <strong>DFT (Quantum ESPRESSO)</strong> validation of formation energy and cohesion — each family chosen for a plasma-facing role, all low-activation. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gates 2.31–2.38.</p>
+    </div>
   </section>
 
   <!-- ================= BLUEPRINTS ================= -->
@@ -1205,6 +1247,12 @@ details.faq .fa b{color:var(--ink)}
     <p class="sub">The plant beyond the reactor core — the subsystems that fuel it, cool it, heat it, pump it, convert its power and keep it safe. Each is graded honestly: <b class="gold">FROZEN</b> (from the deposit), <b class="okc">SCREENING</b> (reduced-order), or <b class="badc">AWAITS HARDWARE</b>.</p>
     <div id="sys-groups"></div>
     <div class="foot" id="sys-foot"></div>
+  
+    <div class="lead" style="margin-top:22px">Fuel cycle · neutronics</div>
+    <div class="card ax-card" id="ax-tbr">
+      <h3>Neutronics & tritium breeding <span class="tag">OpenMC · ENDF/B-VIII.0 · MC transport</span></h3>
+      <div class="ax-tiles"><div class="t"><div class="k">Local TBR</div><div class="v">1.15</div></div><div class="t"><div class="k">Net TBR (system)</div><div class="v">0.742</div></div><div class="t"><div class="k">Demonstrated (Be)</div><div class="v">1.34</div></div><div class="t"><div class="k">Advanced target</div><div class="v">1.42</div></div><div class="t"><div class="k">Tritium</div><div class="v">0.29 → 2.0 kg/yr</div></div></div><div style="margin:6px 0 0"><div style="font:11px var(--fm);color:var(--dim);margin:8px 0 2px">bare local · 0.86</div><div class="ax-bar"><span style="left:0;width:54%;background:#8fb4d9"></span></div><div style="font:11px var(--fm);color:var(--dim);margin:8px 0 2px">beryllium-multiplied · 1.34</div><div class="ax-bar"><span style="left:0;width:84%;background:#d3ac5f"></span></div><div style="font:11px var(--fm);color:var(--dim);margin:8px 0 2px">advanced blanket · 1.42</div><div class="ax-bar"><span style="left:0;width:89%;background:#6bbd8a"></span></div><div style="font:9px var(--fm);color:var(--dim);margin-top:4px">self-sufficiency at TBR = 1.0</div></div><p class="ax-note">3-D Monte-Carlo neutron transport with beryllium multiplication and a ⁶Li breeder: breeding is an <strong>openly-shown ladder</strong>, not a single number. See <a href="https://www.kronosfusionenergy.com/publications/de-risking-register">register</a> · gates BR-L1-A5 · 2.2 · 2.18.</p>
+    </div>
   </section>
 
   <section class="page" id="page-analysis">
