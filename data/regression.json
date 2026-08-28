@@ -5,29 +5,29 @@
  "rows": [
   {
    "check": "breeder.Q",
-   "expected": "3.423913",
-   "got": "3.423913",
+   "expected": "3.076326",
+   "got": "3.076326",
    "atol": "0.0001",
    "verdict": "PASS"
   },
   {
    "check": "breeder.P_fus_MW",
-   "expected": "88.660424",
-   "got": "88.660424",
+   "expected": "85.040577",
+   "got": "85.040577",
    "atol": "0.5000",
    "verdict": "PASS"
   },
   {
    "check": "breeder.Ip_MA",
-   "expected": "9.859860",
-   "got": "9.859860",
+   "expected": "9.656483",
+   "got": "9.656483",
    "atol": "0.0100",
    "verdict": "PASS"
   },
   {
    "check": "breeder.T_kg_yr",
-   "expected": "3.999522",
-   "got": "3.999522",
+   "expected": "3.836229",
+   "got": "3.836229",
    "atol": "0.0100",
    "verdict": "PASS"
   },
