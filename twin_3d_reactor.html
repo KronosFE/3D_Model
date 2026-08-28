@@ -63,7 +63,7 @@ canvas{display:block}
 #readout{position:absolute;top:66px;right:14px;z-index:15;width:200px;background:rgba(34,44,57,.86);
   backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:12px;padding:14px;font-family:var(--fm)}
 #readout .rlab{font-size:9px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
-#readout .rbig{font-size:20px;margin:2px 0 10px}
+#readout .rbig{font-size:20px;margin:2px 0 10px}.dk-div{font-size:8px;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin:8px 0 6px;padding-top:7px;border-top:1px solid var(--line)}.dk-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}.dk-l{font-size:8.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.03em}.dk-v{font-size:11px;color:var(--ink);font-family:var(--fm);white-space:nowrap}
 #readout .rbig small{font-size:11px;color:var(--dim)}
 #hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:15;font-family:var(--fm);
   font-size:10.5px;color:var(--dim);background:rgba(22,29,38,.7);padding:7px 14px;border-radius:20px;border:1px solid var(--line)}
@@ -120,7 +120,7 @@ body.embed #fidfloat{display:flex}
 @media(max-width:760px){
   html,body{overflow-x:hidden}
   #layers{width:44vw;max-width:170px;font-size:9px;max-height:56%;overflow:auto;padding:8px}
-  #readout{width:110px;top:54px;right:8px;padding:8px}
+  #readout{width:150px;top:54px;right:8px;padding:8px}
   #readout .rbig{font-size:15px}
   #bctrl{width:94vw;bottom:8px;padding:10px 12px}
   #ovlegend{width:160px;left:8px;bottom:8px;padding:9px}
@@ -551,8 +551,8 @@ function applyExplodeState(){var s=document.getElementById('expSlider');if(s)set
 
 /* readout / geo */
 function renderReadout(){var r=document.getElementById('readout');
-  if(M==='breeder')r.innerHTML=rd('Fusion gain Q','3.076','')+rd('Fusion power','85.0','MW')+rd('Plasma current','9.66','MA')+rd('Tritium','4.0','kg/yr')+rd('β_N','1.53','/4.2');
-  else r.innerHTML=rd('Engineering Q_E','1.309','')+rd('Neutron frac','5.44','%')+rd('Net @440 m','+850','MWe')+rd('T_i','90','keV')+rd('B_m throat','17','T');}
+  if(M==='breeder')r.innerHTML=rd('Fusion gain Q','3.076','')+rd('Fusion power','85.0','MW')+rd('Plasma current','9.66','MA')+rd('Tritium','4.0','kg/yr')+rd('β_N','1.53','/4.2')+'<div class="dk-div">De-risking · computed</div>'+'<div class="dk-row"><span class="dk-l">α-confine</span><span class="dk-v">99.98%</span></div>'+'<div class="dk-row"><span class="dk-l">Turbulence</span><span class="dk-v">−80%</span></div>'+'<div class="dk-row"><span class="dk-l">Binding gate</span><span class="dk-v">H₉₈</span></div>'+'<div class="dk-row"><span class="dk-l">Ash</span><span class="dk-v">→4.45 @0%</span></div>';
+  else r.innerHTML=rd('Engineering Q_E','1.318','')+rd('Neutron frac','5.44','%')+rd('Net @440 m','+850','MWe')+rd('T_i','90','keV')+rd('B_m throat','17','T')+'<div class="dk-div">De-risking · computed</div>'+'<div class="dk-row"><span class="dk-l">Plug ratio</span><span class="dk-v">16×</span></div>'+'<div class="dk-row"><span class="dk-l">Demonstrated</span><span class="dk-v">WHAM</span></div>'+'<div class="dk-row"><span class="dk-l">Field lever</span><span class="dk-v">null</span></div>'+'<div class="dk-row"><span class="dk-l">Conversion</span><span class="dk-v">direct</span></div>';}
 function rd(l,n,u){return '<div class="rlab">'+l+'</div><div class="rbig">'+n+' <small>'+u+'</small></div>';}
 function renderGeo(){var g=document.getElementById('geo');
   if(M==='breeder')g.innerHTML='<b>Spherical tokamak</b><br>R₀ <b>1.2 m</b> · a <b>0.48 m</b><br>A <b>2.5</b> · κ <b>2.0</b> · δ <b>−0.30</b> (neg.)<br>B₀ <b>8 T</b> · B_peak <b>16.84 T</b>';
