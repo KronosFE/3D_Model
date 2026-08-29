@@ -600,7 +600,7 @@ var t=0;
 function animate(){requestAnimationFrame(animate);t+=0.006;
   var base=fidBase();
   plasmaMeshes.forEach(function(m){if(m.material&&m.material.emissive)m.material.emissiveIntensity=base+Math.sin(t*3)*0.08;});
-  stepParticles();controls.update();updateLabels();
+  stepParticles();controls.update();updateLabels();if(window.__kfeAnim)window.__kfeAnim(t);
   if(composer)composer.render();else renderer.render(scene,camera);}
 
 /* bind view-control sliders programmatically (unambiguous scope) */
@@ -630,4 +630,234 @@ function bootReactor(){
   try{init();}catch(e){fb('The 3-D view couldn’t start on this device. The rest of the model still works.');}
 }
 if(window.THREE&&THREE.OrbitControls){bootReactor();}else{window.addEventListener('load',bootReactor);}
+</script>
+<script>
+/* ===== KFE 3D enhancements · batch 1 (field lines · living plasma · scale · tour) ===== */
+(function(){
+  if(window.__kfe1)return; window.__kfe1=true; if(document.body.classList.contains('embed'))return;
+  var R0=2.4,a=0.96,kap=2.0,TRI=-0.30;
+  var fieldGroup=null,scaleGroup=null,fieldMats=[],plasmaGlow=null;
+  var show={field:true,scale:true};
+
+  // ---- #4 magnetic field lines: helical curves on the plasma surface (q95≈3) ----
+  function buildField(){
+    if(fieldGroup)scene.remove(fieldGroup);
+    fieldGroup=new THREE.Group(); fieldMats=[];
+    if(M!=='breeder'){return;}
+    var N=16,q=3.0,da=Math.asin(TRI);
+    for(var i=0;i<N;i++){
+      var pts=[],phase=i/N*Math.PI*2,seg=280,rr=a*0.9;
+      for(var s=0;s<=seg;s++){
+        var u=s/seg*Math.PI*2*q, v=s/seg*Math.PI*2+phase;
+        var Rp=R0+rr*Math.cos(v+da*Math.sin(v)), Zp=kap*rr*Math.sin(v);
+        pts.push(new THREE.Vector3(Rp*Math.cos(u),Zp,Rp*Math.sin(u)));
+      }
+      var tube=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts,true),420,0.016,6,true);
+      var mat=new THREE.MeshBasicMaterial({color:0x86dcff,transparent:true,opacity:0.0,blending:THREE.AdditiveBlending,depthWrite:false});
+      fieldGroup.add(new THREE.Mesh(tube,mat)); fieldMats.push({m:mat,ph:phase});
+    }
+    fieldGroup.visible=show.field; scene.add(fieldGroup);
+  }
+
+  // ---- #9 scale reference: to-scale human + ghosted ITER outline ----
+  function human(){ // ~1.8 m; display scale 1 m ≈ 2 units
+    var g=new THREE.Group(), col=0x8fa0b4, mat=new THREE.MeshStandardMaterial({color:col,roughness:.8,metalness:.1,transparent:true,opacity:.9});
+    var body=new THREE.Mesh(new THREE.CapsuleGeometry?new THREE.CapsuleGeometry(0.28,2.0,4,8):new THREE.CylinderGeometry(0.28,0.28,2.4,10),mat);body.position.y=1.6;
+    var head=new THREE.Mesh(new THREE.SphereGeometry(0.34,12,12),mat);head.position.y=3.15;
+    g.add(body);g.add(head);return g;
+  }
+  function buildScale(){
+    if(scaleGroup)scene.remove(scaleGroup);
+    scaleGroup=new THREE.Group();
+    if(M==='breeder'){
+      var h=human(); h.position.set(R0+a+2.4,-(a*kap+0.85),0.6); scaleGroup.add(h);
+      // ITER ghost: R0 6.2 m vs 1.2 m -> ~5.2x; outline torus footprint
+      var iterR=R0*(6.2/1.2), ig=new THREE.Mesh(new THREE.TorusGeometry(iterR,0.06,10,80),
+        new THREE.MeshBasicMaterial({color:0x5a6a7f,transparent:true,opacity:.28}));
+      ig.rotation.x=Math.PI/2; ig.position.y=-(a*kap+0.85); scaleGroup.add(ig);
+      var lbl=makeTag('ITER footprint (R₀ 6.2 m) — Hyperion is ~⅕ the size',iterR,-(a*kap+0.6),0,'dim');
+      if(lbl)scaleGroup.add(lbl);
+    }
+    scaleGroup.visible=show.scale; scene.add(scaleGroup);
+  }
+  function makeTag(txt,x,y,z,cls){ try{
+    var c=document.createElement('canvas');c.width=512;c.height=64;var g=c.getContext('2d');
+    g.fillStyle='rgba(20,28,38,0.0)';g.fillRect(0,0,512,64);g.font='22px monospace';g.textAlign='left';
+    g.fillStyle=cls==='dim'?'rgba(154,166,180,0.9)':'rgba(211,172,95,0.95)';g.fillText(txt,6,40);
+    var tx=new THREE.CanvasTexture(c);var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    sp.scale.set(6,0.75,1);sp.position.set(x,y+0.8,z);return sp;}catch(e){return null;} }
+
+  // ---- #3 living plasma: brighter shimmer + secondary pulse on plasma meshes ----
+  function animExtra(t){
+    // field-line flowing glow
+    for(var i=0;i<fieldMats.length;i++){var f=fieldMats[i];
+      f.m.opacity=show.field?(0.28+0.22*Math.max(0,Math.sin(t*2.2+f.ph*2))):0;}
+    // extra plasma shimmer (on top of the base pulse already in animate)
+    if(plasmaMeshes&&plasmaMeshes.length){
+      for(var j=0;j<plasmaMeshes.length;j++){var m=plasmaMeshes[j];
+        if(m.material&&m.material.emissive){m.material.emissiveIntensity+=Math.sin(t*7+j)*0.05;}}
+    }
+  }
+  window.__kfeAnim=animExtra;
+
+  // ---- #7 guided tour: fly the camera component-to-component with callouts ----
+  var tourOn=false,tourT=0,tourStops=[],tourIdx=0,fromPos=null,fromTgt=null,dwell=0;
+  function stopsFor(){
+    if(M==='breeder')return [
+      {p:[11,7,13.5],t:[0,0,0],cap:'HYPERION — compact spherical tokamak · Q 3.076 · 85.04 MW'},
+      {p:[5.5,2.5,7],t:[0,0,0],cap:'δ −0.30 plasma — negative triangularity, the published equilibrium'},
+      {p:[7,5.5,4],t:[0,1,0],cap:'REBCO HTS field cage — 16 TF coils · B_peak 16.84 T'},
+      {p:[8,1.5,8],t:[R0,0,0],cap:'Breeding blanket — TBR 1.34→1.8 · 3.84 kg-T/yr · He-3 co-product'},
+      {p:[4,-4,7],t:[0,-2,0],cap:'Divertor — tungsten monoblocks · lower single-null'},
+      {p:[11,7,13.5],t:[0,0,0],cap:'Every number reproduces from the open deposit.'}
+    ];
+    return [
+      {p:[11,8.5,23],t:[0,0,0],cap:'AEGIS / METROVOLT — D–³He tandem mirror · Q_E 1.318 · +850 MWe'},
+      {p:[0,3,14],t:[0,0,0],cap:'Central cell — where the D–³He burns · f_n 5.44% (low-neutron)'},
+      {p:[9,3,10],t:[6,0,0],cap:'High-field end plugs — B 17 T · plug ratio 16× (WHAM-anchored)'},
+      {p:[13,4,8],t:[8,0,0],cap:'Direct energy conversion — charged exhaust → electricity, no steam'},
+      {p:[11,8.5,23],t:[0,0,0],cap:'Fuel follows purpose — neutrons where you want them.'}
+    ];
+  }
+  function tourCap(txt){var e=document.getElementById('kfe-tourcap');if(!e){e=document.createElement('div');e.id='kfe-tourcap';
+    e.style.cssText='position:fixed;left:50%;bottom:60px;transform:translateX(-50%);z-index:60;background:rgba(12,16,22,.86);border:1px solid var(--line,#3a4553);border-left:3px solid var(--gold,#d3ac5f);border-radius:8px;padding:10px 16px;color:#e0e5eb;font:14px -apple-system,sans-serif;max-width:70vw;text-align:center;opacity:0;transition:opacity .5s';document.body.appendChild(e);}
+    e.textContent=txt;e.style.opacity=txt?'1':'0';}
+  function startTour(){ if(tourOn){stopTour();return;} tourOn=true;tourStops=stopsFor();tourIdx=0;dwell=0;controls.autoRotate=false;beginLeg();
+    var b=document.getElementById('kfe-tourbtn');if(b)b.textContent='◼ Stop tour'; }
+  function stopTour(){tourOn=false;tourCap('');var b=document.getElementById('kfe-tourbtn');if(b)b.textContent='▶ Take the tour';}
+  function beginLeg(){fromPos=camera.position.clone();fromTgt=controls.target.clone();tourT=0;var s=tourStops[tourIdx];tourCap(s.cap);}
+  (function tourLoop(){requestAnimationFrame(tourLoop);if(!tourOn)return;
+    var s=tourStops[tourIdx];tourT=Math.min(1,tourT+0.012);var e=tourT<.5?2*tourT*tourT:1-Math.pow(-2*tourT+2,2)/2;
+    camera.position.lerpVectors(fromPos,new THREE.Vector3(s.p[0],s.p[1],s.p[2]),e);
+    controls.target.lerpVectors(fromTgt,new THREE.Vector3(s.t[0],s.t[1],s.t[2]),e);controls.update();
+    if(tourT>=1){dwell+=1;if(dwell>150){dwell=0;tourIdx++;if(tourIdx>=tourStops.length){stopTour();return;}beginLeg();}}
+  })();
+
+  // ---- floating controls ----
+  function panel(){
+    var d=document.createElement('div');d.id='kfe-enh';
+    d.style.cssText='position:fixed;right:8px;bottom:86px;z-index:55;background:rgba(20,28,38,.9);border:1px solid #3a4553;border-radius:10px;padding:9px 11px;font:11px ui-monospace,monospace;color:#9aa6b4;display:flex;flex-direction:column;gap:6px;min-width:150px';
+    d.innerHTML='<div style="color:#d3ac5f;letter-spacing:.08em">ENHANCEMENTS</div>'+
+      '<label style="display:flex;justify-content:space-between;cursor:pointer"><span>Field lines</span><input type="checkbox" id="kfe-cf" checked></label>'+
+      '<label style="display:flex;justify-content:space-between;cursor:pointer"><span>Scale ref</span><input type="checkbox" id="kfe-cs" checked></label>'+
+      '<button id="kfe-tourbtn" style="margin-top:3px;background:#d3ac5f;color:#0b1017;border:none;border-radius:6px;padding:7px;font:600 12px inherit;cursor:pointer">▶ Take the tour</button>';
+    document.body.appendChild(d);
+    document.getElementById('kfe-cf').addEventListener('change',function(){show.field=this.checked;if(fieldGroup)fieldGroup.visible=this.checked;});
+    document.getElementById('kfe-cs').addEventListener('change',function(){show.scale=this.checked;if(scaleGroup)scaleGroup.visible=this.checked;});
+    document.getElementById('kfe-tourbtn').addEventListener('click',startTour);
+  }
+
+  // ---- wire into build() so field+scale rebuild on machine change ----
+  function rebuild(){try{buildField();buildScale();}catch(e){console.warn('kfe enh',e);}}
+  if(typeof build==='function'){var _b=build;build=function(){_b.apply(this,arguments);rebuild();};}
+  // initial
+  panel();rebuild();
+})();
+
+</script>
+<script>
+/* ===== KFE 3D enhancements · batch 2 (lighting · vignette · flux map · cross-section + design sliders) ===== */
+(function(){
+  if(window.__kfe2)return; window.__kfe2=true; if(document.body.classList.contains('embed'))return;
+
+  // ---- #1 lighting / PBR polish: richer reflections on metals ----
+  function polish(){ try{
+    scene.traverse(function(o){ if(o.isMesh&&o.material&&o.material.isMeshStandardMaterial&&o.material.metalness>0.5){
+      o.material.envMapIntensity=0.8; o.material.needsUpdate=true; }});
+  }catch(e){} }
+
+  // ---- #2 cinematic vignette + bloom tune ----
+  function vignette(){ if(!document.getElementById('kfe-vig')){
+      var v=document.createElement('div');v.id='kfe-vig';
+      v.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 260px 50px rgba(0,0,0,.5)';
+      document.body.appendChild(v);}
+    try{ if(typeof bloom!=='undefined'&&bloom){bloom.strength=0.42;bloom.radius=0.4;} }catch(e){}
+  }
+
+  // ---- #5 neutron-flux / TBR heat-map toggle (blanket recolor by attenuation) ----
+  var fluxOn=false;
+  function toggleFlux(on){ fluxOn=on;
+    var bl=layerGroups['Blanket & Fuel Cycle']; if(!bl){return;}
+    var idx=0, metas=[];
+    bl.group.traverse(function(o){ if(o.isMesh) metas.push(o); });
+    metas.forEach(function(o,i){
+      if(on){ if(!o.userData._m0)o.userData._m0=o.material;
+        // inner (first wall) = high flux (white-hot); outer (blanket) = attenuating (gold->deep red)
+        var frac=metas.length>1? i/(metas.length-1):0;
+        var c=new THREE.Color().setHSL(0.02+0.10*frac, 0.9, 0.62-0.22*frac);
+        o.material=new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:0.62,side:THREE.DoubleSide,blending:THREE.AdditiveBlending,depthWrite:false});
+      } else if(o.userData._m0){ o.material=o.userData._m0; }
+    });
+    var lg=document.getElementById('kfe-fluxleg');
+    if(on&&!lg){ lg=document.createElement('div');lg.id='kfe-fluxleg';
+      lg.style.cssText='position:fixed;right:8px;bottom:250px;z-index:55;background:rgba(20,28,38,.9);border:1px solid #3a4553;border-radius:8px;padding:8px 10px;font:10px ui-monospace,monospace;color:#9aa6b4';
+      lg.innerHTML='NEUTRON FLUX (14 MeV)<br><div style="height:8px;width:130px;margin:5px 0;background:linear-gradient(90deg,#ffefe0,#ffb14a,#e0431f,#7a1f10)"></div>first wall → outer blanket · attenuating';
+      document.body.appendChild(lg);}
+    else if(!on&&lg){lg.remove();}
+  }
+
+  // ---- #6 + #8 poloidal cross-section with live design sliders ----
+  var C={R0:1.2,A:2.5,kap:2.0,delta:-0.30};
+  function drawXsec(){
+    var cv=document.getElementById('kfe-xsec'); if(!cv)return; var g=cv.getContext('2d');
+    var W=cv.width,H=cv.height; g.clearRect(0,0,W,H);
+    var a=C.R0/C.A, Rmax=C.R0+a, sc=(W*0.42)/Rmax, cx=W*0.30, cy=H*0.52;
+    // axis
+    g.strokeStyle='rgba(154,166,180,.3)';g.lineWidth=1;g.beginPath();g.moveTo(cx- C.R0*sc,cy);g.lineTo(cx+Rmax*sc+20,cy);g.stroke();
+    g.beginPath();g.moveTo(cx,10);g.lineTo(cx,H-24);g.stroke();
+    // nested flux surfaces (Miller)
+    var da=Math.asin(Math.max(-1,Math.min(1,C.delta)));
+    for(var s=1;s<=5;s++){ var rho=s/5;
+      g.beginPath();
+      for(var i=0;i<=120;i++){ var th=i/120*Math.PI*2;
+        var R=C.R0 + rho*a*Math.cos(th+da*Math.sin(th)), Z=rho*C.kap*a*Math.sin(th);
+        var x=cx+R*sc, y=cy - Z*sc; if(i===0)g.moveTo(x,y);else g.lineTo(x,y);}
+      g.closePath();
+      g.strokeStyle= s===5? '#e94f9c' : 'rgba(211,172,95,'+(0.3+0.12*s)+')';
+      g.lineWidth= s===5?2.2:1.1; g.stroke();
+    }
+    g.fillStyle='#d3ac5f';g.font='10px monospace';g.textAlign='left';
+    g.fillText('R₀ '+C.R0.toFixed(2)+' m',8,14);
+    g.fillText('a '+a.toFixed(2)+' m · A '+C.A.toFixed(1),8,H-8);
+    g.fillText('κ '+C.kap.toFixed(1)+' · δ '+C.delta.toFixed(2),8,H-22);
+    var canon=(Math.abs(C.R0-1.2)<0.02&&Math.abs(C.A-2.5)<0.05&&Math.abs(C.delta+0.30)<0.02&&Math.abs(C.kap-2.0)<0.05);
+    g.fillStyle=canon?'#6fd08a':'#9aa6b4';g.textAlign='right';
+    g.fillText(canon?'= ratified design point':'exploring design space',W-8,14);
+  }
+  function xsecPanel(){
+    var d=document.createElement('div');d.id='kfe-xpanel';
+    d.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:10px;z-index:56;display:none;background:rgba(16,22,30,.96);border:1px solid #3a4553;border-radius:10px;padding:10px;font:11px ui-monospace,monospace;color:#9aa6b4;width:250px';
+    d.innerHTML='<div style="color:#d3ac5f;letter-spacing:.06em;margin-bottom:4px">POLOIDAL CROSS-SECTION · design explorer</div>'+
+      '<canvas id="kfe-xsec" width="230" height="150" style="width:230px;height:150px;background:#0c131b;border-radius:6px;display:block"></canvas>'+
+      row('R₀ (m)','xR','80','200','120','100')+row('A (aspect)','xA','18','40','25','10')+
+      row('κ','xK','15','28','20','10')+row('δ','xD','-45','30','-30','100');
+    document.body.appendChild(d);
+    bind('xR',function(v){C.R0=v/100;},'R₀','xRv',function(v){return (v/100).toFixed(2)+' m';});
+    bind('xA',function(v){C.A=v/10;},'A','xAv',function(v){return (v/10).toFixed(1);});
+    bind('xK',function(v){C.kap=v/10;},'κ','xKv',function(v){return (v/10).toFixed(1);});
+    bind('xD',function(v){C.delta=v/100;},'δ','xDv',function(v){return (v/100).toFixed(2);});
+    drawXsec();
+  }
+  function row(lab,id,mn,mx,val,div){ return '<div style="display:flex;align-items:center;gap:6px;margin-top:5px"><span style="width:64px">'+lab+'</span>'+
+    '<input type="range" id="'+id+'" min="'+mn+'" max="'+mx+'" value="'+val+'" style="flex:1"><span id="'+id+'v" style="width:52px;text-align:right;color:#e0e5eb"></span></div>'; }
+  function bind(id,set,lab,vid,fmt){ var el=document.getElementById(id); function upd(){set(+el.value);document.getElementById(vid).textContent=fmt(+el.value);drawXsec();} el.addEventListener('input',upd);upd(); }
+
+  // ---- extend the ENHANCEMENTS panel with Flux toggle ----
+  function extendPanel(){ var p=document.getElementById('kfe-enh'); if(!p)return;
+    var lx=document.createElement('label'); lx.style.cssText='display:flex;justify-content:space-between;cursor:pointer';
+    lx.innerHTML='<span>Cross-section</span><input type="checkbox" id="kfe-cx">';
+    p.insertBefore(lx, p.querySelector('#kfe-tourbtn'));
+    lx.querySelector('#kfe-cx').addEventListener('change',function(){var x=document.getElementById('kfe-xpanel');if(x)x.style.display=this.checked?'block':'none';});
+    var l=document.createElement('label'); l.style.cssText='display:flex;justify-content:space-between;cursor:pointer';
+    l.innerHTML='<span>Flux heat-map</span><input type="checkbox" id="kfe-cflux">';
+    p.insertBefore(l, p.querySelector('#kfe-tourbtn'));
+    document.getElementById('kfe-cflux').addEventListener('change',function(){toggleFlux(this.checked);});
+  }
+
+  function init(){ polish(); vignette(); extendPanel(); xsecPanel(); }
+  // re-polish after machine rebuilds (materials get recreated)
+  if(typeof build==='function'){var _b=build;build=function(){_b.apply(this,arguments);setTimeout(function(){polish();if(fluxOn)toggleFlux(true);},0);};}
+  init();
+})();
+
 </script>
